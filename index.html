@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Palette by Ethan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,560;1,9..144,340;1,9..144,440&family=Abril+Fatface&family=Caveat:wght@500;600&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#eef1ee;
+    --ink:#151a18;
+    --ink-soft:#4c5652;
+    --line:#c8cfc9;
+    --accent:#3c5a52;
+    --accent-2:#b5502f;
+
+    --measure: 34rem;
+    --wide: 78rem;
+    --navh: 80px;
+    --fs-eyebrow: .72rem;
+    --fs-caption: .8rem;
+    --fs-body: 1.08rem;
+    --fs-lede: clamp(1.25rem, 2.2vw, 1.5rem);
+    --fs-quote: clamp(1.6rem, 4vw, 2.4rem);
+    --fs-h1: clamp(2.5rem, 7vw, 4.5rem);
+
+    --sp-1: .5rem;
+    --sp-2: 1rem;
+    --sp-3: 1.75rem;
+    --sp-4: 3rem;
+    --sp-5: 5.5rem;
+    --sp-6: 9rem;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0f1310;
+      --ink:#e8ece9;
+      --ink-soft:#98a29c;
+      --line:#293029;
+      --accent:#82b3a2;
+      --accent-2:#e08a5f;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0f1310;
+    --ink:#e8ece9;
+    --ink-soft:#98a29c;
+    --line:#293029;
+    --accent:#82b3a2;
+    --accent-2:#e08a5f;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Work Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size:var(--fs-body);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  h1,h2,h3{font-family:"Fraunces", ui-serif, Georgia, serif; text-wrap:balance; margin:0;}
+  img{display:block; max-width:100%;}
+  button{font:inherit;}
+
+  .eyebrow{
+    font-family:"Space Mono", ui-monospace, Menlo, monospace;
+    font-size:var(--fs-eyebrow);
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- grain ---------- */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:5;
+    opacity:.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:180px 180px;
+  }
+
+  /* ---------- nav ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:50; height:var(--navh);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 var(--sp-3);
+    background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav__mark{
+    font-family:"Fraunces", serif; font-style:normal; font-weight:400;
+    font-size:1.7rem; letter-spacing:.01em; text-decoration:none;
+  }
+  .nav__mark-palette{ font-family:"Abril Fatface", ui-serif, Georgia, serif; text-transform:uppercase; letter-spacing:.01em; color:#e3a94c; }
+  .nav__mark-by{
+    font-family:"Space Mono", monospace; font-style:normal; font-weight:400;
+    font-size:.85rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .nav__links{ display:flex; gap:var(--sp-3); align-items:center; }
+  .nav__about{
+    font-family:"Space Mono", monospace; font-size:.72rem; letter-spacing:.1em;
+    text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
+    border-bottom:1px solid transparent; padding:.2rem 0;
+  }
+  .nav__about:hover, .nav__about:focus-visible{ color:var(--ink); border-color:var(--ink); }
+
+  .site-foot{
+    display:flex; align-items:center; justify-content:center; gap:var(--sp-3); flex-wrap:wrap;
+    text-align:center; padding:var(--sp-4) var(--sp-3);
+    font-family:"Space Mono",monospace; font-size:.72rem; letter-spacing:.05em;
+    color:var(--ink-soft);
+  }
+  .site-foot__social{ display:inline-flex; align-items:center; gap:var(--sp-3); }
+  .site-foot__social a{ color:var(--ink-soft); display:flex; text-decoration:none; }
+  .site-foot__social a:hover, .site-foot__social a:focus-visible{ color:var(--accent); }
+  .site-foot__social svg{ width:15px; height:15px; display:block; }
+
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+
+  .col{ max-width:var(--measure); margin:0 auto; padding:0 var(--sp-3); }
+  .col--wide{ max-width:var(--wide); margin:0 auto; padding:0 var(--sp-3); }
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+  .reveal.is-visible{opacity:1; transform:none;}
+  @media (prefers-reduced-motion: reduce){ .reveal{transition:none; transform:none; opacity:1;} }
+
+  /* ================= HOME / INDEX (photos only) ================= */
+  .hero{ position:relative; width:100%; height:92vh; min-height:560px; overflow:hidden; background:var(--line); }
+  .hero__frame{ position:absolute; inset:0; }
+  .hero__frame img{ width:100%; height:100%; object-fit:cover; object-position:50% 38%; display:block; }
+  .hero__scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.22), rgba(0,0,0,.02) 32%, rgba(0,0,0,.3)); }
+  .hero__text{
+    position:absolute; inset:0; z-index:2; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center; pointer-events:none;
+  }
+  .hero__line{ margin:0; text-wrap:balance; text-shadow:0 2px 28px rgba(0,0,0,.35); }
+  .hero__line--1{
+    font-family:"Caveat", cursive; font-weight:600; font-style:normal;
+    color:#f6efe1; line-height:1; letter-spacing:.01em;
+    font-size:clamp(2rem, 6.5vw, 4.5rem);
+  }
+  .hero__line--2{
+    font-family:"Abril Fatface", ui-serif, Georgia, serif; font-weight:400; font-style:normal;
+    color:#e3a94c; line-height:.95; letter-spacing:.02em;
+    font-size:clamp(3.6rem, 13.5vw, 10.5rem);
+    text-shadow:
+      1px 1px 0 #cf9640, 2px 2px 0 #cf9640,
+      3px 3px 0 #bb8636, 4px 4px 0 #bb8636,
+      5px 5px 0 #a7732c, 6px 6px 0 #a7732c,
+      7px 7px 0 #936222,
+      8px 8px 18px rgba(0,0,0,.45);
+  }
+  @media (max-width:640px){
+    .hero__line--1{ font-size:clamp(1.6rem, 7vw, 2.6rem); }
+    .hero__line--2{
+      font-size:clamp(2.4rem, 15vw, 5rem);
+      text-shadow:
+        1px 1px 0 #cf9640, 2px 2px 0 #bb8636,
+        3px 3px 0 #a7732c, 4px 4px 10px rgba(0,0,0,.45);
+    }
+  }
+
+  .letter{
+    display:inline-block; opacity:0; transform:translateY(.22em);
+    animation:letterIn .85s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .letter--space{ width:.32em; }
+  @keyframes letterIn{ to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce){
+    .letter{ animation:none; opacity:1; transform:none; }
+  }
+
+  .grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr));
+    gap:var(--sp-3); padding-top:var(--sp-3); padding-bottom:var(--sp-3);
+  }
+  .tile{ display:block; text-decoration:none; color:inherit; }
+  .tile__frame{ position:relative; overflow:hidden; background:var(--line); aspect-ratio:4/5; }
+  .tile__frame img{ width:100%; height:100%; object-fit:cover; transition:transform .7s cubic-bezier(.2,.7,.2,1); }
+  .tile:hover .tile__frame img, .tile:focus-visible .tile__frame img{ transform:scale(1.045); }
+  .tile__frame::after{ content:''; position:absolute; inset:0; background:rgba(0,0,0,0); transition:background .35s ease; }
+  .tile:hover .tile__frame::after, .tile:focus-visible .tile__frame::after{ background:rgba(0,0,0,.28); }
+  .tile__place{
+    position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;
+    font-family:"Space Mono", monospace; font-style:normal; font-weight:400;
+    font-size:.85rem; letter-spacing:.08em; color:#f6efe1; text-shadow:0 2px 10px rgba(0,0,0,.5);
+    opacity:0; transition:opacity .35s ease; pointer-events:none;
+  }
+  .tile:hover .tile__place, .tile:focus-visible .tile__place{ opacity:1; }
+
+  .tile--soon{ opacity:.35; cursor:default; }
+  .tile--soon .tile__frame{ display:flex; align-items:center; justify-content:center; }
+  .tile--soon .tile__frame span{ font-family:"Space Mono",monospace; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
+
+  /* ================= ABOUT PAGE ================= */
+  .about-page{ padding-top:calc(var(--navh) + var(--sp-5)); padding-bottom:var(--sp-6); }
+  .about{display:grid; gap:var(--sp-4); align-items:start;}
+  @media (min-width:760px){ .about{grid-template-columns:.8fr 1.2fr;} }
+  .about .frame{aspect-ratio:4/5; overflow:hidden; background:var(--line);}
+  .about .frame img{width:100%; height:100%; object-fit:cover;}
+  .about h2{font-size:clamp(1.6rem,3.2vw,2.1rem); font-weight:340; margin-bottom:var(--sp-2);}
+  .about h2 .palette-word{ font-family:"Abril Fatface", ui-serif, Georgia, serif; letter-spacing:.01em; color:#e3a94c; }
+
+  .tip-wrap{ position:relative; display:inline-flex; }
+  .tip-wrap__bubble{
+    position:absolute; bottom:100%; left:50%; transform:translate(-50%,-2px);
+    background:var(--ink); color:var(--paper);
+    font-family:"Space Mono",monospace; font-size:.7rem; letter-spacing:.02em;
+    padding:.35em .65em; border-radius:3px; white-space:nowrap;
+    opacity:0; pointer-events:none;
+    transition:opacity .18s ease, transform .18s ease;
+  }
+  .tip-wrap__bubble::after{
+    content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+    border:5px solid transparent; border-top-color:var(--ink);
+  }
+  .tip-wrap:hover .tip-wrap__bubble, .tip-wrap:focus-within .tip-wrap__bubble{
+    opacity:1; transform:translate(-50%,-8px);
+  }
+
+  /* ================= TRIP / SLIDESHOW ================= */
+  .trip{ min-height:100vh; padding-top:var(--navh); display:flex; flex-direction:column; }
+  .stage__bar{
+    display:flex; align-items:center; gap:var(--sp-2);
+    padding:var(--sp-3) var(--sp-3) 0;
+  }
+  .iconbtn{
+    background:none; border:none; cursor:pointer; color:var(--ink);
+    display:flex; align-items:center; padding:.25rem;
+  }
+  .iconbtn:hover{ color:var(--accent); }
+  .stage__count{ font-family:"Space Mono",monospace; font-size:.78rem; color:var(--ink-soft); }
+  .stage__title{ font-family:"Space Mono",monospace; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
+
+  .stage{ position:relative; flex:1; display:flex; align-items:center; justify-content:center; padding:var(--sp-4) var(--sp-5); min-height:60vh; }
+  .stage__navbtn{
+    position:fixed; top:50%; transform:translateY(-50%);
+    background:none; border:none; cursor:pointer; color:var(--ink-soft);
+    font-size:2rem; line-height:1; padding:var(--sp-2); z-index:20;
+  }
+  .stage__navbtn:hover{ color:var(--ink); }
+  .stage__navbtn--prev{ left:var(--sp-1); }
+  .stage__navbtn--next{ right:var(--sp-1); }
+  .stage__navbtn[hidden]{ display:none; }
+
+  .slide{ width:100%; }
+  .slide--photo{ display:flex; flex-direction:column; align-items:center; max-width:100%; }
+  .slide__frame{ max-width:min(88vw, 900px); max-height:70vh; }
+  .slide__frame img{ max-width:min(88vw, 900px); max-height:70vh; width:auto; height:auto; object-fit:contain; margin:0 auto; }
+  .slide figcaption{
+    font-family:"Space Mono",monospace; font-size:var(--fs-caption); letter-spacing:.04em; color:var(--ink-soft);
+    margin-top:var(--sp-2); display:flex; gap:1.2em; justify-content:center;
+  }
+  .slide figcaption .loc{ color:var(--ink); }
+
+  .slide--photo-pair{
+    display:flex; gap:var(--sp-4); justify-content:center; align-items:flex-start;
+    flex-wrap:wrap; width:100%;
+  }
+  .pair-item{ display:flex; flex-direction:column; align-items:center; }
+  .pair-item__frame{ max-width:min(42vw, 420px); max-height:65vh; }
+  .pair-item__frame img{ max-width:min(42vw, 420px); max-height:65vh; width:auto; height:auto; object-fit:contain; margin:0 auto; }
+  .pair-item figcaption{
+    font-family:"Space Mono",monospace; font-size:var(--fs-caption); letter-spacing:.04em; color:var(--ink-soft);
+    margin-top:var(--sp-2); display:flex; gap:1.2em; justify-content:center;
+  }
+  .pair-item figcaption .loc{ color:var(--ink); }
+  @media (max-width:720px){
+    .pair-item__frame{ max-width:88vw; max-height:38vh; }
+  }
+
+  .slide--text{ max-width:var(--measure); margin:0 auto; }
+  .slide--text .lede{font-family:"Fraunces",serif; font-style:italic; font-weight:340; font-size:var(--fs-lede); color:var(--ink); margin:0 0 var(--sp-3);}
+  .slide--text p{margin:0 0 var(--sp-3);}
+  .slide--text p:last-child{margin-bottom:0;}
+
+  .slide--quote{ max-width:38rem; margin:0 auto; }
+  .slide--quote blockquote{ margin:0; font-family:"Fraunces",serif; font-style:italic; font-weight:340; font-size:var(--fs-quote); line-height:1.25; color:var(--ink); }
+  .slide--quote blockquote::before{content:"\201C";}
+  .slide--quote blockquote::after{content:"\201D";}
+  .slide--quote cite{ display:block; margin-top:var(--sp-2); font-style:normal; font-family:"Space Mono",monospace; font-size:var(--fs-caption); color:var(--ink-soft); }
+
+  .slide--itinerary{
+    display:grid; grid-template-columns:minmax(220px,340px) 1fr; gap:var(--sp-5);
+    width:100%; max-width:1000px; text-align:left; align-items:start;
+  }
+  @media (max-width:760px){ .slide--itinerary{ grid-template-columns:1fr; } }
+  .itin-map{ width:100%; align-self:center; }
+  .itin-map svg{ width:100%; height:auto; display:block; overflow:hidden; }
+  .itin-map .coast-fill{ fill:rgba(60,90,82,0.15); stroke:none; }
+  .itin-map .coast-edge{ fill:none; stroke:var(--ink-soft); stroke-width:1.1; stroke-linejoin:round; stroke-linecap:round; opacity:.5; }
+  .itin-map .leg-path{ fill:none; stroke:var(--accent); stroke-width:1.6; stroke-linecap:round; opacity:.8; }
+  .itin-map .leg-dot circle{ fill:var(--paper); stroke:var(--accent-2); stroke-width:2; }
+  .itin-map .leg-dot text{ font-family:"Space Mono",monospace; font-size:9px; letter-spacing:.04em; fill:var(--ink-soft); text-anchor:middle; }
+  .itin-map .leg-plane{ opacity:0; }
+  .itin-map .leg-plane path, .itin-map .leg-plane rect, .itin-map .leg-plane circle{ fill:var(--accent-2); }
+  .itin-list h2{ font-size:clamp(1.4rem,2.6vw,1.9rem); font-weight:340; margin:.2em 0 .9em; }
+  .itin-list .eyebrow{ margin-bottom:.3em; }
+  .itin-leg{ border-top:1px solid var(--line); padding:.85em 0; }
+  .itin-leg:last-child{ border-bottom:1px solid var(--line); }
+  .itin-leg__top{ display:flex; justify-content:space-between; gap:1em; font-family:"Space Mono",monospace; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:.4em; }
+  .itin-leg__airline{ color:var(--ink); display:inline-flex; align-items:center; }
+  .itin-leg__logo{
+    display:inline-flex; align-items:center; justify-content:center; width:2.6em; height:1.5em;
+    margin-right:.5em;
+  }
+  .itin-leg__logo img{ max-width:100%; max-height:100%; object-fit:contain; display:block; }
+  .itin-leg__route{ display:flex; align-items:center; gap:.5em; font-family:"Fraunces",serif; font-weight:400; font-size:1.25rem; margin-bottom:.3em; }
+  .itin-leg__mode-icon{ display:inline-flex; align-items:center; color:var(--ink-soft); }
+  .itin-leg__mode-icon svg{ width:20px; height:13px; display:block; }
+  .itin-leg__mode-icon svg path, .itin-leg__mode-icon svg rect, .itin-leg__mode-icon svg circle{ fill:currentColor; }
+  .itin-leg__times{ font-family:"Space Mono",monospace; font-size:.82rem; color:var(--ink-soft); }
+  .itin-leg__duration{ font-family:"Space Mono",monospace; font-size:.72rem; color:var(--ink-soft); margin-top:.2em; }
+
+  /* ---- grid subview ---- */
+  .thumbgrid{ columns:3 260px; column-gap:var(--sp-4); padding:var(--sp-4) var(--sp-3) var(--sp-6); }
+  .thumb{ display:block; width:100%; break-inside:avoid; margin-bottom:var(--sp-4); background:none; border:none; padding:0; cursor:pointer; }
+  .thumb img{ width:100%; height:auto; transition:transform .6s cubic-bezier(.2,.7,.2,1); }
+  .thumb:hover img, .thumb:focus-visible img{ transform:scale(1.03); }
+  @media (max-width:720px){ .thumbgrid{ columns:2 180px; } }
+</style>
+</head>
+
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="nav">
+  <a class="nav__mark" href="#"><span class="nav__mark-palette">Palette</span><span class="nav__mark-by"> by ethan</span></a>
+  <div class="nav__links">
+    <a class="nav__about" href="#/about">About</a>
+  </div>
+</nav>
+
+<main id="app"></main>
+<footer class="site-foot">
+  <span>© 2025–2026 Ethan Ye Photography. All rights reserved.</span>
+  <span class="site-foot__social" id="footer-social"></span>
+</footer>
+
+<script>
+(function(){
+  var trips = [
+    {
+      slug: 'china',
+      title: 'China',
+      place: 'China',
+      coord: '39.9042°N, 116.4074°E',
+      date: 'June 2026',
+      cover: 'images/china/china-zhangjiajie-panorama.jpg',
+      coverAlt: 'A sweeping view over dozens of sandstone pillars rising from the forest at Zhangjiajie, hazy mountains stretching to the horizon',
+      slides: [
+        { type:'itinerary',
+          title:'China',
+          legs:[
+            { airline:'Airlink', flight:'483', date:'Jun 3, 2026', fromCode:'LVI', toCode:'JNB', dep:'1:49 PM GMT+2', arr:'3:38 PM GMT+2', duration:'1 hr 49 min', aircraft:'Embraer E190' },
+            { airline:'Singapore Airlines', flight:'481', date:'Jun 3, 2026', fromCode:'JNB', toCode:'SIN', dep:'9:12 PM GMT+2', arr:'12:46 PM GMT+8', duration:'9 hr 34 min', aircraft:'Airbus A350-900' },
+            { airline:'Singapore Airlines', flight:'806', date:'Jun 4, 2026', fromCode:'SIN', toCode:'PEK', dep:'5:00 PM GMT+8', arr:'11:00 PM GMT+8', duration:'6 hr', aircraft:'Boeing 787-10' },
+            { airline:'Air China', flight:'1953', date:'Jun 8, 2026', fromCode:'PEK', toCode:'DYG', dep:'8:21 PM GMT+8', arr:'10:57 PM GMT+8', duration:'2 hr 36 min', aircraft:'Boeing 737-800' },
+            { mode:'train', airline:'HSR', fromCode:'DYG', toCode:'CKG' },
+            { mode:'train', airline:'HSR', fromCode:'CKG', toCode:'CTU' }
+          ]
+        },
+        { type:'text',
+          eyebrow:'Field Notes — Beijing, Zhangjiajie, Chongqing, Chengdu & the Sichuan Highlands',
+          lede:'China does not do subtlety, and after twelve days I stopped expecting it to.',
+          paragraphs:[
+            'We started in Beijing, because that’s where the flights land and because six hundred years of very intentional red paint deserves the jet lag. The Forbidden City took a full day and gave up maybe a third of itself; Jingshan Park handed over the rest of the view for free, from a hill built specifically so an emperor could look down on his own roof.',
+            'From there it stopped being predictable — a flight south to sandstone pillars everyone calls the Avatar mountains whether or not they’ve seen the movie, a city built into its own cliffs with a train that runs straight through an apartment block, a research base staffed entirely by animals better at resting than we were, and a run up onto the Tibetan Plateau where the water stops looking like something a camera should be trusted with.'
+          ]
+        },
+        { type:'photo', src:'images/china/china-forbidden-city-gate.jpg', alt:'The red walls and golden roofs of the Forbidden City’s inner gate, seen across a stone bridge over the moat, crowded with visitors', loc:'FORBIDDEN CITY', day:'DAY 1' },
+        { type:'photo', src:'images/china/china-jingshan-park-aerial.jpg', alt:'An aerial view over the Forbidden City’s golden rooftops toward the Beijing skyline, framed by pavilion roofs on Jingshan hill', loc:'JINGSHAN PARK', day:'DAY 2' },
+        { type:'photo', src:'images/china/china-apartment-candid.jpg', alt:'A woman photographing a plate of food from directly overhead with her phone, orchids and oranges on the table around her', loc:'BEIJING HOMESTAY', day:'DAY 3' },
+        { type:'photo-pair', photos:[
+          { src:'images/china/china-temple-of-heaven.jpg', alt:'The triple-tiered blue and gold roof of the Hall of Prayer for Good Harvest at the Temple of Heaven, crowds gathered on the marble terraces below', loc:'TEMPLE OF HEAVEN', day:'DAY 3' },
+          { src:'images/china/china-great-wall-mutianyu.jpg', alt:'The Great Wall snaking over forested ridgelines under a hazy sky, watchtowers spaced along the battlements, a crenellated wall in the foreground', loc:'GREAT WALL, MUTIANYU', day:'DAY 4' }
+        ] },
+        { type:'photo', src:'images/china/china-tiananmen-gate.jpg', alt:'A tourist waving in front of the Gate of Heavenly Peace, Mao’s portrait hanging beneath the rooftop, red flags on either side', loc:'TIANANMEN', day:'DAY 4' },
+        { type:'photo', src:'images/china/china-mao-portrait-detail.jpg', alt:'A close view of Mao’s portrait framed on the red gate wall, the golden state emblem and tiled roofline above', loc:'TIANANMEN', day:'DAY 4' },
+        { type:'photo', src:'images/china/china-zhangjiajie-pillars-wide.jpg', alt:'Sandstone pillar peaks rising out of dense forest at Zhangjiajie, distant jagged ridgelines under a clear sky', loc:'ZHANGJIAJIE NATIONAL FOREST PARK', day:'DAY 5' },
+        { type:'photo', src:'images/china/china-zhangjiajie-morning-pillars.jpg', alt:'A wide view of sandstone pillars catching morning light above the forest at Zhangjiajie', loc:'ZHANGJIAJIE NATIONAL FOREST PARK', day:'DAY 5' },
+        { type:'photo-pair', photos:[
+          { src:'images/china/china-zhangjiajie-canyon-ledge.jpg', alt:'A wide sandstone pillar ledge overhanging a forested canyon at Zhangjiajie, more pillars visible in the haze beyond', loc:'YUANJIAJIE', day:'DAY 5' },
+          { src:'images/china/china-zhangjiajie-pillar-tree.jpg', alt:'A single tree-topped sandstone pillar rising above the forest canopy at Zhangjiajie, distant mountains fading into haze', loc:'YUANJIAJIE', day:'DAY 5' }
+        ] },
+        { type:'photo-pair', photos:[
+          { src:'images/china/china-zhangjiajie-pillars-cluster.jpg', alt:'Several narrow sandstone pillars clustered together rising from the forest at Zhangjiajie, more peaks visible behind', loc:'YUANJIAJIE', day:'DAY 5' },
+          { src:'images/china/china-zhangjiajie-cliff-ledge.jpg', alt:'A long sandstone pillar ledge overhanging the forest canyon at Zhangjiajie, layered cliffs receding into haze', loc:'YUANJIAJIE', day:'DAY 5' }
+        ] },
+        { type:'photo', src:'images/china/china-zhangjiajie-panorama.jpg', alt:'A sweeping view over dozens of sandstone pillars rising from the forest at Zhangjiajie, hazy mountains stretching to the horizon', loc:'ZHANGJIAJIE NATIONAL FOREST PARK', day:'DAY 5' },
+        { type:'photo', src:'images/china/china-tianzi-mountain-pavilion.jpg', alt:'A red multi-story viewing pavilion rising above the forest canopy on a ridge, distant karst peaks on the horizon', loc:'TIANZI MOUNTAIN', day:'DAY 6' },
+        { type:'photo-pair', photos:[
+          { src:'images/china/china-tianmen-mountain-road.jpg', alt:'The switchbacking road up Tianmen Mountain, ninety-nine bends carved into the green mountainside, seen from above', loc:'TIANMEN MOUNTAIN ROAD', day:'DAY 6' },
+          { src:'images/china/china-tianmen-cave.jpg', alt:'Looking up through a natural rock archway at Tianmen Cave, the opening framed by cliff and forest', loc:'TIANMEN CAVE', day:'DAY 6' }
+        ] },
+        { type:'photo', src:'images/china/china-tianmen-cave-stairs.jpg', alt:'A long staircase climbing toward the Tianmen Cave archway, cut into a sheer cliff face with a waterfall trickling down the rock to one side', loc:'TIANMEN CAVE', day:'DAY 6' },
+        { type:'photo-pair', photos:[
+          { src:'images/china/china-zhangjiajie-canyon-temple.jpg', alt:'A temple complex tucked into a narrow forested canyon at Zhangjiajie, seen from above', loc:'ZHANGJIAJIE', day:'DAY 6' },
+          { src:'images/china/china-tianmen-photo-op.jpg', alt:'A phone-screenshot photo op from a Tianmen Mountain tourism app, showing two people posing at the base of the mountain', loc:'TIANMEN MOUNTAIN', day:'DAY 6' }
+        ] },
+        { type:'quote', text:'Somewhere between the ninety-nine bends and the cable car line, someone in our group admitted that “extremely afraid of heights” and “bought the ticket already” can coexist for surprisingly long stretches.', cite:'trail notes, Tianmen Mountain' },
+        { type:'photo-pair', photos:[
+          { src:'images/china/china-liziba-station.jpg', alt:'A monorail train emerging from a gap built directly through a Chongqing apartment building, the Liziba Station sign on the facade', loc:'LIZIBA STATION', day:'DAY 7' },
+          { src:'images/china/china-luohan-temple-skyscraper.jpg', alt:'The carved eaves of Luohan Temple’s rooftop set against a glass skyscraper behind it, a red sign reading "I am in Chongqing"', loc:'LUOHAN TEMPLE', day:'DAY 7' }
+        ] },
+        { type:'photo', src:'images/china/china-chongqing-skyline-night.jpg', alt:'Chongqing’s riverside skyline lit up at night, skyscrapers reflected in the water below a lit bridge', loc:'CHONGQING SKYLINE', day:'DAY 8' },
+        { type:'photo', src:'images/china/china-chongqing-skyline-night2.jpg', alt:'A second view of Chongqing’s skyscrapers lit up at night along the river', loc:'CHONGQING SKYLINE', day:'DAY 8' },
+        { type:'photo', src:'images/china/china-hongyadong-night.jpg', alt:'The stilted, multi-tiered buildings of Hongyadong lit up at night, stacked up the hillside above the river', loc:'HONGYADONG', day:'DAY 8' },
+        { type:'photo-pair', photos:[
+          { src:'images/china/china-chongqing-grand-theatre.jpg', alt:'The angular red steel beams of the Chongqing Grand Theatre rising above the riverside under an overcast sky', loc:'CHONGQING GRAND THEATRE', day:'DAY 8' },
+          { src:'images/china/china-leshan-giant-buddha.jpg', alt:'A close view of the Leshan Giant Buddha’s carved stone face, weathered by centuries and dwarfing the visitors below', loc:'LESHAN GIANT BUDDHA', day:'DAY 10' }
+        ] },
+        { type:'text',
+          paragraphs:['Chengdu slows everything down on purpose — the pandas set the pace, and after watching one fall asleep mid-bamboo-bite, we stopped arguing with it. An easy day trip out to Leshan for the Buddha was as ambitious as the schedule got.']
+        },
+        { type:'photo', src:'images/china/china-red-panda.jpg', alt:'A red panda resting in the branches of a tree at the Chengdu Research Base of Giant Panda Breeding', loc:'CHENGDU PANDA BASE', day:'DAY 9' },
+        { type:'photo', src:'images/china/china-giant-panda-bamboo.jpg', alt:'A giant panda sitting in the grass eating a stalk of bamboo', loc:'CHENGDU PANDA BASE', day:'DAY 9' },
+        { type:'photo', src:'images/china/china-chengdu-wave-building.jpg', alt:'A wave-roofed modern building lit at dusk, its curved white beams rising above a plaza', loc:'CHENGDU', day:'DAY 10' },
+        { type:'photo', src:'images/china/china-chengdu-wave-building-dusk.jpg', alt:'The same wave-roofed building at dusk, its white curved beams glowing against the darkening sky', loc:'CHENGDU', day:'DAY 10' },
+        { type:'photo', src:'images/china/china-chengdu-wave-building-tree.jpg', alt:'The wave-roofed building at night seen past an illuminated metal tree sculpture in the foreground', loc:'CHENGDU', day:'DAY 10' },
+        { type:'photo', src:'images/china/china-leshan-arch-bridge.jpg', alt:'A red arched double-span bridge with pavilion roofs crossing a river, forested hills behind', loc:'LESHAN', day:'DAY 10' },
+        { type:'text',
+          paragraphs:['The drive north out of Chengdu climbs fast enough to notice, and by the time the valleys opened up at Huanglong the water had turned a blue that our cameras kept trying, and failing, to tone down.']
+        },
+        { type:'photo', src:'images/china/china-sichuan-highlands-valley.jpg', alt:'A green mountain valley with a river running through forested slopes, on the drive toward Huanglong', loc:'SICHUAN HIGHLANDS', day:'DAY 11' },
+        { type:'photo', src:'images/china/china-huanglong-monastery.jpg', alt:'A Tibetan-style monastery with ornate gold roof details set against snow-streaked mountains', loc:'EN ROUTE TO HUANGLONG', day:'DAY 11' },
+        { type:'photo', src:'images/china/china-huanglong-pools-wide.jpg', alt:'Turquoise travertine pools terracing down a forested hillside at Huanglong', loc:'HUANGLONG', day:'DAY 11' },
+        { type:'photo-pair', photos:[
+          { src:'images/china/china-huanglong-temple-pools.jpg', alt:'Turquoise travertine pools beside a small temple pavilion, snow-capped mountains rising behind', loc:'HUANGLONG', day:'DAY 11' },
+          { src:'images/china/china-huanglong-pools-mountains.jpg', alt:'Travertine pools in shades of turquoise and green, forested mountains rising in the background', loc:'HUANGLONG', day:'DAY 11' }
+        ] },
+        { type:'photo', src:'images/china/china-jiuzhaigou-valley.jpg', alt:'A calm river bordered by green meadow, forested mountains reflected in the water at Jiuzhaigou', loc:'JIUZHAIGOU', day:'DAY 12' },
+        { type:'photo', src:'images/china/china-jiuzhaigou-lake-aerial.jpg', alt:'An elevated view over a turquoise lake at Jiuzhaigou, fallen trees visible beneath the clear water, forest and mountains reflected on the surface', loc:'JIUZHAIGOU', day:'DAY 12' },
+        { type:'photo', src:'images/china/china-pearl-shoal-waterfall.jpg', alt:'Water cascading over wide travertine terraces at Pearl Shoal Waterfall, forested mountains behind', loc:'PEARL SHOAL WATERFALL', day:'DAY 12' },
+        { type:'photo', src:'images/china/china-five-flower-lake.jpg', alt:'Crystal-clear turquoise water at Five Flower Lake, submerged rocks and fallen logs visible beneath the surface', loc:'FIVE FLOWER LAKE', day:'DAY 12' }
+      ]
+    },
+    {
+      slug: 'namibia',
+      title: 'Namibia',
+      place: 'Namibia',
+      coord: '22.9576°S, 14.5053°E',
+      date: 'May 2026',
+      cover: 'images/namibia/namibia-deadvlei-aerial.jpg',
+      coverAlt: 'An elevated view of Deadvlei’s white clay pan and skeletal dead trees, ringed by towering red dunes',
+      slides: [
+        { type:'itinerary',
+          title:'Namibia',
+          legs:[
+            { airline:'Airlink', flight:'341', date:'May 25, 2026', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190' },
+            { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'WVB', toCode:'SES' },
+            { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'SES', toCode:'WDH' }
+          ]
+        },
+        { type:'text',
+          eyebrow:'Field Notes — Walvis Bay, Spitzkoppe & the Namib Desert, Namibia',
+          lede:'The desert here doesn’t stop at the coastline. It just keeps going until the ocean makes it stop.',
+          paragraphs:[
+            'We started at the coast, where the dunes above Walvis Bay run straight into the Atlantic without any warning — sand hot enough to burn bare feet, fog cold enough to need a jacket, sometimes within the same hour. A Cape fur seal wandered past like the whole arrangement was completely normal.',
+            'From there it was inland: the granite boulders of Spitzkoppe standing alone on flat scrubland like something dropped from orbit, then two days south on gravel roads to Sesriem, where the dunes turn the color of rust and Deadvlei sits at the bottom of them — a dead white pan ringed by six-hundred-year-old skeleton trees that refuse to rot in air this dry.'
+          ]
+        },
+        { type:'photo', src:'images/namibia/namibia-dune-coast-fog.jpg', alt:'Sand dunes falling toward a fog-veiled Atlantic Ocean near Walvis Bay', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-dune-coast-sunlit.jpg', alt:'Sunlight glinting off the ocean beyond a ridge of coastal sand dunes', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-dune-coast-aerial.jpg', alt:'An elevated view along a dune ridge curving beside the coastline, waves breaking on the shore below', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-dune-ocean-aerial.jpg', alt:'A high aerial view of a massive dune falling directly into the fog-veiled Atlantic, waves breaking at its base', loc:'SKELETON COAST', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-cape-fur-seal.jpg', alt:'A Cape fur seal walking across an empty beach at sunset, waves breaking behind it', loc:'CAPE CROSS', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-boulders.jpg', alt:'Rounded granite boulders stacked along a rock ridge at Spitzkoppe, dry scrubland stretching to the horizon', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-arch-peak.jpg', alt:'A natural rock arch framing the main Spitzkoppe peak in the distance', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-portrait.jpg', alt:'A hiker crossing a granite boulder with the Spitzkoppe peak rising behind him', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-arch-detail.jpg', alt:'A close, abstract view of layered granite boulders forming a natural arch, sky visible through the gap', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-rock-arch.jpg', alt:'The full span of the Spitzkoppe rock arch, a granite bridge worn smooth against the sky', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-namib-naukluft-drive.jpg', alt:'A dusty gravel road running toward a jagged desert mountain range', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sesriem-road-sign.jpg', alt:'Road signs pointing toward Dead Valley Lodge, Sesriem Oshana Camp, and Sossusvlei along a gravel road', loc:'SESRIEM', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sossusvlei-balloons.jpg', alt:'Three hot air balloons rising over the desert plain at dawn, mountains silhouetted on the horizon', loc:'SOSSUSVLEI, SUNRISE', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-balloon-flame.jpg', alt:'A hot air balloon firing its burner as it drifts low over red dunes at sunrise', loc:'SOSSUSVLEI, SUNRISE', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sossusvlei-big-dune.jpg', alt:'A massive red sand dune towering over parked vehicles at its base', loc:'SOSSUSVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sossusvlei-dune-cluster.jpg', alt:'A cluster of red sand dunes catching afternoon light, tiny figures visible on the ridgelines', loc:'SOSSUSVLEI', day:'DAY 3' },
+        { type:'photo-pair', photos:[
+          { src:'images/namibia/namibia-desert-road-aerial.jpg', alt:'An elevated view of a car on a desert road cutting between rust-colored mountains', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
+          { src:'images/namibia/namibia-dune-ridge-aerial.jpg', alt:'Hikers climbing a knife-edge dune ridge, their shadows stretching down the slip face', loc:'SOSSUSVLEI', day:'DAY 3' }
+        ] },
+        { type:'photo', src:'images/namibia/namibia-deadvlei-aerial.jpg', alt:'An elevated view of Deadvlei’s white clay pan and skeletal dead trees, ringed by towering red dunes', loc:'DEADVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-deadvlei-trees.jpg', alt:'Two dead camel-thorn trees standing in Deadvlei’s white clay pan against a red dune', loc:'DEADVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-deadvlei-portrait.jpg', alt:'A hiker walking across the white clay pan at Deadvlei, dead trees and a red dune behind him', loc:'DEADVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-desert-lodge-sunset-pool.jpg', alt:'Sunset over the desert plain, seen past an infinity pool at a lodge near Sesriem', loc:'DESERT LODGE', day:'DAY 3 · DUSK' },
+        { type:'photo', src:'images/namibia/namibia-desert-lodge-dusk.jpg', alt:'Thatched-roof lodge chalets at dusk, mountains silhouetted behind under a pink sky', loc:'DESERT LODGE', day:'DAY 3 · DUSK' }
+      ]
+    },
+    {
+      slug: 'south-africa',
+      title: 'South Africa',
+      place: 'South Africa',
+      coord: '34.3568°S, 18.4740°E',
+      date: 'May 2026',
+      cover: 'images/south-africa/sa-lions-head-silhouette.jpg',
+      coverAlt: 'Lion’s Head peak silhouetted against an orange sunset sky above a parking area full of cars',
+      slides: [
+        { type:'itinerary',
+          title:'South Africa',
+          legs:[
+            { airline:'Air France', flight:'81', date:'May 19, 2026', fromCode:'SFO', toCode:'CDG', dep:'8:13 PM PDT', arr:'3:38 PM GMT+2', duration:'10 hr 25 min', aircraft:'Airbus A350-900' },
+            { airline:'Air France', flight:'990', date:'May 20, 2026', fromCode:'CDG', toCode:'JNB', dep:'11:27 PM GMT+2', arr:'10:54 AM GMT+2', duration:'11 hr 27 min', aircraft:'Airbus A350-900' },
+            { airline:'FlySafair', flight:'206', date:'May 21, 2026', fromCode:'JNB', toCode:'CPT', dep:'12:13 PM GMT+2', arr:'2:35 PM GMT+2', duration:'2 hr 22 min', aircraft:'Boeing 737-800' }
+          ]
+        },
+        { type:'text',
+          eyebrow:'Field Notes — Cape Peninsula, South Africa',
+          lede:'Two days to cover a peninsula that refuses to be covered in two days.',
+          paragraphs:[
+            'Day one stayed south — the sandstone cliffs at the Cape and the penguin colony hauled out on the sand at Boulders Beach, unbothered by the tourists stepping around their nests.',
+            'Day two went for everything else: Chapman’s Peak Drive cut into the cliffside above the Atlantic, the beach huts at Muizenberg, Table Mountain by cable car with the cloth of cloud pouring over the plateau, and a last stretch of coast road down to Camps Bay as the Twelve Apostles caught the light.'
+          ]
+        },
+        { type:'photo', src:'images/south-africa/sa-cape-point-cliffs.jpg', alt:'Sandstone cliffs at the tip of the Cape Peninsula, waves breaking over rocks with a kelp bed offshore', loc:'CAPE POINT', day:'DAY 1' },
+        { type:'photo', src:'images/south-africa/sa-cape-point-hikers.jpg', alt:'A small group of hikers gathered on a rocky outcrop at Cape Point as storm clouds roll low over the cliffs and ocean below', loc:'CAPE POINT', day:'DAY 1' },
+        { type:'photo', src:'images/south-africa/sa-boulders-penguins.jpg', alt:'A colony of African penguins nesting in the sand among driftwood and rocks', loc:'BOULDERS BEACH', day:'DAY 1' },
+        { type:'photo', src:'images/south-africa/sa-hout-bay.jpg', alt:'The Sentinel peak rising above the fishing town of Hout Bay, seen across the harbor water', loc:'HOUT BAY', day:'DAY 2' },
+        { type:'photo', src:'images/south-africa/sa-chapmans-peak.jpg', alt:'A cliffside road cut into the mountainside above the Atlantic, cloud spilling over the ridge', loc:'CHAPMAN’S PEAK DRIVE', day:'DAY 2' },
+        { type:'photo', src:'images/south-africa/sa-noordhoek-view.jpg', alt:'A long white-sand beach curving along a bay, mountains fading into cloud in the distance', loc:'NOORDHOEK', day:'DAY 2' },
+        { type:'photo', src:'images/south-africa/sa-muizenberg-huts.jpg', alt:'A row of brightly painted wooden beach huts on the sand below a mountain backdrop', loc:'MUIZENBERG BEACH', day:'DAY 2' },
+        { type:'photo', src:'images/south-africa/sa-muizenberg-surfers.jpg', alt:'Surfers carrying boards past a lifeguard hut on the beach, low mountains across the bay', loc:'MUIZENBERG BEACH', day:'DAY 2' },
+        { type:'photo', src:'images/south-africa/sa-muizenberg-wide.jpg', alt:'A wide view of Muizenberg beach with its colorful huts, surfers in the water and mountains behind', loc:'MUIZENBERG BEACH', day:'DAY 2' },
+        { type:'photo', src:'images/south-africa/sa-signal-hill.jpg', alt:'Table Mountain wrapped in cloud with Lion’s Head beside it, the city bowl spread out below', loc:'SIGNAL HILL', day:'DAY 2' },
+        { type:'photo', src:'images/south-africa/sa-lions-head-car.jpg', alt:'A car parked on a mountain road with Lion’s Head peak rising ahead through the trees', loc:'SIGNAL HILL ROAD', day:'DAY 2' },
+        { type:'photo', src:'images/south-africa/sa-cableway.jpg', alt:'A cable car ascending toward the cloud-wrapped cliffs of Table Mountain', loc:'TABLE MOUNTAIN CABLEWAY', day:'DAY 2' },
+        { type:'photo', src:'images/south-africa/sa-table-mountain-cliff.jpg', alt:'The rocky cliff edge of Table Mountain’s summit plateau meeting a bank of cloud', loc:'TABLE MOUNTAIN', day:'DAY 2 · SUMMIT' },
+        { type:'photo', src:'images/south-africa/sa-table-mountain-golden.jpg', alt:'Golden-hour view from Table Mountain’s summit looking down the coastline toward Camps Bay, cloud pooling below the ridge', loc:'TABLE MOUNTAIN', day:'DAY 2 · GOLDEN HOUR' },
+        { type:'photo', src:'images/south-africa/sa-lions-head-silhouette.jpg', alt:'Lion’s Head peak silhouetted against an orange sunset sky above a parking area full of cars', loc:'TABLE MOUNTAIN CABLEWAY', day:'DAY 2 · DUSK' },
+        { type:'photo', src:'images/south-africa/sa-camps-bay.jpg', alt:'The Twelve Apostles mountain range lit gold at sunset above the houses and beach of Camps Bay', loc:'CAMPS BAY', day:'DAY 2 · DUSK' },
+        { type:'photo', src:'images/south-africa/sa-sunset-silhouette.jpg', alt:'A person silhouetted on coastal rocks against a deep orange sunset over the ocean', loc:'ATLANTIC SEABOARD', day:'DAY 2 · DUSK' }
+      ]
+    },
+    {
+      slug: 'guatemala',
+      title: 'Guatemala',
+      place: 'Guatemala',
+      coord: '14.5586°N, 90.7295°W',
+      date: 'April 2026',
+      cover: 'images/guatemala/guatemala-fuego-eruption-dusk.jpg',
+      coverAlt: 'Volcán de Fuego erupting at dusk, glowing lava spatter against a smoke plume lit orange by the fading light',
+      slides: [
+        { type:'itinerary',
+          title:'Guatemala',
+          legs:[
+            { airline:'Avianca', flight:'561', date:'Apr 9, 2026', fromCode:'SFO', toCode:'SAL', dep:'11:59 PM PDT', arr:'6:38 AM CST', duration:'5 hr 39 min', aircraft:'Airbus A320neo' },
+            { airline:'Avianca', flight:'554', date:'Apr 10, 2026', fromCode:'SAL', toCode:'GUA', dep:'8:08 AM CST', arr:'8:54 AM CST', duration:'46 min', aircraft:'Airbus A320-200' },
+            { airline:'Avianca', flight:'555', date:'Apr 15, 2026', fromCode:'GUA', toCode:'SAL', dep:'3:42 PM CST', arr:'4:33 PM CST', duration:'51 min', aircraft:'Airbus A320neo' },
+            { airline:'Avianca', flight:'560', date:'Apr 15, 2026', fromCode:'SAL', toCode:'SFO', dep:'5:42 PM CST', arr:'10:46 PM PDT', duration:'6 hr 4 min', aircraft:'Airbus A320neo' }
+          ]
+        },
+        { type:'text',
+          eyebrow:'Field Notes — Antigua, Volcán de Acatenango & Lake Atitlán, Guatemala',
+          lede:'Guatemala hands you a colonial city, an active volcano, and a lake that swallows both whole — usually in the same week.',
+          paragraphs:[
+            'We started in Antigua, cobblestones and church ruins under a volcano that was somehow always exactly where we left it — Volcán de Agua framing every street that ran uphill. Two days of market food and colonial arches turned out to just be acclimatization for what came next: the overnight climb up Acatenango, base camp for watching its neighbor, Fuego, do the thing it does every twenty minutes or so.',
+            'Nobody sleeps much at four thousand meters with a volcano detonating on schedule a few miles off. We traded warmth for a front-row seat, watched the sky go from orange to pitch black to lava-streaked, and hiked out at sunrise with Agua standing silhouetted over the whole valley. Lake Atitlán, three volcanoes ringing water that changes color with the light, was the exhale at the end of it.'
+          ]
+        },
+        { type:'photo', src:'images/guatemala/guatemala-antigua-asado.jpg', alt:'A cook tending chicken over an open wood fire at a brick grill station in a market stall', loc:'MERCADO, ANTIGUA', day:'DAY 1' },
+        { type:'photo', src:'images/guatemala/guatemala-antigua-arch.jpg', alt:'The yellow Santa Catalina Arch spanning a cobblestone street crowded with people, Volcán de Agua rising behind it', loc:'SANTA CATALINA ARCH, ANTIGUA', day:'DAY 1' },
+        { type:'photo', src:'images/guatemala/guatemala-antigua-dusk.jpg', alt:'Antigua’s rooftops and the golden dome of La Merced church lit up at dusk beneath the looming silhouette of Volcán de Agua', loc:'ANTIGUA', day:'DAY 1 · DUSK' },
+        { type:'text',
+          paragraphs:['The trailhead for Acatenango starts in cornfields and ends above the clouds — a straight, grinding climb that gains most of its altitude before lunch. Base camp arrives just in time for the temperature to drop and the sky over Fuego to start doing something worth staying up for.']
+        },
+        { type:'photo', src:'images/guatemala/guatemala-acatenango-sunset-clouds.jpg', alt:'A dense cloud bank lit orange and pink by the setting sun, seen from high on the volcano', loc:'ACATENANGO BASE CAMP', day:'DAY 2 · DUSK' },
+        { type:'photo', src:'images/guatemala/guatemala-acatenango-campfire.jpg', alt:'Mugs of hot chocolate set out on a tray beside a campfire at a mountainside base camp', loc:'ACATENANGO BASE CAMP', day:'DAY 2 · DUSK' },
+        { type:'photo-pair', photos:[
+          { src:'images/guatemala/guatemala-fuego-eruption-dusk.jpg', alt:'Volcán de Fuego erupting at dusk, glowing lava spatter against a smoke plume lit orange by the fading light', loc:'VOLCÁN DE FUEGO', day:'DAY 2 · DUSK' },
+          { src:'images/guatemala/guatemala-fuego-eruption-closeup.jpg', alt:'A closer view of Fuego’s summit spattering lava into a dark ash cloud at dusk', loc:'VOLCÁN DE FUEGO', day:'DAY 2 · DUSK' }
+        ] },
+        { type:'quote', text:'Fuego doesn’t erupt once. It erupts on a schedule, like a geological metronome, and by midnight you stop flinching and just start timing it.', cite:'trail notes, day 2' },
+        { type:'photo', src:'images/guatemala/guatemala-fuego-eruption-night.jpg', alt:'A long-exposure night shot of Fuego erupting, lava trails streaking down the dark silhouette of the cone', loc:'VOLCÁN DE FUEGO', day:'DAY 2 · NIGHT' },
+        { type:'photo', src:'images/guatemala/guatemala-acatenango-hikers-eruption.jpg', alt:'Hikers silhouetted on a ridge, cheering as Fuego erupts in the distance at dusk', loc:'ACATENANGO SUMMIT RIDGE', day:'DAY 3 · DAWN' },
+        { type:'photo', src:'images/guatemala/guatemala-acatenango-sunrise.jpg', alt:'Sunrise over a sea of clouds from Acatenango’s summit, Volcán de Agua silhouetted with city lights still visible below', loc:'ACATENANGO SUMMIT', day:'DAY 3 · SUNRISE' },
+        { type:'photo', src:'images/guatemala/guatemala-acatenango-crater-sunrise.jpg', alt:'Hikers silhouetted along a volcanic crater rim at sunrise, layered volcano peaks fading into the pink haze beyond', loc:'ACATENANGO SUMMIT', day:'DAY 3 · SUNRISE' },
+        { type:'text',
+          paragraphs:['We came down off the volcano still smelling like woodsmoke and drove straight for water. Lake Atitlán does the thing travel writers always claim a place will do and actually does it — three volcanoes standing guard over a lake that changes color every hour you sit still long enough to watch it.']
+        },
+        { type:'photo', src:'images/guatemala/guatemala-atitlan-flag.jpg', alt:'A Guatemalan flag on a dock over Lake Atitlán, swimmers at the railing with volcanoes ringing the far shore', loc:'LAKE ATITLÁN', day:'DAY 4' }
+      ]
+    },
+    {
+      slug: 'patagonia',
+      title: 'Chilean Patagonia',
+      place: 'Chile',
+      coord: '50.9683°S, 73.0344°W',
+      date: 'March 2026',
+      cover: 'images/patagonia/patagonia-towers-alpenglow.jpg',
+      coverAlt: 'Alpenglow lighting the granite towers of Torres del Paine at sunrise, seen through a gap in the ridgeline',
+      slides: [
+        { type:'itinerary',
+          title:'Chile',
+          legs:[
+            { airline:'Delta', flight:'1559', date:'Mar 20, 2026', fromCode:'SFO', toCode:'LAX', dep:'6:20 PM PDT', arr:'7:38 PM PDT', duration:'1 hr 18 min', aircraft:'Boeing 737-800' },
+            { airline:'LATAM Peru', flight:'2477', date:'Mar 20, 2026', fromCode:'LAX', toCode:'LIM', dep:'10:03 PM PDT', arr:'8:29 AM GMT-5', duration:'8 hr 26 min', aircraft:'Boeing 767-300ER' },
+            { airline:'LATAM Peru', flight:'2697', date:'Mar 21, 2026', fromCode:'LIM', toCode:'SCL', dep:'9:39 AM GMT-5', arr:'2:57 PM GMT-3', duration:'3 hr 18 min', aircraft:'Boeing 787-9' },
+            { airline:'Sky Airline', flight:'1611', date:'Mar 22, 2026', fromCode:'SCL', toCode:'PMC', dep:'10:48 AM GMT-3', arr:'12:33 PM GMT-3', duration:'1 hr 45 min', aircraft:'Airbus A320neo' },
+            { airline:'Sky Airline', flight:'1611', date:'Mar 22, 2026', fromCode:'PMC', toCode:'PNT', dep:'1:07 PM GMT-3', arr:'3:25 PM GMT-3', duration:'2 hr 18 min', aircraft:'Airbus A320neo' },
+            { airline:'LATAM Chile', flight:'250', date:'Mar 28, 2026', fromCode:'PNT', toCode:'SCL', dep:'9:29 AM GMT-3', arr:'12:39 PM GMT-3', duration:'3 hr 10 min', aircraft:'Airbus A320-200' },
+            { airline:'LATAM Chile', flight:'602', date:'Mar 29, 2026', fromCode:'SCL', toCode:'LAX', dep:'11:20 PM GMT-3', arr:'6:18 AM PDT', duration:'10 hr 58 min', aircraft:'Boeing 787-8' },
+            { airline:'Delta', flight:'1715', date:'Mar 30, 2026', fromCode:'LAX', toCode:'SFO', dep:'9:58 AM PDT', arr:'11:28 AM PDT', duration:'1 hr 30 min', aircraft:'Boeing 737-800' }
+          ]
+        },
+        { type:'text',
+          eyebrow:'Field Notes — Torres del Paine National Park, Chile',
+          lede:'Patagonia doesn’t ask if you’re ready. It just points the wind at you and waits to see how long you last.',
+          paragraphs:[
+            'We flew into Punta Arenas, drove four hours north past guanacos that never bothered looking up, and started walking the next morning under a sky that hadn’t decided what it wanted to be. Refugio Las Torres was base camp on both ends of the loop — the trail runs west from there past the Cuernos and into the French Valley, before a long half-circle brings you back to climb straight up for the towers on the last morning.',
+            'Patagonian wind doesn’t gust, it just holds. Fifty knots for an hour, tent stakes reconsidering their life choices, and then — for four minutes, always right when you’d stopped looking — the clouds would peel back and hand you the entire range for free.'
+          ]
+        },
+        { type:'photo', src:'images/patagonia/patagonia-trail-map.jpg', alt:'A hiker holding up a phone showing the marked trail map of Torres del Paine National Park', loc:'THE ROUTE' },
+        { type:'photo', src:'images/patagonia/patagonia-cuernos-dusk.jpg', alt:'The Cuernos del Paine granite horns rising above a still lake at blue hour, half wrapped in cloud', loc:'MIRADOR LAGO PEHOÉ' },
+        { type:'photo', src:'images/patagonia/patagonia-hosteria-wide.jpg', alt:'A lakeside lodge lit up at dusk on a small peninsula, with a snow-streaked peak behind it', loc:'HOSTERÍA LAGO PEHOÉ' },
+        { type:'photo-pair', photos:[
+          { src:'images/patagonia/patagonia-pehoe-portrait.jpg', alt:'A hiker standing above Lago Pehoé at dusk with the fog-wrapped Cuernos del Paine behind him', loc:'LAGO PEHOÉ' },
+          { src:'images/patagonia/patagonia-hosteria-tall.jpg', alt:'The same lakeside lodge in portrait framing, its footbridge stretching out over calm blue water', loc:'HOSTERÍA LAGO PEHOÉ' }
+        ] },
+        { type:'quote', text:'The wind here doesn’t blow. It leans on you, all day, like it has an opinion about your pace.', cite:'trail notes, day 2' },
+        { type:'photo', src:'images/patagonia/patagonia-cuernos-close.jpg', alt:'A close view of the jagged Cuernos del Paine peaks with fog threading through the summits', loc:'CUERNOS DEL PAINE' },
+        { type:'photo', src:'images/patagonia/patagonia-fog-ridge.jpg', alt:'A jagged snow-covered ridge with cloud snagging on the summits above a dark forested slope', loc:'CUERNOS DEL PAINE' },
+        { type:'photo', src:'images/patagonia/patagonia-cuernos-goldenlight.jpg', alt:'The granite horns of the Cuernos del Paine lit gold against a lavender sky, sheer rock faces rising above a dark valley', loc:'CUERNOS DEL PAINE' },
+        { type:'photo-pair', photos:[
+          { src:'images/patagonia/patagonia-road-bus.jpg', alt:'A small red bus rounding a lakeshore road beneath the Cuernos del Paine at dusk', loc:'RUTA Y-150' },
+          { src:'images/patagonia/patagonia-lakeshore-wind.jpg', alt:'Wind-whipped waves on a lake at dusk beneath a silhouetted headland and a pink sky', loc:'LAKESHORE CAMP' }
+        ] },
+        { type:'photo', src:'images/patagonia/patagonia-flag.jpg', alt:'A hiker straightening a wind-torn Chilean flag beside a lake, with a rolling green coastline behind', loc:'MIRADOR NORDENSKJÖLD' },
+        { type:'photo', src:'images/patagonia/patagonia-glacier-fog.jpg', alt:'A snow-covered glacier cirque almost entirely swallowed by fog, with a lone silhouetted shrub in the foreground', loc:'GLACIAR FRANCÉS' },
+        { type:'photo', src:'images/patagonia/patagonia-french-valley.jpg', alt:'A switchback trail descending into the green French Valley, framed by snow-dusted peaks on both sides', loc:'VALLE FRANCÉS' },
+        { type:'photo', src:'images/patagonia/patagonia-glacier-grey.jpg', alt:'The blue ice face of Glaciar Grey calving into an iceberg-strewn lake, a cloud-wrapped peak rising behind it', loc:'GLACIAR GREY' },
+        { type:'photo', src:'images/patagonia/patagonia-glacier-selfie.jpg', alt:'A couple in rain jackets taking a selfie beside a turquoise glacial lake dotted with icebergs', loc:'GLACIAR GREY' },
+        { type:'text',
+          paragraphs:['By the time we cut inland toward Lago Nordenskjöld on day three, none of us trusted a clear sky to stay that way. We were right not to — the same afternoon gave us a rainbow, a whiteout, and actual sunburn, in that order.']
+        },
+        { type:'photo', src:'images/patagonia/patagonia-storm-peak.jpg', alt:'A snow-covered peak breaking through heavy storm clouds, sunlight cutting through the gap behind it', loc:'LAGO NORDENSKJÖLD' },
+        { type:'photo', src:'images/patagonia/patagonia-sunbreak.jpg', alt:'Sunlight breaking through storm clouds to light a snow-covered ridge above a blue fjord-like lake', loc:'LAGO NORDENSKJÖLD' },
+        { type:'photo', src:'images/patagonia/patagonia-rainbow.jpg', alt:'A faint rainbow arcing over a wide wind-blown lake toward distant snow-capped mountains under heavy clouds', loc:'LAGO NORDENSKJÖLD' },
+        { type:'photo', src:'images/patagonia/patagonia-nordenskjold-sunny.jpg', alt:'Late sun raking across gold-lit hills above a wind-chopped turquoise bay, snowy peaks fading into the haze beyond', loc:'LAGO NORDENSKJÖLD' },
+        { type:'photo', src:'images/patagonia/patagonia-nordenskjold-break.jpg', alt:'Cloud shredding apart against a sunlit, snow-dusted ridge above a deep blue lake', loc:'LAGO NORDENSKJÖLD' },
+        { type:'photo', src:'images/patagonia/patagonia-lakeshore-dusk.jpg', alt:'A lavender dusk sky over a dark lakeshore silhouetted with wind-bent trees', loc:'LAKESHORE CAMP' },
+        { type:'photo', src:'images/patagonia/patagonia-golden-ridge.jpg', alt:'Golden late-afternoon light on a ridgeline above a wind-rippled turquoise lake', loc:'TRAIL TO LAS TORRES' },
+        { type:'photo', src:'images/patagonia/patagonia-valley-switchback.jpg', alt:'A switchback trail dropping into a green valley toward a rushing stream, snow-covered peaks rising at the head of the valley', loc:'TRAIL TO LAS TORRES' },
+        { type:'photo', src:'images/patagonia/patagonia-alpenglow-notch.jpg', alt:'Sunrise alpenglow catching the towers through a notch in the ridgeline, forest silhouetted below against a clearing sky', loc:'MIRADOR LAS TORRES' },
+        { type:'photo', src:'images/patagonia/patagonia-base-torres-clearing.jpg', alt:'The three towers of Torres del Paine emerging from parting cloud above a turquoise glacial lake', loc:'BASE LAS TORRES' }
+      ]
+    },
+    {
+      slug: 'ethiopia',
+      title: 'Ethiopia',
+      place: 'Ethiopia',
+      coord: '9.0054°N, 38.7636°E',
+      date: 'December 2025',
+      cover: 'images/ethiopia/ethiopia-cathedral-window.jpg',
+      coverAlt: 'A stained-glass window frames a painted icon of Saint George slaying the dragon inside Holy Trinity Cathedral',
+      slides: [
+        { type:'itinerary',
+          title:'Ethiopia',
+          legs:[
+            { airline:'Ethiopian Airlines', flight:'453', date:'Dec 18, 2025', fromCode:'CAI', toCode:'ADD', dep:'3:07 AM GMT+2', arr:'7:19 AM GMT+3', duration:'3 hr 12 min', aircraft:'Boeing 777-300ER' },
+            { airline:'Ethiopian Airlines', flight:'574', date:'Dec 18, 2025', fromCode:'ADD', toCode:'FCO', dep:'10:42 PM GMT+3', arr:'3:21 AM GMT+1', duration:'6 hr 39 min', aircraft:'Boeing 787-8' },
+            { airline:'Ethiopian Airlines', flight:'574', date:'Dec 19, 2025', fromCode:'FCO', toCode:'ORD', dep:'4:04 AM GMT+1', arr:'7:49 AM CST', duration:'10 hr 45 min', aircraft:'Boeing 787-8' },
+            { airline:'American Airlines', flight:'2212', date:'Dec 19, 2025', fromCode:'ORD', toCode:'SNA', dep:'11:47 AM CST', arr:'2:27 PM PST', duration:'4 hr 40 min', aircraft:'Boeing 737 MAX 8' }
+          ]
+        },
+        { type:'text',
+          eyebrow:'Field Notes — Addis Ababa, Ethiopia',
+          lede:'Fifteen hours between flights is either a wasted day or an entire trip, depending on what you do with it.',
+          paragraphs:[
+            'The routing home from Cairo ran through Addis Ababa with enough of a gap between landing and the next departure to actually leave the airport — fifteen hours, door to door. We spent the morning at the National Museum and a grand, chandeliered hall next door, school groups in matching uniforms weaving past us on their own field trip, then let a local driver take the rest of the day wherever it made sense to go.',
+            'It made sense to go to church, then to coffee. Holy Trinity Cathedral holds a stained-glass Saint George spearing his dragon and a pair of kebero drums resting in the light like they’d just been set down mid-song. Down the hill, Tomoca has been roasting since 1953 and still doesn’t believe in chairs — everyone drinks standing at the counter, which is either the whole point or just Tuesday.'
+          ]
+        },
+        { type:'photo-pair', photos:[
+          { src:'images/ethiopia/ethiopia-national-museum.jpg', alt:'The concrete facade of the National Museum of Ethiopia, a mosaic mural visible through its upper windows', loc:'NATIONAL MUSEUM, ADDIS ABABA' },
+          { src:'images/ethiopia/ethiopia-palace-hallway.jpg', alt:'Schoolchildren in uniform walking past ornate chandeliers and a gilded doorway in a grand hallway', loc:'NATIONAL MUSEUM, ADDIS ABABA' }
+        ] },
+        { type:'photo-pair', photos:[
+          { src:'images/ethiopia/ethiopia-driver-candid.jpg', alt:'A driver glancing back over his shoulder from behind the wheel, smiling', loc:'ADDIS ABABA' },
+          { src:'images/ethiopia/ethiopia-street-crossing.jpg', alt:'A family crossing a crosswalk past a row of storefronts, a mannequin in traditional dress visible on a balcony above', loc:'ADDIS ABABA' }
+        ] },
+        { type:'photo', src:'images/ethiopia/ethiopia-laundry-line.jpg', alt:'White and green patterned fabric hanging to dry on a line strung across a dusty courtyard, an apartment block behind', loc:'ADDIS ABABA' },
+        { type:'photo', src:'images/ethiopia/ethiopia-cathedral-window.jpg', alt:'A stained-glass window frames a painted icon of Saint George slaying the dragon, traditional kebero drums resting on the carpet below', loc:'HOLY TRINITY CATHEDRAL' },
+        { type:'photo', src:'images/ethiopia/ethiopia-cathedral-mural.jpg', alt:'A large historical mural depicting an Ethiopian emperor and his procession, painted beneath a stone archway', loc:'HOLY TRINITY CATHEDRAL' },
+        { type:'quote', text:'You don’t plan on falling for a city in an afternoon. Addis Ababa didn’t seem to care what I’d planned.', cite:'layover notes, Dec 18' },
+        { type:'photo', src:'images/ethiopia/ethiopia-tomoca-interior.jpg', alt:'The wood-paneled interior of Tomoca coffee shop, vintage coffee grinders lined up on the counter', loc:'TOMOCA, ADDIS ABABA' },
+        { type:'photo-pair', photos:[
+          { src:'images/ethiopia/ethiopia-tomoca-poster.jpg', alt:'A framed, weathered poster illustrating the legend of Ethiopia as the birthplace of coffee arabica', loc:'TOMOCA, ADDIS ABABA' },
+          { src:'images/ethiopia/ethiopia-tomoca-portrait.jpg', alt:'A man in a navy polo holding a macchiato and stirring it with a small spoon, standing at the coffee shop counter', loc:'TOMOCA, ADDIS ABABA' }
+        ] },
+        { type:'photo', src:'images/ethiopia/ethiopia-macchiatos.jpg', alt:'Two glass macchiatos dusted with cinnamon, sitting in sunlight on a café table', loc:'TOMOCA, ADDIS ABABA' },
+        { type:'photo', src:'images/ethiopia/ethiopia-merkato-street.jpg', alt:'A crowded street scene outside a row of market stalls hung with shoes and bags, pedestrians crossing in every direction', loc:'MERKATO, ADDIS ABABA' }
+      ]
+    },
+    {
+      slug: 'egypt',
+      title: 'Egypt',
+      place: 'Egypt',
+      coord: '25.6872°N, 32.6396°E',
+      date: 'December 2025',
+      cover: 'images/egypt/egypt-luxor-temple-pylon-night.jpg',
+      coverAlt: 'The illuminated pylon, obelisk and colossi of Luxor Temple at dusk, tourists gathered below',
+      slides: [
+        { type:'itinerary',
+          title:'Egypt',
+          legs:[
+            { airline:'EgyptAir', flight:'776', date:'Dec 13, 2025', fromCode:'DUB', toCode:'CAI', dep:'7:54 PM GMT', arr:'3:04 AM GMT+2', duration:'5 hr 10 min', aircraft:'Airbus A320neo' },
+            { airline:'Air Cairo', flight:'60', date:'Dec 14, 2025', fromCode:'CAI', toCode:'LXR', dep:'11:15 AM GMT+2', arr:'12:39 PM GMT+2', duration:'1 hr 24 min', aircraft:'Airbus A320-200' },
+            { airline:'EgyptAir', flight:'63', date:'Dec 16, 2025', fromCode:'LXR', toCode:'CAI', dep:'7:55 AM GMT+2', arr:'9:06 AM GMT+2', duration:'1 hr 11 min', aircraft:'Boeing 737-800' }
+          ]
+        },
+        { type:'text',
+          eyebrow:'Field Notes — Cairo, Luxor & Giza, Egypt',
+          lede:'Every wall we stood in front of had already outlasted the wall before written language existed.',
+          paragraphs:[
+            'The flight from Dublin landed at three in the morning, which turned out to be the correct amount of jet lag for a country this old — you’re not really awake anyway, so the four-thousand-year gap barely registers. We flew south to Luxor that same afternoon, straight into the hypostyle hall at Karnak: a hundred and thirty-four columns, some too thick for six people to link arms around, every surface carved floor to ceiling in a script nobody could read for two thousand years.'
+          ]
+        },
+        { type:'photo', src:'images/egypt/egypt-cairo-street-aerial.jpg', alt:'An elevated view of a Cairo street, cars parked at angles and a woman in black crossing between them', loc:'CAIRO', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/egypt/egypt-karnak-columns-detail.jpg', alt:'Massive carved papyrus columns of the Great Hypostyle Hall rising toward a bright sky', loc:'KARNAK TEMPLE', day:'DAY 1' },
+          { src:'images/egypt/egypt-karnak-column-corridor.jpg', alt:'A corridor between rows of hieroglyph-covered columns leading toward a sunlit doorway', loc:'KARNAK TEMPLE', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/egypt/egypt-karnak-obelisks.jpg', alt:'Ruined sandstone walls and two ancient obelisks rising against a clear blue sky at Karnak', loc:'KARNAK TEMPLE', day:'DAY 1' },
+        { type:'photo', src:'images/egypt/egypt-karnak-statue.jpg', alt:'A weathered pharaoh statue framed in a stone doorway, hieroglyphs carved into the surrounding walls', loc:'KARNAK TEMPLE', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/egypt/egypt-karnak-colossus.jpg', alt:'A colossal seated statue towering over tourists at the entrance to Karnak Temple', loc:'KARNAK TEMPLE', day:'DAY 1' },
+          { src:'images/egypt/egypt-karnak-crowd-columns.jpg', alt:'A crowd of visitors gathered beneath towering carved columns in the hypostyle hall', loc:'KARNAK TEMPLE', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/egypt/egypt-karnak-ram-sphinxes.jpg', alt:'A row of ram-headed sphinxes lining the entrance avenue to Karnak Temple', loc:'KARNAK TEMPLE', day:'DAY 1' },
+        { type:'quote', text:'Every column at Karnak is carved with hieroglyphs you can’t read, by a civilization that assumed you’d still be standing there reading them.', cite:'trail notes, Karnak' },
+        { type:'text',
+          paragraphs:['The next morning went to the West Bank — the Valley of the Kings first, tombs cut straight into the cliffs and painted like the color dried yesterday, then up to Hatshepsut’s temple, terraced into the same rock. We closed the day back in Luxor itself, walking into the temple grounds right as the sky went the same orange as the sandstone.']
+        },
+        { type:'photo', src:'images/egypt/egypt-valley-of-kings-wide.jpg', alt:'A wide view of the Valley of the Kings, tomb entrances cut into pale cliffs beneath a deep blue sky', loc:'VALLEY OF THE KINGS', day:'DAY 2' },
+        { type:'photo', src:'images/egypt/egypt-tomb-interior.jpg', alt:'A painted tomb corridor with a star-covered ceiling and rows of figures on the walls, leading to a burial chamber', loc:'VALLEY OF THE KINGS', day:'DAY 2' },
+        { type:'photo', src:'images/egypt/egypt-tomb-painting-detail.jpg', alt:'A close detail of a painted tomb wall showing a procession of jackal-headed figures', loc:'VALLEY OF THE KINGS', day:'DAY 2' },
+        { type:'photo', src:'images/egypt/egypt-valley-of-kings-cliffs.jpg', alt:'Sunlit sandstone cliffs rising against a deep blue sky above the Valley of the Kings', loc:'VALLEY OF THE KINGS', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/egypt/egypt-west-bank-galabeya.jpg', alt:'A man in a flowing blue galabeya walking past a shop sign reading Hatshepsut', loc:'WEST BANK, LUXOR', day:'DAY 2' },
+          { src:'images/egypt/egypt-hatshepsut-osiride-statues.jpg', alt:'Osiride statues of Hatshepsut standing along the temple’s upper colonnade', loc:'MORTUARY TEMPLE OF HATSHEPSUT', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/egypt/egypt-hatshepsut-wide.jpg', alt:'The colonnaded terraces of Hatshepsut’s mortuary temple cut into the cliffside, visitors climbing the central ramp', loc:'MORTUARY TEMPLE OF HATSHEPSUT', day:'DAY 2' },
+        { type:'photo', src:'images/egypt/egypt-hatshepsut-hathor-column.jpg', alt:'A carved Hathor-headed column at Hatshepsut’s temple, cliffs rising behind it', loc:'MORTUARY TEMPLE OF HATSHEPSUT', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/egypt/egypt-luxor-street-dusk.jpg', alt:'Apartment buildings and parked tour vans lit gold by the setting sun on a Luxor street', loc:'LUXOR', day:'DAY 2 · DUSK' },
+          { src:'images/egypt/egypt-luxor-temple-dusk-columns.jpg', alt:'The columns of Luxor Temple glowing orange in the last light, an obelisk rising beyond them', loc:'LUXOR', day:'DAY 2 · DUSK' }
+        ] },
+        { type:'photo', src:'images/egypt/egypt-luxor-temple-columns-glow.jpg', alt:'Papyrus columns of Luxor Temple lit warm orange at dusk against a fading blue sky', loc:'LUXOR TEMPLE', day:'DAY 2 · DUSK' },
+        { type:'photo', src:'images/egypt/egypt-luxor-temple-pylon-night.jpg', alt:'The illuminated pylon, obelisk and colossi of Luxor Temple at dusk, tourists gathered below', loc:'LUXOR TEMPLE', day:'DAY 2 · NIGHT' },
+        { type:'text',
+          paragraphs:['We flew back to Cairo the next morning and gave the last day to the one thing everyone actually pictures when they hear the word Egypt — the pyramids, sitting at the edge of a city of twenty million people like it’s the most normal thing in the world.']
+        },
+        { type:'photo', src:'images/egypt/egypt-giza-pyramids-wide.jpg', alt:'The pyramids of Giza rising from the desert plateau, a hazy Cairo skyline visible behind them', loc:'GIZA', day:'DAY 3' },
+        { type:'photo', src:'images/egypt/egypt-giza-sphinx.jpg', alt:'The Great Sphinx of Giza facing a pyramid beyond it under a pale overcast sky', loc:'GIZA', day:'DAY 3' }
+      ]
+    },
+    {
+      slug: 'switzerland',
+      title: 'Switzerland',
+      place: 'Switzerland',
+      coord: '46.0207°N, 7.7491°E',
+      date: 'October 2025',
+      cover: 'images/switzerland/switzerland-gornergrat-matterhorn.jpg',
+      coverAlt: 'The Matterhorn rising above a snowfield as a red Gornergrat railway train rounds the ridge below it',
+      slides: [
+        { type:'itinerary',
+          title:'Switzerland',
+          legs:[
+            { airline:'Aer Lingus', flight:'342', date:'Oct 24, 2025', fromCode:'DUB', toCode:'ZRH', dep:'7:11 AM GMT+1', arr:'10:22 AM GMT+2', duration:'2 hr 11 min', aircraft:'Airbus A320-200' },
+            { mode:'train', airline:'SBB', fromCode:'ZRH', toCode:'LUZ' },
+            { mode:'train', airline:'SBB', fromCode:'LUZ', toCode:'INT' },
+            { mode:'train', airline:'SBB', fromCode:'INT', toCode:'ZER' },
+            { mode:'train', airline:'SBB', fromCode:'ZER', toCode:'ZRH' },
+            { airline:'Aer Lingus', flight:'349', date:'Nov 2, 2025', fromCode:'ZRH', toCode:'DUB', dep:'8:06 PM GMT+1', arr:'9:34 PM GMT', duration:'2 hr 28 min', aircraft:'Airbus A320-200' }
+          ]
+        },
+        { type:'text',
+          eyebrow:'Field Notes — Grindelwald, Lauterbrunnen, Mürren & Zermatt, Switzerland',
+          lede:'Nine days of Swiss trains, and the view never once flattened out.',
+          paragraphs:[
+            'We landed in Zürich and pointed the train straight at the mountains — into the Bernese Oberland and a first night in Grindelwald, where the Eiger’s north face sits at the end of the main street like it owns the place. The first snow of the season had already found the high routes; a suspension bridge out along the cliffs disappeared into cloud a few hundred meters out.'
+          ]
+        },
+        { type:'photo', src:'images/switzerland/switzerland-grindelwald-cliffwalk.jpg', alt:'A suspension footbridge crossing a fog-filled alpine valley, snow-covered ridgelines on both sides', loc:'GRINDELWALD FIRST', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/switzerland/switzerland-grindelwald-chalet-mountains.jpg', alt:'A wooden chalet with a pizzeria sign, towering snow-covered peaks rising directly behind it', loc:'GRINDELWALD', day:'DAY 1' },
+          { src:'images/switzerland/switzerland-grindelwald-dusk.jpg', alt:'The Sunstar hotel and village storefronts at dusk, snow-covered peaks fading into cloud above', loc:'GRINDELWALD', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/switzerland/switzerland-lakeside-chalet.jpg', alt:'A traditional wooden chalet on a forested hillside above a still lake in full autumn color', loc:'LAKE BRIENZ', day:'DAY 2' },
+        { type:'text',
+          paragraphs:['A lake crossing the next morning put us on the valley floor at Lauterbrunnen, seventy-two waterfalls on the official count and one of them — Staubbach Falls — pouring three hundred meters straight off the cliff behind the village. The train up to car-free Wengen took twelve minutes and a few hundred more meters of elevation, and the Eiger just kept getting bigger.']
+        },
+        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-waterfall.jpg', alt:'Staubbach Falls pouring off a sheer cliff directly above the rooftops of Lauterbrunnen village', loc:'LAUTERBRUNNEN', day:'DAY 3' },
+        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-valley.jpg', alt:'An elevated view of Lauterbrunnen’s church steeple and valley floor, hemmed in by sheer cliffs and snow-capped peaks', loc:'LAUTERBRUNNEN', day:'DAY 3' },
+        { type:'photo', src:'images/switzerland/switzerland-wengen-village.jpg', alt:'The car-free village of Wengen with Hotel Regina at its center, snow-covered peaks rising behind', loc:'WENGEN', day:'DAY 3' },
+        { type:'text',
+          paragraphs:['Mürren, across the valley on the other rim, might be the more honest answer to “which view is better” — no cars, a cliffside perch aimed straight at the Eiger-Mönch-Jungfrau wall, and, on a clear afternoon, paragliders launching off the ridge above town and riding the thermals down past the cows.']
+        },
+        { type:'photo', src:'images/switzerland/switzerland-eiger-village.jpg', alt:'The Eiger’s sunlit peak rising directly behind a cluster of chalet rooftops', loc:'MÜRREN', day:'DAY 4' },
+        { type:'photo', src:'images/switzerland/switzerland-murren-cablecar.jpg', alt:'A cable car line strung across a deep valley, snow-covered peaks and a chalet village behind it', loc:'MÜRREN', day:'DAY 4' },
+        { type:'photo-pair', photos:[
+          { src:'images/switzerland/switzerland-chalet-cart.jpg', alt:'An antique wooden horse cart beside a dark timber chalet balcony, a snow-covered peak framed through bare branches', loc:'MÜRREN', day:'DAY 4' },
+          { src:'images/switzerland/switzerland-swiss-flag-eiger.jpg', alt:'A Swiss flag hanging above a village street, the Eiger’s sunlit face rising at the end of it', loc:'MÜRREN', day:'DAY 4' }
+        ] },
+        { type:'photo', src:'images/switzerland/switzerland-snowy-trail.jpg', alt:'A snow-covered path leading past timber huts toward the Eiger and surrounding peaks', loc:'MÜRREN', day:'DAY 4' },
+        { type:'photo', src:'images/switzerland/switzerland-solar-chalet.jpg', alt:'A solar-paneled wooden chalet on a snowfield beneath a jagged summit and cable car station', loc:'MÜRREN', day:'DAY 4' },
+        { type:'photo', src:'images/switzerland/switzerland-calves-mountains.jpg', alt:'Two calves standing in a snowy pen with a sweeping range of snow-covered peaks behind them', loc:'MÜRREN', day:'DAY 4' },
+        { type:'photo', src:'images/switzerland/switzerland-barn-peaks.jpg', alt:'A weathered wooden barn on a snowy slope beneath the Eiger and Mönch', loc:'MÜRREN', day:'DAY 4' },
+        { type:'photo-pair', photos:[
+          { src:'images/switzerland/switzerland-alpine-stream.jpg', alt:'A snowmelt stream running through a snowy high alpine meadow, a sharp peak rising beyond', loc:'MÜRREN', day:'DAY 4' },
+          { src:'images/switzerland/switzerland-paraglider-close.jpg', alt:'A yellow paraglider descending past sheer cliffs beneath a snow-covered summit', loc:'MÜRREN', day:'DAY 4' }
+        ] },
+        { type:'photo', src:'images/switzerland/switzerland-murren-peaks-wide.jpg', alt:'A wide view of chalets scattered across a snowy hillside beneath the Eiger, Mönch and Jungfrau', loc:'MÜRREN', day:'DAY 4' },
+        { type:'photo', src:'images/switzerland/switzerland-paraglider-far.jpg', alt:'A distant yellow paraglider suspended against a towering snow-covered peak and sheer cliff face', loc:'MÜRREN', day:'DAY 4' },
+        { type:'quote', text:'The Swiss didn’t build a train to every mountain because they had to. They built it because eventually someone was going to ask why not.', cite:'trail notes, Bernese Oberland' },
+        { type:'photo-pair', photos:[
+          { src:'images/switzerland/switzerland-hut-pasture.jpg', alt:'A small wooden hut on a green hillside pasture, snow-covered peaks rising behind it', loc:'MÜRREN', day:'DAY 4' },
+          { src:'images/switzerland/switzerland-window-flowers.jpg', alt:'A man arranging a flower box in a chalet window, a snow-covered peak filling the valley view beside him', loc:'MÜRREN', day:'DAY 4' }
+        ] },
+        { type:'photo', src:'images/switzerland/switzerland-murren-village.jpg', alt:'A wide view over Mürren’s chalet rooftops toward a massive snow-covered peak', loc:'MÜRREN', day:'DAY 4' },
+        { type:'photo', src:'images/switzerland/switzerland-chalet-facade.jpg', alt:'A dark timber chalet facade with flower-boxed balconies, a snow-covered peak rising behind it', loc:'MÜRREN', day:'DAY 4' },
+        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-overlook.jpg', alt:'A high overlook down into the Lauterbrunnen valley, autumn color streaking the forested slopes below snow-capped peaks', loc:'MÜRREN', day:'DAY 4' },
+        { type:'text',
+          paragraphs:['A detour south to Kandersteg earned its own day — Lake Oeschinen sits below a wall of cliffs so sheer the water just mirrors them back, glacier-blue and cold enough to explain why nobody was swimming in late October.']
+        },
+        { type:'photo', src:'images/switzerland/switzerland-oeschinensee.jpg', alt:'The turquoise waters of Lake Oeschinen reflecting a wall of sheer cliffs and snow-covered peaks', loc:'OESCHINENSEE, KANDERSTEG', day:'DAY 5' },
+        { type:'text',
+          paragraphs:['The last leg of the loop went to Zermatt, car-free itself and built entirely around one mountain. The Gornergrat railway climbs to a ridge that puts the Matterhorn directly in front of you with nothing in between, and the whole town turns the same shade of pink when it catches the last light.']
+        },
+        { type:'photo', src:'images/switzerland/switzerland-gornergrat-matterhorn.jpg', alt:'The Matterhorn rising above a snowfield as a red Gornergrat railway train rounds the ridge below it', loc:'GORNERGRAT', day:'DAY 6' },
+        { type:'photo', src:'images/switzerland/switzerland-matterhorn-dusk.jpg', alt:'The Matterhorn silhouetted against a pink dusk sky above dark ridgelines', loc:'ZERMATT', day:'DAY 6 · DUSK' },
+        { type:'photo', src:'images/switzerland/switzerland-zermatt-town-lights.jpg', alt:'Zermatt’s lit windows spread across the valley floor beneath the dark silhouette of the Matterhorn at blue hour', loc:'ZERMATT', day:'DAY 6 · NIGHT' },
+        { type:'photo', src:'images/switzerland/switzerland-matterhorn-window.jpg', alt:'The Matterhorn’s summit catching golden alpenglow light, framed by a dark window edge and silhouetted trees', loc:'ZERMATT', day:'DAY 7' },
+        { type:'photo', src:'images/switzerland/switzerland-matterhorn-larches.jpg', alt:'The Matterhorn framed by golden autumn larch trees under a pale sky', loc:'ZERMATT', day:'DAY 7' }
+      ]
+    },
+    {
+      slug: 'peru',
+      title: 'Peru',
+      place: 'Peru',
+      coord: '13.5319°S, 71.9675°W',
+      date: 'March 2025',
+      cover: 'images/peru/peru-vinicunca-local-boy.jpg',
+      coverAlt: 'A local boy in a tasseled chullo hat standing between two corrugated-metal trailside shelters near Vinicunca, looking straight at the camera',
+      slides: [
+        { type:'itinerary',
+          title:'Peru',
+          legs:[
+            { airline:'Avianca', flight:'563', date:'Mar 22, 2025', fromCode:'SFO', toCode:'SAL', dep:'2:18 PM PDT', arr:'8:39 PM CST', duration:'5 hr 21 min', aircraft:'Airbus A320neo' },
+            { airline:'Avianca', flight:'429', date:'Mar 22, 2025', fromCode:'SAL', toCode:'LIM', dep:'9:57 PM CST', arr:'3:10 AM GMT-5', duration:'4 hr 13 min', aircraft:'Airbus A320-200' },
+            { airline:'LATAM Peru', flight:'2005', date:'Mar 23, 2025', fromCode:'LIM', toCode:'CUZ', dep:'6:41 AM GMT-5', arr:'8:05 AM GMT-5', duration:'1 hr 24 min', aircraft:'Airbus A320-200' },
+            { airline:'LATAM Peru', flight:'2026', date:'Mar 28, 2025', fromCode:'CUZ', toCode:'LIM', dep:'6:10 PM GMT-5', arr:'7:31 PM GMT-5', duration:'1 hr 21 min', aircraft:'Airbus A320neo' },
+            { airline:'Copa', flight:'264', date:'Mar 30, 2025', fromCode:'LIM', toCode:'PTY', dep:'2:27 AM GMT-5', arr:'6:04 AM EST', duration:'3 hr 37 min', aircraft:'Boeing 737-800' },
+            { airline:'Copa', flight:'382', date:'Mar 30, 2025', fromCode:'PTY', toCode:'SFO', dep:'5:42 PM EST', arr:'11:32 PM PDT', duration:'7 hr 50 min', aircraft:'Boeing 737 MAX 9' }
+          ]
+        },
+        { type:'text',
+          eyebrow:'Field Notes — Cusco, the Sacred Valley, Machu Picchu & Lima, Peru',
+          lede:'Everything in the highlands happens at altitude and on someone else’s schedule — the train, the festival, the weather over the ruins.',
+          paragraphs:[
+            'We landed into a Cusco that was already mid-celebration, dancers working their way around the Plaza de Armas in wool and sequins while the rest of the city just kept walking past. From there the trip ran downhill in elevation and uphill in scenery: the Sacred Valley for a day of weaving and llamas, a train to the base of Machu Picchu, and a pre-dawn climb up to the ruins themselves before the clouds could close back over them.',
+            'The detour to Rainbow Mountain came almost as an afterthought and turned out to be the hardest four hours of the trip — five thousand meters of thin air and switchbacks for a view that doesn’t photograph as saturated as it actually looks. We closed it out on the coast, trading llamas for a Chinatown tuk-tuk and a sunset that had nothing to do with the Andes at all.'
+          ]
+        },
+        { type:'photo', src:'images/peru/peru-cusco-parade-red.jpg', alt:'Dancers in red ponchos and embroidered vests parading past a colonial white building during a Cusco street festival', loc:'HISTORIC CENTER, CUSCO', day:'DAY 1' },
+        { type:'photo', src:'images/peru/peru-cusco-parade-crowd.jpg', alt:'A procession of dancers in white capes and red tasseled hats moving past a balconied colonial building hung with flags', loc:'HISTORIC CENTER, CUSCO', day:'DAY 1' },
+        { type:'photo', src:'images/peru/peru-cusco-chefs-dish.jpg', alt:'A woman in an embroidered jacket and feathered hat presenting an elaborately plated dish under a festival tent, flanked by two chefs in tall white toques', loc:'CUSCO', day:'DAY 1' },
+        { type:'photo', src:'images/peru/peru-cusco-plaza-dusk.jpg', alt:'Colonial arcades and balconies lit up at blue hour along Cusco’s main plaza, mountains fading into the dark behind the rooftops', loc:'PLAZA DE ARMAS, CUSCO', day:'DAY 1' },
+        { type:'photo', src:'images/peru/peru-weaver-hands.jpg', alt:'Close view of a weaver’s hands working a backstrap loom strung with striped blue and cream wool', loc:'SACRED VALLEY', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/peru/peru-guinea-pig.jpg', alt:'A guinea pig sitting beside a clay pot and a wooden stool in a dirt-floored courtyard', loc:'SACRED VALLEY', day:'DAY 2' },
+          { src:'images/peru/peru-llamas-sacred-valley.jpg', alt:'A llama and two alpacas grazing in a green field with an adobe village and mountains behind them', loc:'SACRED VALLEY', day:'DAY 2' }
+        ] },
+        { type:'photo-pair', photos:[
+          { src:'images/peru/peru-sacred-valley-lodge-view.jpg', alt:'A view across a lodge lawn toward green terraced mountainsides and a rocky peak in the Sacred Valley', loc:'SACRED VALLEY', day:'DAY 2' },
+          { src:'images/peru/peru-ollantaytambo-kids-performer.jpg', alt:'Children in traditional dress gathered outside a coffee shop while a costumed performer in a feathered headdress carries a spear past them', loc:'OLLANTAYTAMBO', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/peru/peru-sacred-valley-ridge.jpg', alt:'A storm-shadowed mountain ridge above the Sacred Valley, a small village and football field visible on the valley floor below', loc:'SACRED VALLEY', day:'DAY 2' },
+        { type:'photo', src:'images/peru/peru-ollantaytambo-tassels.jpg', alt:'Strings of dyed wool fringe in a rainbow of colors, strung up against a cloudy mountainside with Inca terracing visible on the ridge', loc:'OLLANTAYTAMBO', day:'DAY 2' },
+        { type:'photo', src:'images/peru/peru-ollantaytambo-cafe-street.jpg', alt:'A yellow pizzeria and resto bar on an Ollantaytambo street corner, green mountains rising steeply behind the rooftops', loc:'OLLANTAYTAMBO', day:'DAY 2' },
+        { type:'photo', src:'images/peru/peru-weaver-portrait-dusk.jpg', alt:'A weaver in a red sweater and a flower-topped hat smiling at the camera beside her backstrap loom, tile roofs behind her at dusk', loc:'OLLANTAYTAMBO', day:'DAY 2' },
+        { type:'photo', src:'images/peru/peru-ollantaytambo-dusk-street.jpg', alt:'A cobbled street of shopfronts lit up at dusk, a jagged peak silhouetted against the last blue light of the sky', loc:'OLLANTAYTAMBO', day:'DAY 2' },
+        { type:'photo', src:'images/peru/peru-market-novelty-cards.jpg', alt:'A hand holding a deck of novelty playing cards printed with an Ancient Peru fertility figure, souvenir stall blurred behind', loc:'AGUAS CALIENTES', day:'DAY 3' },
+        { type:'photo', src:'images/peru/peru-aguas-calientes-street.jpg', alt:'A row of restaurant terraces along the train tracks at Aguas Calientes, sheer green cliffs rising directly behind the town', loc:'AGUAS CALIENTES', day:'DAY 3' },
+        { type:'photo', src:'images/peru/peru-aguas-calientes-wide.jpg', alt:'An elevated view of Aguas Calientes wedged into a steep river gorge, cloud snagging on the cliffs above the rooftops', loc:'AGUAS CALIENTES', day:'DAY 3' },
+        { type:'photo', src:'images/peru/peru-aguas-calientes-river.jpg', alt:'A swollen river rushing through the center of Aguas Calientes between riverside buildings, mist hanging over the mountains behind', loc:'AGUAS CALIENTES', day:'DAY 3' },
+        { type:'quote', text:'Every bus up to the ruins fills before sunrise. Nobody tells you that the view is worth setting an alarm for at fifteen hundred meters of switchbacks and zero coffee.', cite:'trail notes, day 4' },
+        { type:'photo', src:'images/peru/peru-machu-picchu-llamas.jpg', alt:'Llamas grazing on a grassy terrace at Machu Picchu, Huayna Picchu rising behind them through low cloud', loc:'MACHU PICCHU', day:'DAY 4' },
+        { type:'photo', src:'images/peru/peru-machu-picchu-classic-view.jpg', alt:'Machu Picchu’s terraced ruins seen from the classic overlook, cloud snagging on Huayna Picchu behind them', loc:'MACHU PICCHU', day:'DAY 4' },
+        { type:'text',
+          paragraphs:['The transfer back to Cusco ran most of the next day, which left one more before we flew out — enough time for the detour everyone said not to skip. Vinicunca starts before dawn and climbs to nearly five thousand meters, and the mineral stripes only show up in full once the cloud burns off the ridge.']
+        },
+        { type:'photo', src:'images/peru/peru-vinicunca-local-boy.jpg', alt:'A local boy in a tasseled chullo hat standing between two corrugated-metal trailside shelters near Vinicunca, looking straight at the camera', loc:'VINICUNCA TRAILHEAD', day:'DAY 5' },
+        { type:'photo', src:'images/peru/peru-vinicunca-trailhead.jpg', alt:'A row of tin-roofed trailside stalls leading up a dirt path toward cloud-wrapped mountains', loc:'VINICUNCA TRAILHEAD', day:'DAY 5' },
+        { type:'photo', src:'images/peru/peru-rainbow-mountain.jpg', alt:'The striped red, gold and turquoise slopes of Rainbow Mountain, a line of hikers climbing toward the summit ridge', loc:'RAINBOW MOUNTAIN', day:'DAY 5' },
+        { type:'photo', src:'images/peru/peru-rainbow-mountain-llamas.jpg', alt:'A woman in a pink jacket checking her phone beside two llamas dressed in pompom collars at a foggy overlook', loc:'RAINBOW MOUNTAIN', day:'DAY 5' },
+        { type:'photo', src:'images/peru/peru-rainbow-mountain-alpaca.jpg', alt:'A woman in a wide-brimmed hat and traditional skirt standing beside a resting alpaca at the edge of a foggy overlook', loc:'RAINBOW MOUNTAIN', day:'DAY 5' },
+        { type:'photo', src:'images/peru/peru-vinicunca-trail-snowpeaks.jpg', alt:'A grazing horse on a green hillside below a jagged, snow-capped mountain range', loc:'VINICUNCA TRAIL', day:'DAY 5' },
+        { type:'text',
+          paragraphs:['Lima came last, and mostly at sea level, which every set of lungs on the trip was grateful for. A morning in the historic center gave way to an afternoon in Barrio Chino, and the whole thing closed out on the clifftop boulevards of Miraflores as the Costa Verde traffic lit up below.']
+        },
+        { type:'photo', src:'images/peru/peru-lima-casa-literatura.jpg', alt:'The Peruvian flag flying above the ornate stone facade of Casa de la Literatura Peruana under a pale sky', loc:'CASA DE LA LITERATURA, LIMA', day:'DAY 7' },
+        { type:'photo', src:'images/peru/peru-lima-barrio-chino.jpg', alt:'A fruit cart and tuk-tuk parked outside a storefront with Chinese characters on its sign in Lima’s Chinatown', loc:'BARRIO CHINO, LIMA', day:'DAY 7' },
+        { type:'photo', src:'images/peru/peru-lima-el-beso.jpg', alt:'The Parque del Amor’s embracing stone sculpture silhouetted at dusk beside a palm tree under a lavender sky', loc:'PARQUE DEL AMOR, MIRAFLORES', day:'DAY 7 · DUSK' },
+        { type:'photo-pair', photos:[
+          { src:'images/peru/peru-lima-costa-verde-dusk.jpg', alt:'The curving Costa Verde highway lit up with traffic along the coastline at dusk, waves breaking below the cliffs', loc:'COSTA VERDE, LIMA', day:'DAY 7 · DUSK' },
+          { src:'images/peru/peru-lima-miraflores-dusk.jpg', alt:'Miraflores apartment towers and palm trees against a pink dusk sky, headlights streaming along the boulevard below', loc:'MIRAFLORES, LIMA', day:'DAY 7 · DUSK' }
+        ] }
+      ]
+    }
+  ];
+
+  var gridIcon = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>';
+  var frameIcon = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1" y="1" width="14" height="14"/></svg>';
+
+  var lastIndex = {};
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  function letterSpans(text, startDelay, stagger){
+    var out = '';
+    text.split('').forEach(function(ch, i){
+      var delay = (startDelay + i * stagger).toFixed(3) + 's';
+      if (ch === ' '){
+        out += '<span class="letter letter--space" style="animation-delay:'+delay+'">&nbsp;</span>';
+      } else {
+        out += '<span class="letter" style="animation-delay:'+delay+'">'+escapeHtml(ch)+'</span>';
+      }
+    });
+    return out;
+  }
+
+  function renderHome(){
+    var tiles = trips.map(function(t){
+      return '<a class="tile reveal" href="#/trip/'+t.slug+'">' +
+        '<div class="tile__frame"><img src="'+t.cover+'" alt="'+escapeHtml(t.coverAlt)+'" loading="lazy">' +
+          '<span class="tile__place">'+escapeHtml(t.place)+'</span>' +
+        '</div>' +
+        '</a>';
+    }).join('') + '<div class="tile tile--soon"><div class="tile__frame"><span>More trips soon</span></div></div>';
+
+    var heroImg = 'images/site/hero-half-dome.jpg';
+    var heroAlt = 'A hiker sitting on a granite summit overlooking Half Dome in Yosemite';
+    var hero = '<div class="hero">' +
+      '<div class="hero__frame"><img src="'+heroImg+'" alt="'+escapeHtml(heroAlt)+'" loading="eager"></div>' +
+      '<div class="hero__scrim"></div>' +
+      '<div class="hero__text">' +
+        '<h1 class="hero__line hero__line--1">'+letterSpans('welcome to my', 0.2, 0.09)+'</h1>' +
+        '<h1 class="hero__line hero__line--2">'+letterSpans('PALETTE', 0.2 + 14*0.09 + 0.25, 0.09)+'</h1>' +
+      '</div>' +
+    '</div>';
+
+    return hero + '<div class="grid col--wide">' + tiles + '</div>';
+  }
+
+  var ICON_INSTAGRAM = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.012-3.584.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.98-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>';
+  var ICON_LINKEDIN = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.067-.926-2.067-2.067 0-1.14.925-2.066 2.067-2.066 1.14 0 2.066.925 2.066 2.066 0 1.14-.925 2.067-2.066 2.067zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>';
+
+  function socialIconsHtml(){
+    return (
+      '<span class="tip-wrap"><a href="mailto:ethanye@berkeley.edu" aria-label="Email: ethanye@berkeley.edu">Email</a><span class="tip-wrap__bubble" aria-hidden="true">ethanye@berkeley.edu</span></span>' +
+      '<a href="https://www.instagram.com/ethannyee" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">'+ICON_INSTAGRAM+'</a>' +
+      '<a href="https://www.linkedin.com/in/ethan-ye/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">'+ICON_LINKEDIN+'</a>'
+    );
+  }
+
+  function renderAbout(){
+    return (
+      '<div class="about-page col--wide">' +
+        '<section class="about reveal">' +
+          '<div class="frame"><img src="images/patagonia/patagonia-cover.jpg" loading="lazy" alt="Portrait of the photographer holding a camera up to his face against a bare concrete wall"></div>' +
+          '<div>' +
+            '<p class="eyebrow">About the journal</p>' +
+            '<h2>A vibrant <span class="palette-word">PALETTE</span> for a bold, daring, unforgiving world.</h2>' +
+            '<p>Hello, and welcome to my palette! My name is Ethan. I fell in love with my fujifilm xt-3 and I’ve been playing around with it a lot, so I hope you can see a bit of the world through my lens.</p>' +
+            '<p>Every turn, every capture is a vision of the vivid world we live in. This field journal represents every moment I’ve been grateful to experience. Every composition emerges a story, a truth, and a palette yet to be seen. Every choice of palette filters the world, fulfilling every choice of visual poetry into one that captures the true essence of the heart.</p>' +
+            '<p>If you’re looking to vibe, send me a message and let’s connect. Chat soon!</p>' +
+          '</div>' +
+        '</section>' +
+      '</div>'
+    );
+  }
+
+  var AIRPORT_COORDS = {
+    SFO: [37.6213, -122.3790],
+    LAX: [33.9416, -118.4085],
+    LIM: [-12.0219, -77.1143],
+    SCL: [-33.3930, -70.7858],
+    PMC: [-41.4389, -73.0940],
+    PNT: [-51.6668, -72.5286],
+    SAL: [13.4409, -89.0557],
+    GUA: [14.5833, -90.5275],
+    CDG: [49.0097, 2.5479],
+    JNB: [-26.1392, 28.2460],
+    CPT: [-33.9715, 18.6021],
+    WVB: [-22.9575, 14.5053],
+    SES: [-24.1300, 15.7900],
+    WDH: [-22.9799, 17.4709],
+    CUZ: [-13.5357, -71.9388],
+    PTY: [9.0714, -79.3835],
+    LVI: [-17.8218, 25.8228],
+    SIN: [1.3644, 103.9915],
+    PEK: [40.0799, 116.6031],
+    DYG: [29.1028, 110.4508],
+    CKG: [29.5630, 106.5516],
+    CTU: [30.6700, 104.0670],
+    CAI: [30.1219, 31.4056],
+    ADD: [8.9779, 38.7993],
+    FCO: [41.8003, 12.2389],
+    ORD: [41.9742, -87.9073],
+    SNA: [33.6757, -117.8683],
+    DUB: [53.4213, -6.2701],
+    LXR: [25.6710, 32.7067],
+    ZRH: [47.4647, 8.5492],
+    LUZ: [47.0502, 8.3093],
+    INT: [46.6863, 7.8632],
+    ZER: [46.0207, 7.7491]
+  };
+
+  // Simplified coastline outlines used as a map backdrop so routes read against real
+  // geography. 'ribbon' regions trace one open coastal edge with land assumed to lie
+  // `dir` degrees-of-longitude toward the interior; 'closed' regions trace a full
+  // perimeter (e.g. a continent) and are filled directly.
+  // Full perimeter of North America (Pacific coast south to Panama, across the isthmus,
+  // up the Caribbean/Gulf/Atlantic coast, closing roughly back across Canada).
+  var NORTH_AMERICA_COASTLINE = [
+    [49.3,-123.1],[46.9,-124.1],[43.3,-124.4],[40.4,-124.3],[38.3,-123.0],
+    [37.7,-122.5],[36.6,-121.9],[34.5,-120.5],[33.9,-118.4],[32.7,-117.2],
+    [31.8,-116.7],[29.0,-115.2],[27.2,-114.9],[24.1,-110.3],[22.9,-109.9],
+    [23.2,-106.4],[21.5,-105.3],[19.1,-104.3],[17.6,-101.6],[16.8,-99.9],
+    [15.9,-97.1],[14.7,-92.4],[13.9,-90.8],[13.5,-89.3],[13.1,-87.7],
+    [12.2,-87.2],[11.0,-86.2],[9.9,-84.8],[8.4,-82.9],[7.5,-80.4],
+    [8.9,-79.6],
+    [9.4,-79.0],
+    [11.6,-84.2],[13.8,-83.6],[15.8,-86.8],[15.9,-88.0],[17.5,-88.2],
+    [18.5,-88.3],[21.2,-86.9],[20.6,-90.5],[18.9,-94.0],[19.2,-96.1],
+    [22.2,-97.9],[25.7,-97.4],[29.3,-94.8],[29.9,-90.1],[30.4,-87.2],
+    [27.9,-82.8],[25.8,-80.2],[30.3,-81.4],[32.8,-79.9],[36.9,-76.3],
+    [39.3,-74.4],[40.7,-74.0],[41.5,-71.3],[42.4,-70.9],[44.6,-63.6],
+    [47.6,-52.7],[48.5,-58.6],[49.2,-68.0],
+    [48.5,-88.5],[49.8,-95.0],[51.0,-115.0]
+  ];
+
+  // Full perimeter of South America (Pacific coast north to south, Atlantic coast
+  // back up to the Colombian Caribbean, closing near the Panama border).
+  var SOUTH_AMERICA_COASTLINE = [
+    [7.3,-78.2],[5.5,-77.5],[3.9,-77.1],[1.3,-78.8],
+    [-2.2,-80.9],[-3.5,-80.4],[-6.8,-79.9],[-9.1,-78.6],[-12.0,-77.1],
+    [-14.1,-75.8],[-17.0,-71.3],[-18.5,-70.3],[-20.2,-70.1],[-23.6,-70.4],
+    [-27.1,-70.9],[-29.9,-71.3],[-33.0,-71.6],[-33.4,-70.8],[-36.8,-73.1],
+    [-39.8,-73.2],[-41.4,-72.9],[-43.5,-74.0],[-45.5,-73.9],[-47.7,-75.0],
+    [-50.0,-75.2],[-51.7,-72.9],[-53.2,-70.9],[-54.8,-68.3],
+    [-52.5,-68.7],[-50.3,-68.1],[-45.9,-67.5],[-42.8,-65.0],[-38.0,-57.5],
+    [-34.6,-58.4],[-34.9,-56.2],[-32.0,-52.1],[-30.0,-51.2],[-25.5,-48.5],
+    [-23.9,-46.3],[-22.9,-43.2],[-20.3,-40.3],[-16.0,-39.0],[-12.9,-38.5],
+    [-8.1,-34.9],[-5.8,-35.2],[-2.5,-44.3],[0.0,-50.0],[4.9,-52.3],
+    [5.8,-55.2],[6.8,-58.2],[8.6,-60.7],[10.5,-64.2],[10.6,-66.9],
+    [11.0,-72.2],[10.4,-75.5],[9.5,-77.0]
+  ];
+
+  // Full perimeter of Africa (west coast south, east coast north, Red Sea and
+  // Mediterranean coasts back to the start) so it can be filled as a closed shape.
+  var AFRICA_COASTLINE = [
+    [35.8,-5.8],[33.6,-7.6],[30.4,-9.6],[27.9,-12.9],[23.7,-15.9],
+    [18.1,-16.0],[15.9,-16.6],[12.6,-16.8],[9.5,-13.7],[6.3,-10.8],
+    [5.3,-4.0],[5.6,-0.2],[6.4,3.4],[4.4,9.4],[0.4,9.5],
+    [-0.7,8.8],[-4.3,11.7],[-6.1,12.3],[-8.8,13.2],[-12.6,13.4],
+    [-15.2,12.1],[-17.9,11.8],[-19.0,12.6],[-20.5,13.2],[-22.4,14.3],
+    [-22.9,14.5],[-23.6,14.4],[-24.6,14.8],[-25.6,14.9],[-26.6,15.2],
+    [-27.6,15.7],[-28.6,16.4],[-29.6,16.9],[-30.6,17.5],[-31.6,18.2],
+    [-32.5,18.2],[-33.0,18.1],[-33.9,18.4],[-34.15,18.32],[-34.36,18.47],
+    [-34.19,18.45],[-34.08,18.85],[-34.4,19.2],[-34.83,20.02],[-34.0,22.1],[-33.9,25.6],
+    [-32.9,27.9],[-29.9,31.0],[-26.8,32.9],[-23.9,35.4],[-19.8,34.8],
+    [-15.0,40.7],[-10.8,40.2],[-6.8,39.3],[-4.0,39.7],[2.0,45.3],
+    [11.6,50.8],[12.6,43.1],[15.6,39.5],[19.6,37.2],[26.2,33.8],
+    [31.5,32.3],[31.2,29.9],[32.9,13.2],[36.8,10.2],[36.8,3.1]
+  ];
+
+  // Singapore up through the South China Sea to the East China / Bohai coast.
+  var ASIA_COASTLINE = [
+    [1.3,103.9],[4.2,103.4],[10.8,106.7],[13.8,109.2],[16.0,108.2],
+    [17.5,106.6],[20.0,106.2],[20.8,106.7],[21.5,108.3],[21.2,110.4],
+    [22.5,113.6],[23.1,116.7],[24.5,118.1],[26.1,119.3],[28.0,120.7],
+    [29.9,121.6],[31.2,121.5],[32.1,120.9],[34.8,119.5],[36.1,120.4],
+    [37.5,119.0],[38.9,117.7],[40.08,116.6]
+  ];
+
+  // Iberia, France, a simplified British Isles/North Sea sweep and Italy
+  // (including the Rome/Fiumicino coast), closing back through the Mediterranean.
+  var EUROPE_COASTLINE = [
+    [36.1,-5.3],[37.0,-8.9],[38.7,-9.4],[41.1,-8.7],[43.5,-8.2],
+    [43.4,-2.9],[44.6,-1.2],[47.2,-2.2],[48.4,-4.5],[49.5,-1.6],
+    [50.9,1.6],[51.3,1.4],[53.5,0.0],[55.9,-4.3],[58.2,-6.2],
+    [57.1,-2.1],[53.0,4.8],[54.3,10.1],[53.9,14.3],[54.7,20.5],
+    [43.3,16.4],[40.6,17.9],[38.1,15.6],[37.5,13.4],[40.8,14.3],
+    [41.8,12.5],[43.5,10.3],[44.4,8.9],[43.7,7.3],[41.4,2.2],
+    [39.5,-0.3],[36.7,-4.4]
+  ];
+
+  var COASTLINE_REGIONS = [
+    { points: NORTH_AMERICA_COASTLINE, mode:'closed' },
+    { points: SOUTH_AMERICA_COASTLINE, mode:'closed' },
+    { points: AFRICA_COASTLINE, mode:'closed' },
+    { points: EUROPE_COASTLINE, mode:'closed' },
+    { points: ASIA_COASTLINE, mode:'ribbon', dir:-1 }
+  ];
+
+  function computeProjection(points, W, H, PAD){
+    var lats = points.map(function(p){ return p[0]; });
+    var lons = points.map(function(p){ return p[1]; });
+    var minLat = Math.min.apply(null, lats), maxLat = Math.max.apply(null, lats);
+    var minLon = Math.min.apply(null, lons), maxLon = Math.max.apply(null, lons);
+    var latRange = Math.max(maxLat - minLat, 0.0001);
+    var lonRange = Math.max(maxLon - minLon, 0.0001);
+    var meanLatRad = (minLat + maxLat) / 2 * Math.PI / 180;
+    var lonCorrection = Math.max(Math.cos(meanLatRad), 0.15);
+    var effLonRange = lonRange * lonCorrection;
+    var scale = Math.min((W - 2*PAD) / effLonRange, (H - 2*PAD) / latRange);
+    var usedW = effLonRange * scale, usedH = latRange * scale;
+    var offX = PAD + ((W - 2*PAD) - usedW) / 2;
+    var offY = PAD + ((H - 2*PAD) - usedH) / 2;
+    return {
+      project: function(lat, lon){
+        return [ offX + (lon - minLon) * lonCorrection * scale, offY + (maxLat - lat) * scale ];
+      },
+      maxLon: maxLon
+    };
+  }
+
+  function smoothPathD(pts){
+    if (pts.length < 2) return '';
+    if (pts.length === 2){
+      return 'M'+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1)+' L'+pts[1][0].toFixed(1)+','+pts[1][1].toFixed(1);
+    }
+    var d = 'M'+pts[0][0].toFixed(1)+','+pts[0][1].toFixed(1)+' ';
+    for (var i=0; i<pts.length-1; i++){
+      var p0 = pts[i-1] || pts[i];
+      var p1 = pts[i];
+      var p2 = pts[i+1];
+      var p3 = pts[i+2] || p2;
+      var c1x = p1[0] + (p2[0]-p0[0])/6, c1y = p1[1] + (p2[1]-p0[1])/6;
+      var c2x = p2[0] - (p3[0]-p1[0])/6, c2y = p2[1] - (p3[1]-p1[1])/6;
+      d += 'C'+c1x.toFixed(1)+','+c1y.toFixed(1)+' '+c2x.toFixed(1)+','+c2y.toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1)+' ';
+    }
+    return d.trim();
+  }
+
+  function coastalWidth(lat){
+    if (lat > 30) return 34;
+    if (lat > 6) return 3 + (lat-6)/(30-6) * (34-3);
+    return 20;
+  }
+
+  function vehicleIconInner(mode){
+    if (mode === 'shuttle'){
+      return '<rect x="-5.5" y="-3" width="11" height="5" rx="1"/><circle cx="-3" cy="2.3" r="1.3"/><circle cx="3" cy="2.3" r="1.3"/>';
+    }
+    if (mode === 'train'){
+      return '<rect x="-7" y="-2.5" width="14" height="4.5" rx="1.5"/><circle cx="-4" cy="2.3" r="1.1"/><circle cx="0" cy="2.3" r="1.1"/><circle cx="4" cy="2.3" r="1.1"/>';
+    }
+    return '<path d="M11,0 L2,-1.4 L-9,0 L2,1.4 Z M1,-6.2 L2.6,0 L1,6.2 L-0.6,0 Z M-6,-3 L-5,0 L-6,3 L-7.2,0 Z"/>';
+  }
+
+  function buildItineraryMap(legs){
+    var codes = [];
+    legs.forEach(function(l){
+      if (codes.indexOf(l.fromCode) === -1) codes.push(l.fromCode);
+      if (codes.indexOf(l.toCode) === -1) codes.push(l.toCode);
+    });
+    var airportPts = codes.map(function(c){ return AIRPORT_COORDS[c]; });
+    var airportLats = airportPts.map(function(p){ return p[0]; });
+    var airportLons = airportPts.map(function(p){ return p[1]; });
+    var minALat = Math.min.apply(null, airportLats), maxALat = Math.max.apply(null, airportLats);
+    var minALon = Math.min.apply(null, airportLons), maxALon = Math.max.apply(null, airportLons);
+    var latPad = Math.max(5, (maxALat - minALat) * 0.18);
+    var lonPad = Math.max(8, (maxALon - minALon) * 0.18);
+    var latLo = minALat - latPad, latHi = maxALat + latPad;
+    var lonLo = minALon - lonPad, lonHi = maxALon + lonPad;
+
+    var regions = COASTLINE_REGIONS.map(function(region){
+      var pts = region.points.filter(function(p){
+        return p[0] >= latLo && p[0] <= latHi && p[1] >= lonLo && p[1] <= lonHi;
+      });
+      return { mode: region.mode, dir: region.dir, points: pts };
+    }).filter(function(r){ return r.points.length > 1; });
+
+    var allCoastPts = [];
+    regions.forEach(function(r){ allCoastPts = allCoastPts.concat(r.points); });
+
+    var W = 280, H = 640, PAD = 26;
+    var proj = computeProjection(airportPts.concat(allCoastPts), W, H, PAD);
+    var project = proj.project;
+
+    var coastSvg = '';
+    regions.forEach(function(r){
+      var xy = r.points.map(function(p){ return project(p[0], p[1]); });
+      if (r.mode === 'closed'){
+        var closedD = smoothPathD(xy) + ' Z';
+        coastSvg += '<path class="coast-fill" d="'+closedD+'"/><path class="coast-edge" d="'+closedD+'"/>';
+      } else {
+        var inlandXY = r.points.map(function(p){ return project(p[0], p[1] + r.dir*coastalWidth(p[0])); });
+        var edgeD = smoothPathD(xy);
+        var fillD = edgeD + ' L' + inlandXY[inlandXY.length-1][0].toFixed(1)+','+inlandXY[inlandXY.length-1][1].toFixed(1) + ' ';
+        for (var i=inlandXY.length-2; i>=0; i--){
+          fillD += 'L'+inlandXY[i][0].toFixed(1)+','+inlandXY[i][1].toFixed(1)+' ';
+        }
+        fillD += 'Z';
+        coastSvg += '<path class="coast-fill" d="'+fillD+'"/><path class="coast-edge" d="'+edgeD+'"/>';
+      }
+    });
+
+    var pts = {};
+    codes.forEach(function(c){ pts[c] = project(AIRPORT_COORDS[c][0], AIRPORT_COORDS[c][1]); });
+
+    var seenPairs = {};
+    var pathsSvg = '';
+    var planesSvg = '';
+    legs.forEach(function(l){
+      var mode = l.mode || 'flight';
+      var p1 = pts[l.fromCode], p2 = pts[l.toCode];
+      var key = [l.fromCode, l.toCode].sort().join('-');
+      var count = seenPairs[key] || 0;
+      seenPairs[key] = count + 1;
+      var sign = (count % 2 === 0) ? 1 : -1;
+      var mx = (p1[0]+p2[0])/2, my = (p1[1]+p2[1])/2;
+      var dx = p2[0]-p1[0], dy = p2[1]-p1[1];
+      var len = Math.sqrt(dx*dx + dy*dy) || 1;
+      var nx = -dy/len, ny = dx/len;
+      var bend = Math.min(26, len*0.24) * sign;
+      var cx = mx + nx*bend, cy = my + ny*bend;
+      var d = 'M'+p1[0].toFixed(1)+','+p1[1].toFixed(1)+' Q'+cx.toFixed(1)+','+cy.toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1);
+      pathsSvg += '<path class="leg-path leg-path--'+mode+'" d="'+d+'"/>';
+      var logoSrc = mode === 'flight' ? AIRLINE_LOGO[l.airline] : null;
+      var markerInner, rotateStyle;
+      if (logoSrc){
+        markerInner = '<image href="'+logoSrc+'" x="-7" y="-7" width="14" height="14" preserveAspectRatio="xMidYMid meet"/>';
+        rotateStyle = 'offset-rotate:0deg;';
+      } else {
+        markerInner = '<g transform="scale(0.85)">'+vehicleIconInner(mode)+'</g>';
+        rotateStyle = mode === 'flight' ? 'offset-rotate:auto;' : 'offset-rotate:0deg;';
+      }
+      planesSvg += '<g class="leg-plane" style="offset-path:path(\''+d+'\');'+rotateStyle+'">'+markerInner+'</g>';
+    });
+    var dotsSvg = '';
+    codes.forEach(function(c){
+      var p = pts[c];
+      dotsSvg += '<g class="leg-dot">' +
+        '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5"/>' +
+        '<text x="'+p[0].toFixed(1)+'" y="'+(p[1]-9).toFixed(1)+'">'+c+'</text>' +
+      '</g>';
+    });
+    return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet">'+coastSvg+pathsSvg+dotsSvg+planesSvg+'</svg>';
+  }
+
+  var AIRLINE_LOGO = {
+    'Delta': 'images/site/airlines/delta.png',
+    'LATAM Peru': 'images/site/airlines/latam.png',
+    'LATAM Chile': 'images/site/airlines/latam.png',
+    'Sky Airline': 'images/site/airlines/sky-airline.png',
+    'Avianca': 'images/site/airlines/avianca.png',
+    'Air France': 'images/site/airlines/air-france.png',
+    'FlySafair': 'images/site/airlines/flysafair.png',
+    'Airlink': 'images/site/airlines/airlink.png',
+    'Singapore Airlines': 'images/site/airlines/singapore-airlines.png',
+    'Air China': 'images/site/airlines/air-china.png',
+    'Copa': 'images/site/airlines/copa.png',
+    'Ethiopian Airlines': 'images/site/airlines/ethiopian.png',
+    'American Airlines': 'images/site/airlines/american.png',
+    'EgyptAir': 'images/site/airlines/egyptair.png',
+    'Air Cairo': 'images/site/airlines/aircairo.png',
+    'Aer Lingus': 'images/site/airlines/aer-lingus.png'
+  };
+
+  function renderItinerary(slide){
+    var mapSvg = buildItineraryMap(slide.legs);
+    var legsHtml = slide.legs.map(function(l){
+      var mode = l.mode || 'flight';
+      var logoSrc = AIRLINE_LOGO[l.airline];
+      var badgeHtml = logoSrc ? '<span class="itin-leg__logo"><img src="'+logoSrc+'" alt="" loading="lazy"></span>' : '';
+      var dateHtml = l.date ? '<span>'+escapeHtml(l.date)+'</span>' : '';
+      var timesHtml = (l.dep && l.arr) ? '<div class="itin-leg__times">'+escapeHtml(l.dep)+' &ndash; '+escapeHtml(l.arr)+'</div>' : '';
+      var durBits = [l.duration, l.aircraft].filter(Boolean).map(escapeHtml).join(' &middot; ');
+      var durHtml = durBits ? '<div class="itin-leg__duration">'+durBits+'</div>' : '';
+      return '<div class="itin-leg">' +
+        '<div class="itin-leg__top"><span class="itin-leg__airline">'+badgeHtml+escapeHtml(l.airline)+(l.flight?' '+escapeHtml(l.flight):'')+'</span>'+dateHtml+'</div>' +
+        '<div class="itin-leg__route">' +
+          '<span class="itin-leg__code">'+escapeHtml(l.fromCode)+'</span>' +
+          '<span class="itin-leg__mode-icon"><svg viewBox="-10 -7 22 14" aria-hidden="true">'+vehicleIconInner(mode)+'</svg></span>' +
+          '<span class="itin-leg__code">'+escapeHtml(l.toCode)+'</span>' +
+        '</div>' +
+        timesHtml +
+        durHtml +
+      '</div>';
+    }).join('');
+    return '<div class="slide slide--itinerary">' +
+      '<div class="itin-map">'+mapSvg+'</div>' +
+      '<div class="itin-list">' +
+        '<p class="eyebrow">Travel Itinerary</p>' +
+        '<h2>'+escapeHtml(slide.title)+'</h2>' +
+        legsHtml +
+      '</div>' +
+    '</div>';
+  }
+
+  var itineraryLoopTimer = null;
+
+  function initItinerary(){
+    if (itineraryLoopTimer){ clearTimeout(itineraryLoopTimer); itineraryLoopTimer = null; }
+    var svg = document.querySelector('.itin-map svg');
+    if (!svg) return;
+    var paths = svg.querySelectorAll('.leg-path');
+    var dots = svg.querySelectorAll('.leg-dot');
+    var planes = svg.querySelectorAll('.leg-plane');
+    if (!paths.length) return;
+
+    var STEP = 550, DRAW = 1100, HOLD = 1500;
+
+    function forceReflow(){ svg.getBoundingClientRect(); }
+
+    function resetState(){
+      paths.forEach(function(p){
+        var len = p.getTotalLength();
+        p.style.transition = 'none';
+        p.style.strokeDasharray = len;
+        p.style.strokeDashoffset = len;
+      });
+      dots.forEach(function(d){
+        d.style.transition = 'none';
+        d.style.opacity = '0';
+        d.style.transform = 'scale(0.4)';
+        d.style.transformOrigin = 'center';
+        d.style.transformBox = 'fill-box';
+      });
+      planes.forEach(function(pl){
+        pl.style.transition = 'none';
+        pl.style.opacity = '0';
+        pl.style.offsetDistance = '0%';
+      });
+      forceReflow();
+    }
+
+    function playOnce(){
+      paths.forEach(function(p, i){
+        setTimeout(function(){
+          p.style.transition = 'stroke-dashoffset '+DRAW+'ms ease';
+          p.style.strokeDashoffset = '0';
+        }, 150 + i*STEP);
+      });
+      dots.forEach(function(d, i){
+        setTimeout(function(){
+          d.style.transition = 'opacity .4s ease, transform .4s ease';
+          d.style.opacity = '1';
+          d.style.transform = 'scale(1)';
+        }, 100 + i*STEP);
+      });
+      planes.forEach(function(pl, i){
+        setTimeout(function(){
+          pl.style.transition = 'none';
+          pl.style.opacity = '1';
+          forceReflow();
+          pl.style.transition = 'offset-distance '+DRAW+'ms linear, opacity .3s ease';
+          pl.style.offsetDistance = '100%';
+        }, 150 + i*STEP);
+        setTimeout(function(){ pl.style.opacity = '0'; }, 150 + i*STEP + DRAW + 250);
+      });
+      var total = 150 + (paths.length-1)*STEP + DRAW + HOLD;
+      itineraryLoopTimer = setTimeout(function(){
+        resetState();
+        playOnce();
+      }, total);
+    }
+
+    resetState();
+    playOnce();
+  }
+
+  function renderSlide(slide){
+    if (slide.type === 'itinerary'){
+      return renderItinerary(slide);
+    }
+    if (slide.type === 'photo'){
+      return '<figure class="slide slide--photo">' +
+        '<div class="slide__frame"><img src="'+slide.src+'" alt="'+escapeHtml(slide.alt)+'"></div>' +
+        '<figcaption><span class="loc">'+escapeHtml(slide.loc)+'</span>'+(slide.day?'<span>'+escapeHtml(slide.day)+'</span>':'')+'</figcaption>' +
+      '</figure>';
+    }
+    if (slide.type === 'photo-pair'){
+      return '<div class="slide slide--photo-pair">' +
+        slide.photos.map(function(p){
+          return '<figure class="pair-item">' +
+            '<div class="slide__frame pair-item__frame"><img src="'+p.src+'" alt="'+escapeHtml(p.alt)+'"></div>' +
+            '<figcaption><span class="loc">'+escapeHtml(p.loc)+'</span>'+(p.day?'<span>'+escapeHtml(p.day)+'</span>':'')+'</figcaption>' +
+          '</figure>';
+        }).join('') +
+      '</div>';
+    }
+    if (slide.type === 'quote'){
+      return '<div class="slide slide--quote"><blockquote>'+escapeHtml(slide.text)+'</blockquote><cite>— '+escapeHtml(slide.cite)+'</cite></div>';
+    }
+    var out = '<div class="slide slide--text">';
+    if (slide.eyebrow) out += '<p class="eyebrow">'+escapeHtml(slide.eyebrow)+'</p>';
+    if (slide.lede) out += '<p class="lede">'+escapeHtml(slide.lede)+'</p>';
+    (slide.paragraphs||[]).forEach(function(p){ out += '<p>'+escapeHtml(p)+'</p>'; });
+    out += '</div>';
+    return out;
+  }
+
+  function renderStage(trip, idx){
+    var n = trip.slides.length;
+    idx = Math.max(0, Math.min(n-1, idx));
+    var slide = trip.slides[idx];
+    return (
+      '<div class="trip">' +
+        '<div class="stage__bar col--wide">' +
+          '<button class="iconbtn" id="gridToggle" aria-label="View as grid">'+gridIcon+'</button>' +
+          '<span class="stage__count">('+(idx+1)+' of '+n+')</span>' +
+          '<span class="stage__title">'+escapeHtml(trip.title)+'</span>' +
+        '</div>' +
+        '<div class="stage">' +
+          '<button class="stage__navbtn stage__navbtn--prev" id="prevBtn" aria-label="Previous"'+(idx===0?' hidden':'')+'>‹</button>' +
+          renderSlide(slide) +
+          '<button class="stage__navbtn stage__navbtn--next" id="nextBtn" aria-label="Next"'+(idx===n-1?' hidden':'')+'>›</button>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function renderGrid(trip){
+    var thumbs = [];
+    trip.slides.forEach(function(s,i){
+      if (s.type === 'photo'){ thumbs.push({src:s.src, alt:s.alt, i:i}); }
+      else if (s.type === 'photo-pair'){ s.photos.forEach(function(p){ thumbs.push({src:p.src, alt:p.alt, i:i}); }); }
+    });
+    var html = thumbs.map(function(x){
+      return '<button class="thumb" data-index="'+x.i+'"><img src="'+x.src+'" alt="'+escapeHtml(x.alt)+'" loading="lazy"></button>';
+    }).join('');
+    return (
+      '<div class="trip">' +
+        '<div class="stage__bar col--wide">' +
+          '<button class="iconbtn" id="frameToggle" aria-label="View as slideshow">'+frameIcon+'</button>' +
+          '<span class="stage__title">'+escapeHtml(trip.title)+'</span>' +
+        '</div>' +
+        '<div class="thumbgrid">' + html + '</div>' +
+      '</div>'
+    );
+  }
+
+  function goto(hash){ location.hash = hash; }
+
+  function bindStage(trip, idx){
+    var n = trip.slides.length;
+    var prev = document.getElementById('prevBtn');
+    var next = document.getElementById('nextBtn');
+    var gridBtn = document.getElementById('gridToggle');
+    if (prev) prev.addEventListener('click', function(){ if (idx>0) goto('#/trip/'+trip.slug+'/'+(idx-1)); });
+    if (next) next.addEventListener('click', function(){ if (idx<n-1) goto('#/trip/'+trip.slug+'/'+(idx+1)); });
+    if (gridBtn) gridBtn.addEventListener('click', function(){ lastIndex[trip.slug]=idx; goto('#/trip/'+trip.slug+'/grid'); });
+    stageKeyHandler = function(ev){
+      if (ev.key === 'ArrowLeft' && idx>0) goto('#/trip/'+trip.slug+'/'+(idx-1));
+      else if (ev.key === 'ArrowRight' && idx<n-1) goto('#/trip/'+trip.slug+'/'+(idx+1));
+      else if (ev.key === 'Escape') goto('#');
+    };
+    document.addEventListener('keydown', stageKeyHandler);
+  }
+
+  function bindGrid(trip){
+    var frameBtn = document.getElementById('frameToggle');
+    if (frameBtn) frameBtn.addEventListener('click', function(){ goto('#/trip/'+trip.slug+'/'+(lastIndex[trip.slug]||0)); });
+    document.querySelectorAll('.thumb').forEach(function(btn){
+      btn.addEventListener('click', function(){ goto('#/trip/'+trip.slug+'/'+btn.getAttribute('data-index')); });
+    });
+    stageKeyHandler = function(ev){ if (ev.key === 'Escape') goto('#'); };
+    document.addEventListener('keydown', stageKeyHandler);
+  }
+
+  var stageKeyHandler = null;
+
+  function initReveal(){
+    var els = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+      }, {threshold:.1, rootMargin:'0px 0px -40px 0px'});
+      els.forEach(function(el){ io.observe(el); });
+    } else {
+      els.forEach(function(el){ el.classList.add('is-visible'); });
+    }
+  }
+
+  function render(){
+    if (stageKeyHandler){ document.removeEventListener('keydown', stageKeyHandler); stageKeyHandler = null; }
+    if (itineraryLoopTimer){ clearTimeout(itineraryLoopTimer); itineraryLoopTimer = null; }
+    var app = document.getElementById('app');
+    var hash = location.hash.replace(/^#\/?/, '');
+
+    if (hash.indexOf('trip/') === 0){
+      var parts = hash.split('/');
+      var slug = parts[1];
+      var trip = trips.filter(function(t){ return t.slug===slug; })[0];
+      if (!trip){ location.hash = ''; return; }
+      if (parts[2] === 'grid'){
+        app.innerHTML = renderGrid(trip);
+        bindGrid(trip);
+      } else {
+        var idx = parts[2] ? (parseInt(parts[2],10)||0) : 0;
+        app.innerHTML = renderStage(trip, idx);
+        bindStage(trip, idx);
+        initItinerary();
+      }
+      window.scrollTo(0,0);
+    } else if (hash.indexOf('about') === 0 || hash.indexOf('contact') === 0){
+      app.innerHTML = renderAbout();
+      if (hash.indexOf('contact') === 0){
+        requestAnimationFrame(function(){
+          var el = document.getElementById('contact');
+          if (el) el.scrollIntoView({behavior:'smooth', block:'center'});
+        });
+      } else {
+        window.scrollTo(0,0);
+      }
+    } else {
+      app.innerHTML = renderHome();
+      window.scrollTo(0,0);
+    }
+    initReveal();
+  }
+
+  var footerSocial = document.getElementById('footer-social');
+  if (footerSocial) footerSocial.innerHTML = socialIconsHtml();
+
+  window.addEventListener('hashchange', render);
+  render();
+})();
+</script>
+</body>
+</html>
