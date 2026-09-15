@@ -271,12 +271,21 @@
   .stage__navbtn{
     position:fixed; top:50%; transform:translateY(-50%);
     background:none; border:none; cursor:pointer; color:var(--ink-soft);
-    font-size:2rem; line-height:1; padding:var(--sp-2); z-index:20;
+    font-size:3.4rem; line-height:1; padding:var(--sp-2) var(--sp-1); z-index:20;
   }
   .stage__navbtn:hover{ color:var(--ink); }
   .stage__navbtn--prev{ left:var(--sp-1); }
   .stage__navbtn--next{ right:var(--sp-1); }
   .stage__navbtn[hidden]{ display:none; }
+  .stage__nexthint{
+    position:fixed; top:calc(50% + 2.6rem); right:var(--sp-1); transform:translateX(-2%);
+    font-family:"Space Mono",monospace; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-soft); white-space:nowrap; z-index:20; pointer-events:none;
+  }
+  @media (max-width:720px){
+    .stage__navbtn{ font-size:2.4rem; }
+    .stage__nexthint{ font-size:.6rem; white-space:normal; max-width:5.5rem; text-align:right; top:calc(50% + 2.1rem); }
+  }
 
   .slide{ width:100%; }
   .slide--photo{ display:flex; flex-direction:column; align-items:center; max-width:100%; }
@@ -350,8 +359,19 @@
   /* ---- grid subview ---- */
   .thumbgrid{ columns:3 260px; column-gap:var(--sp-4); padding:var(--sp-4) var(--sp-3) var(--sp-6); }
   .thumb{ display:block; width:100%; break-inside:avoid; margin-bottom:var(--sp-4); background:none; border:none; padding:0; cursor:pointer; }
-  .thumb img{ width:100%; height:auto; transition:transform .6s cubic-bezier(.2,.7,.2,1); }
+  .thumb__frame{ position:relative; display:block; overflow:hidden; background:var(--line); }
+  .thumb img{ display:block; width:100%; height:auto; transition:transform .6s cubic-bezier(.2,.7,.2,1); }
   .thumb:hover img, .thumb:focus-visible img{ transform:scale(1.03); }
+  .thumb__frame::after{ content:''; position:absolute; inset:0; background:rgba(0,0,0,0); transition:background .35s ease; }
+  .thumb:hover .thumb__frame::after, .thumb:focus-visible .thumb__frame::after{ background:rgba(0,0,0,.28); }
+  .thumb__place{
+    position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:0 .6em;
+    font-family:"Space Mono", monospace; font-style:normal; font-weight:400;
+    font-size:.78rem; letter-spacing:.08em; color:#f6efe1; text-shadow:0 2px 10px rgba(0,0,0,.5);
+    opacity:0; transition:opacity .35s ease; pointer-events:none;
+  }
+  .thumb:hover .thumb__place, .thumb:focus-visible .thumb__place{ opacity:1; }
   @media (max-width:720px){ .thumbgrid{ columns:2 180px; } }
 </style>
 </head>
@@ -892,9 +912,13 @@
     }).join('') + '<div class="tile tile--soon"><div class="tile__frame"><span>More trips soon</span></div></div>';
 
     var heroImg = 'images/site/hero-half-dome.jpg';
+    var heroImgMobile = 'images/site/hero-half-dome-mobile.jpg';
     var heroAlt = 'A hiker sitting on a granite summit overlooking Half Dome in Yosemite';
     var hero = '<div class="hero">' +
-      '<div class="hero__frame"><img src="'+heroImg+'" alt="'+escapeHtml(heroAlt)+'" loading="eager"></div>' +
+      '<div class="hero__frame"><picture>' +
+        '<source media="(max-width:700px)" srcset="'+heroImgMobile+'">' +
+        '<img src="'+heroImg+'" alt="'+escapeHtml(heroAlt)+'" loading="eager">' +
+      '</picture></div>' +
       '<div class="hero__scrim"></div>' +
       '<div class="hero__text">' +
         '<h1 class="hero__line hero__line--1">'+letterSpans('welcome to my', 0.2, 0.09)+'</h1>' +
@@ -1331,7 +1355,7 @@
     }
     if (slide.type === 'photo'){
       return '<figure class="slide slide--photo">' +
-        '<div class="slide__frame"><img src="'+slide.src+'" alt="'+escapeHtml(slide.alt)+'"></div>' +
+        '<div class="slide__frame"><img src="'+slide.src+'" alt="'+escapeHtml(slide.alt)+'" loading="lazy" decoding="async"></div>' +
         '<figcaption><span class="loc">'+escapeHtml(slide.loc)+'</span>'+(slide.day?'<span>'+escapeHtml(slide.day)+'</span>':'')+'</figcaption>' +
       '</figure>';
     }
@@ -1339,7 +1363,7 @@
       return '<div class="slide slide--photo-pair">' +
         slide.photos.map(function(p){
           return '<figure class="pair-item">' +
-            '<div class="slide__frame pair-item__frame"><img src="'+p.src+'" alt="'+escapeHtml(p.alt)+'"></div>' +
+            '<div class="slide__frame pair-item__frame"><img src="'+p.src+'" alt="'+escapeHtml(p.alt)+'" loading="lazy" decoding="async"></div>' +
             '<figcaption><span class="loc">'+escapeHtml(p.loc)+'</span>'+(p.day?'<span>'+escapeHtml(p.day)+'</span>':'')+'</figcaption>' +
           '</figure>';
         }).join('') +
@@ -1360,6 +1384,7 @@
     var n = trip.slides.length;
     idx = Math.max(0, Math.min(n-1, idx));
     var slide = trip.slides[idx];
+    var isItinerary = slide.type === 'itinerary';
     return (
       '<div class="trip">' +
         '<div class="stage__bar col--wide">' +
@@ -1371,19 +1396,29 @@
           '<button class="stage__navbtn stage__navbtn--prev" id="prevBtn" aria-label="Previous"'+(idx===0?' hidden':'')+'>‹</button>' +
           renderSlide(slide) +
           '<button class="stage__navbtn stage__navbtn--next" id="nextBtn" aria-label="Next"'+(idx===n-1?' hidden':'')+'>›</button>' +
+          (isItinerary && idx<n-1 ? '<span class="stage__nexthint">to the photo palette</span>' : '') +
         '</div>' +
       '</div>'
     );
   }
 
+  function thumbSrc(src){
+    return src.replace(/\/([^/]+)$/, '/thumbs/$1');
+  }
+
   function renderGrid(trip){
     var thumbs = [];
     trip.slides.forEach(function(s,i){
-      if (s.type === 'photo'){ thumbs.push({src:s.src, alt:s.alt, i:i}); }
-      else if (s.type === 'photo-pair'){ s.photos.forEach(function(p){ thumbs.push({src:p.src, alt:p.alt, i:i}); }); }
+      if (s.type === 'photo'){ thumbs.push({src:s.src, alt:s.alt, loc:s.loc, i:i}); }
+      else if (s.type === 'photo-pair'){ s.photos.forEach(function(p){ thumbs.push({src:p.src, alt:p.alt, loc:p.loc, i:i}); }); }
     });
     var html = thumbs.map(function(x){
-      return '<button class="thumb" data-index="'+x.i+'"><img src="'+x.src+'" alt="'+escapeHtml(x.alt)+'" loading="lazy"></button>';
+      return '<button class="thumb" data-index="'+x.i+'">' +
+        '<span class="thumb__frame">' +
+          '<img src="'+thumbSrc(x.src)+'" alt="'+escapeHtml(x.alt)+'" loading="lazy" decoding="async">' +
+          '<span class="thumb__place">'+escapeHtml(x.loc)+'</span>' +
+        '</span>' +
+      '</button>';
     }).join('');
     return (
       '<div class="trip">' +
@@ -1400,15 +1435,21 @@
 
   function bindStage(trip, idx){
     var n = trip.slides.length;
+    var isItinerary = trip.slides[idx].type === 'itinerary';
     var prev = document.getElementById('prevBtn');
     var next = document.getElementById('nextBtn');
     var gridBtn = document.getElementById('gridToggle');
+    function goNext(){
+      if (idx>=n-1) return;
+      if (isItinerary){ goto('#/trip/'+trip.slug+'/grid'); }
+      else { goto('#/trip/'+trip.slug+'/'+(idx+1)); }
+    }
     if (prev) prev.addEventListener('click', function(){ if (idx>0) goto('#/trip/'+trip.slug+'/'+(idx-1)); });
-    if (next) next.addEventListener('click', function(){ if (idx<n-1) goto('#/trip/'+trip.slug+'/'+(idx+1)); });
+    if (next) next.addEventListener('click', goNext);
     if (gridBtn) gridBtn.addEventListener('click', function(){ lastIndex[trip.slug]=idx; goto('#/trip/'+trip.slug+'/grid'); });
     stageKeyHandler = function(ev){
       if (ev.key === 'ArrowLeft' && idx>0) goto('#/trip/'+trip.slug+'/'+(idx-1));
-      else if (ev.key === 'ArrowRight' && idx<n-1) goto('#/trip/'+trip.slug+'/'+(idx+1));
+      else if (ev.key === 'ArrowRight') goNext();
       else if (ev.key === 'Escape') goto('#');
     };
     document.addEventListener('keydown', stageKeyHandler);
