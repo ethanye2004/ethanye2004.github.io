@@ -131,6 +131,11 @@
     transition:opacity .18s ease, transform .18s ease, visibility .18s;
   }
   .nav__dropdown.is-open .nav__dropdown-menu{ opacity:1; visibility:visible; transform:translateY(0); }
+  @media (hover:hover) and (pointer:fine){
+    .nav__dropdown:hover .nav__dropdown-menu{ opacity:1; visibility:visible; transform:translateY(0); }
+    .nav__dropdown:hover .nav__dropdown-toggle{ color:var(--ink); border-color:var(--ink); }
+    .nav__dropdown:hover .nav__dropdown-caret{ transform:rotate(180deg); }
+  }
   .nav__dropdown-link{
     font-family:"Space Mono", monospace; font-size:.72rem; letter-spacing:.08em;
     text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
@@ -277,14 +282,21 @@
   .stage__navbtn--prev{ left:var(--sp-1); }
   .stage__navbtn--next{ right:var(--sp-1); }
   .stage__navbtn[hidden]{ display:none; }
+  .stage__navbtn--itinerary{
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:.3rem; border:1px solid transparent;
+  }
+  .stage__navbtn--itinerary:hover, .stage__navbtn--itinerary:focus-visible{ border-color:var(--ink); }
+  .stage__navbtn-arrow{ font-size:2.6rem; line-height:1; }
   .stage__nexthint{
-    position:fixed; top:calc(50% + 2.6rem); right:var(--sp-1); transform:translateX(-2%);
-    font-family:"Space Mono",monospace; font-size:.68rem; letter-spacing:.08em; text-transform:uppercase;
-    color:var(--ink-soft); white-space:nowrap; z-index:20; pointer-events:none;
+    font-family:"Space Mono",monospace; font-size:.62rem; letter-spacing:.08em; text-transform:uppercase;
+    line-height:1.4; text-align:center; white-space:nowrap;
   }
   @media (max-width:720px){
     .stage__navbtn{ font-size:2.4rem; }
-    .stage__nexthint{ font-size:.6rem; white-space:normal; max-width:5.5rem; text-align:right; top:calc(50% + 2.1rem); }
+    .stage__navbtn-arrow{ font-size:2rem; }
+    .stage__nexthint{ font-size:.56rem; }
+    .stage__navbtn--itinerary{ padding:.4rem .6rem; }
   }
 
   .slide{ width:100%; }
@@ -638,7 +650,6 @@
         { type:'photo', src:'images/patagonia/patagonia-nordenskjold-break.jpg', alt:'Cloud shredding apart against a sunlit, snow-dusted ridge above a deep blue lake', loc:'LAGO NORDENSKJÖLD' },
         { type:'photo', src:'images/patagonia/patagonia-lakeshore-dusk.jpg', alt:'A lavender dusk sky over a dark lakeshore silhouetted with wind-bent trees', loc:'LAKESHORE CAMP' },
         { type:'photo', src:'images/patagonia/patagonia-golden-ridge.jpg', alt:'Golden late-afternoon light on a ridgeline above a wind-rippled turquoise lake', loc:'TRAIL TO LAS TORRES' },
-        { type:'photo', src:'images/patagonia/patagonia-valley-switchback.jpg', alt:'A switchback trail dropping into a green valley toward a rushing stream, snow-covered peaks rising at the head of the valley', loc:'TRAIL TO LAS TORRES' },
         { type:'photo', src:'images/patagonia/patagonia-alpenglow-notch.jpg', alt:'Sunrise alpenglow catching the towers through a notch in the ridgeline, forest silhouetted below against a clearing sky', loc:'MIRADOR LAS TORRES' },
         { type:'photo', src:'images/patagonia/patagonia-base-torres-clearing.jpg', alt:'The three towers of Torres del Paine emerging from parting cloud above a turquoise glacial lake', loc:'BASE LAS TORRES' }
       ]
@@ -1395,15 +1406,16 @@
         '<div class="stage">' +
           '<button class="stage__navbtn stage__navbtn--prev" id="prevBtn" aria-label="Previous"'+(idx===0?' hidden':'')+'>‹</button>' +
           renderSlide(slide) +
-          '<button class="stage__navbtn stage__navbtn--next" id="nextBtn" aria-label="Next"'+(idx===n-1?' hidden':'')+'>›</button>' +
-          (isItinerary && idx<n-1 ? '<span class="stage__nexthint">to the photo palette</span>' : '') +
+          (isItinerary && idx<n-1 ?
+            '<button class="stage__navbtn stage__navbtn--next stage__navbtn--itinerary" id="nextBtn" aria-label="Next: view all photos">' +
+              '<span class="stage__navbtn-arrow">›</span>' +
+              '<span class="stage__nexthint">to the<br>photo palette</span>' +
+            '</button>' :
+            '<button class="stage__navbtn stage__navbtn--next" id="nextBtn" aria-label="Next"'+(idx===n-1?' hidden':'')+'>›</button>'
+          ) +
         '</div>' +
       '</div>'
     );
-  }
-
-  function thumbSrc(src){
-    return src.replace(/\/([^/]+)$/, '/thumbs/$1');
   }
 
   function renderGrid(trip){
@@ -1415,7 +1427,7 @@
     var html = thumbs.map(function(x){
       return '<button class="thumb" data-index="'+x.i+'">' +
         '<span class="thumb__frame">' +
-          '<img src="'+thumbSrc(x.src)+'" alt="'+escapeHtml(x.alt)+'" loading="lazy" decoding="async">' +
+          '<img src="'+x.src+'" alt="'+escapeHtml(x.alt)+'" loading="lazy" decoding="async">' +
           '<span class="thumb__place">'+escapeHtml(x.loc)+'</span>' +
         '</span>' +
       '</button>';
@@ -1525,7 +1537,7 @@
   var travelsMenu = document.getElementById('travels-menu');
   if (travelsDropdown && travelsToggle && travelsMenu){
     travelsMenu.innerHTML = trips.map(function(t){
-      return '<a class="nav__dropdown-link" href="#/trip/'+t.slug+'">'+t.title+'</a>';
+      return '<a class="nav__dropdown-link" href="#/trip/'+t.slug+'">'+escapeHtml(t.place)+'</a>';
     }).join('');
 
     function closeTravels(){
