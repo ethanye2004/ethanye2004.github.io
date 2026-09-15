@@ -103,7 +103,9 @@
   .nav__mark{
     font-family:"Fraunces", serif; font-style:normal; font-weight:400;
     font-size:1.7rem; letter-spacing:.01em; text-decoration:none;
+    border:1px solid transparent; padding:.3rem .5rem; margin:-.3rem -.5rem;
   }
+  .nav__mark:hover, .nav__mark:focus-visible{ border-color:var(--ink); }
   .nav__mark-palette{ font-family:"Abril Fatface", ui-serif, Georgia, serif; text-transform:uppercase; letter-spacing:.01em; color:#e3a94c; }
   .nav__mark-by{
     font-family:"Space Mono", monospace; font-style:normal; font-weight:400;
@@ -113,7 +115,7 @@
   .nav__about{
     font-family:"Space Mono", monospace; font-size:.72rem; letter-spacing:.1em;
     text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
-    border-bottom:1px solid transparent; padding:.2rem 0;
+    border:1px solid transparent; padding:.35rem .6rem; margin:-.35rem -.6rem;
   }
   .nav__about:hover, .nav__about:focus-visible{ color:var(--ink); border-color:var(--ink); }
 
@@ -121,7 +123,7 @@
   .nav__dropdown-toggle{
     font-family:"Space Mono", monospace; font-size:.72rem; letter-spacing:.1em;
     text-transform:uppercase; color:var(--ink-soft);
-    background:none; border:none; border-bottom:1px solid transparent; padding:.2rem 0;
+    background:none; border:1px solid transparent; padding:.35rem .6rem; margin:-.35rem -.6rem;
     cursor:pointer; display:flex; align-items:center; gap:.4em;
   }
   .nav__dropdown-toggle:hover, .nav__dropdown-toggle:focus-visible, .nav__dropdown.is-open .nav__dropdown-toggle{
@@ -145,9 +147,9 @@
   .nav__dropdown-link{
     font-family:"Space Mono", monospace; font-size:.72rem; letter-spacing:.08em;
     text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
-    padding:.5rem .9rem; white-space:nowrap;
+    padding:.5rem .9rem; white-space:nowrap; border:1px solid transparent;
   }
-  .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ color:var(--ink); background:color-mix(in srgb, var(--ink) 5%, transparent); }
+  .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ color:var(--ink); background:color-mix(in srgb, var(--ink) 5%, transparent); border-color:var(--ink); }
 
   .site-foot{
     display:flex; align-items:center; justify-content:center; gap:var(--sp-3); flex-wrap:wrap;
@@ -156,8 +158,11 @@
     color:var(--ink-soft);
   }
   .site-foot__social{ display:inline-flex; align-items:center; gap:var(--sp-3); }
-  .site-foot__social a{ color:var(--ink-soft); display:flex; text-decoration:none; }
-  .site-foot__social a:hover, .site-foot__social a:focus-visible{ color:var(--accent); }
+  .site-foot__social a{
+    color:var(--ink-soft); display:flex; text-decoration:none;
+    border:1px solid transparent; padding:.35rem .5rem; margin:-.35rem -.5rem;
+  }
+  .site-foot__social a:hover, .site-foot__social a:focus-visible{ color:var(--accent); border-color:var(--accent); }
   .site-foot__social svg{ width:15px; height:15px; display:block; }
 
   a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
@@ -271,12 +276,19 @@
     padding:var(--sp-3) var(--sp-3) 0;
   }
   .iconbtn{
-    background:none; border:none; cursor:pointer; color:var(--ink);
-    display:flex; align-items:center; padding:.25rem;
+    background:none; cursor:pointer; color:var(--ink);
+    display:flex; align-items:center; padding:.4rem; margin:-.4rem;
+    border:1px solid transparent;
   }
-  .iconbtn:hover{ color:var(--accent); }
+  .iconbtn:hover, .iconbtn:focus-visible{ color:var(--accent); border-color:var(--accent); }
   .stage__count{ font-family:"Space Mono",monospace; font-size:.78rem; color:var(--ink-soft); }
   .stage__title{ font-family:"Space Mono",monospace; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
+  .stage__itinerary-link{
+    font-family:"Space Mono",monospace; font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
+    text-decoration:none; color:var(--ink-soft); padding:.3rem .6rem;
+    border:1px solid transparent;
+  }
+  .stage__itinerary-link:hover, .stage__itinerary-link:focus-visible{ color:var(--ink); border-color:var(--ink); }
 
   .stage{ position:relative; flex:1; display:flex; align-items:center; justify-content:center; padding:var(--sp-4) var(--sp-5); min-height:60vh; }
   .stage__navbtn{
@@ -291,17 +303,17 @@
   .stage__navbtn[hidden]{ display:none; }
   .stage__navbtn--itinerary{
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:.3rem; padding:1rem 1.4rem;
+    gap:.3rem; padding:.8rem 1rem;
   }
   .stage__navbtn-arrow{ font-size:2.6rem; line-height:1; }
   .stage__nexthint{
-    font-family:"Space Mono",monospace; font-size:.82rem; letter-spacing:.08em; text-transform:uppercase;
+    font-family:"Space Mono",monospace; font-size:.62rem; letter-spacing:.08em; text-transform:uppercase;
     line-height:1.4; text-align:center; white-space:nowrap;
   }
   @media (max-width:720px){
     .stage__navbtn{ font-size:2.4rem; }
     .stage__navbtn-arrow{ font-size:2rem; }
-    .stage__nexthint{ font-size:.68rem; }
+    .stage__nexthint{ font-size:.56rem; }
     .stage__navbtn--itinerary{ padding:.4rem .6rem; }
   }
 
@@ -309,6 +321,10 @@
   .slide--photo{ display:flex; flex-direction:column; align-items:center; max-width:100%; }
   .slide__frame{ max-width:min(88vw, 900px); max-height:70vh; }
   .slide__frame img{ max-width:min(88vw, 900px); max-height:70vh; width:auto; height:auto; object-fit:contain; margin:0 auto; }
+  @media (max-width:720px){
+    .slide__frame{ max-width:74vw; }
+    .slide__frame img{ max-width:74vw; }
+  }
   .slide figcaption{
     font-family:"Space Mono",monospace; font-size:var(--fs-caption); letter-spacing:.04em; color:var(--ink-soft);
     margin-top:var(--sp-2); display:flex; gap:1.2em; justify-content:center;
@@ -1415,6 +1431,7 @@
           '<button class="iconbtn" id="gridToggle" aria-label="View as grid">'+gridIcon+'</button>' +
           '<span class="stage__count">('+(idx+1)+' of '+n+')</span>' +
           '<span class="stage__title">'+escapeHtml(trip.title)+'</span>' +
+          '<a class="stage__itinerary-link" href="#/trip/'+trip.slug+'/0">Itinerary</a>' +
         '</div>' +
         '<div class="stage">' +
           '<button class="stage__navbtn stage__navbtn--prev" id="prevBtn" aria-label="Previous"'+(idx===0?' hidden':'')+'>‹</button>' +
@@ -1450,6 +1467,7 @@
         '<div class="stage__bar col--wide">' +
           '<button class="iconbtn" id="frameToggle" aria-label="View as slideshow">'+frameIcon+'</button>' +
           '<span class="stage__title">'+escapeHtml(trip.title)+'</span>' +
+          '<a class="stage__itinerary-link" href="#/trip/'+trip.slug+'/0">Itinerary</a>' +
         '</div>' +
         '<div class="thumbgrid">' + html + '</div>' +
       '</div>'
