@@ -111,6 +111,33 @@
   }
   .nav__about:hover, .nav__about:focus-visible{ color:var(--ink); border-color:var(--ink); }
 
+  .nav__dropdown{ position:relative; }
+  .nav__dropdown-toggle{
+    font-family:"Space Mono", monospace; font-size:.72rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--ink-soft);
+    background:none; border:none; border-bottom:1px solid transparent; padding:.2rem 0;
+    cursor:pointer; display:flex; align-items:center; gap:.4em;
+  }
+  .nav__dropdown-toggle:hover, .nav__dropdown-toggle:focus-visible, .nav__dropdown.is-open .nav__dropdown-toggle{
+    color:var(--ink); border-color:var(--ink);
+  }
+  .nav__dropdown-caret{ font-size:.6rem; transition:transform .2s ease; }
+  .nav__dropdown.is-open .nav__dropdown-caret{ transform:rotate(180deg); }
+  .nav__dropdown-menu{
+    position:absolute; top:calc(100% + .9rem); right:0; min-width:170px;
+    background:var(--paper); border:1px solid var(--line);
+    padding:.4rem 0; display:flex; flex-direction:column;
+    opacity:0; visibility:hidden; transform:translateY(-4px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+  }
+  .nav__dropdown.is-open .nav__dropdown-menu{ opacity:1; visibility:visible; transform:translateY(0); }
+  .nav__dropdown-link{
+    font-family:"Space Mono", monospace; font-size:.72rem; letter-spacing:.08em;
+    text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
+    padding:.5rem .9rem; white-space:nowrap;
+  }
+  .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ color:var(--ink); background:color-mix(in srgb, var(--ink) 5%, transparent); }
+
   .site-foot{
     display:flex; align-items:center; justify-content:center; gap:var(--sp-3); flex-wrap:wrap;
     text-align:center; padding:var(--sp-4) var(--sp-3);
@@ -335,6 +362,12 @@
 <nav class="nav">
   <a class="nav__mark" href="#"><span class="nav__mark-palette">Palette</span><span class="nav__mark-by"> by ethan</span></a>
   <div class="nav__links">
+    <div class="nav__dropdown" id="travels-dropdown">
+      <button class="nav__dropdown-toggle" id="travels-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+        Travels <span class="nav__dropdown-caret">&#9662;</span>
+      </button>
+      <div class="nav__dropdown-menu" id="travels-menu"></div>
+    </div>
     <a class="nav__about" href="#/about">About</a>
   </div>
 </nav>
@@ -1445,6 +1478,37 @@
 
   var footerSocial = document.getElementById('footer-social');
   if (footerSocial) footerSocial.innerHTML = socialIconsHtml();
+
+  var travelsDropdown = document.getElementById('travels-dropdown');
+  var travelsToggle = document.getElementById('travels-toggle');
+  var travelsMenu = document.getElementById('travels-menu');
+  if (travelsDropdown && travelsToggle && travelsMenu){
+    travelsMenu.innerHTML = trips.map(function(t){
+      return '<a class="nav__dropdown-link" href="#/trip/'+t.slug+'">'+t.title+'</a>';
+    }).join('');
+
+    function closeTravels(){
+      travelsDropdown.classList.remove('is-open');
+      travelsToggle.setAttribute('aria-expanded', 'false');
+    }
+    function toggleTravels(){
+      var open = travelsDropdown.classList.toggle('is-open');
+      travelsToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    travelsToggle.addEventListener('click', function(ev){
+      ev.stopPropagation();
+      toggleTravels();
+    });
+    travelsMenu.addEventListener('click', function(){ closeTravels(); });
+    document.addEventListener('click', function(ev){
+      if (!travelsDropdown.contains(ev.target)) closeTravels();
+    });
+    document.addEventListener('keydown', function(ev){
+      if (ev.key === 'Escape') closeTravels();
+    });
+    window.addEventListener('hashchange', closeTravels);
+  }
 
   window.addEventListener('hashchange', render);
   render();
