@@ -937,7 +937,6 @@
         { type:'photo', src:'images/seychelles/seychelles-petite-anse-cove.jpg', alt:'A secluded cove of granite boulders and pale sand meeting turquoise water beneath a forested cliff', loc:'PETITE ANSE, MAHÉ', day:'DAY 1' },
         { type:'photo', src:'images/seychelles/seychelles-petite-anse-portrait.jpg', alt:'A hiker standing on a rocky point above a turquoise cove, a palm frond framing the shot', loc:'PETITE ANSE, MAHÉ', day:'DAY 2' },
         { type:'photo', src:'images/seychelles/seychelles-petite-anse-beach-wide.jpg', alt:'A crescent of white sand curving beneath a jungle-covered hillside dotted with resort rooftops', loc:'PETITE ANSE, MAHÉ', day:'DAY 2' },
-        { type:'photo', src:'images/seychelles/seychelles-petite-anse-secluded-cove.jpg', alt:'A palm tree leaning over a boulder-strewn beach at the edge of a turquoise cove', loc:'PETITE ANSE, MAHÉ', day:'DAY 2' },
         { type:'photo-pair', photos:[
           { src:'images/seychelles/seychelles-petite-anse-overlook-portrait.jpg', alt:'A hiker with a backpack pausing on a path above a turquoise bay ringed by resort villas', loc:'PETITE ANSE, MAHÉ', day:'DAY 2' },
           { src:'images/seychelles/seychelles-petite-anse-overlook-wide.jpg', alt:'A wide view down a granite cliff to a crescent beach and bay, resort villas scattered across the hillside', loc:'PETITE ANSE, MAHÉ', day:'DAY 2' }
@@ -1355,7 +1354,9 @@
     'American Airlines': 'images/site/airlines/american.png',
     'EgyptAir': 'images/site/airlines/egyptair.png',
     'Air Cairo': 'images/site/airlines/aircairo.png',
-    'Aer Lingus': 'images/site/airlines/aer-lingus.png'
+    'Aer Lingus': 'images/site/airlines/aer-lingus.png',
+    'Qatar Airways': 'images/site/airlines/qatar-airways.png',
+    'Kenya Airways': 'images/site/airlines/kenya-airways.png'
   };
 
   function renderItinerary(slide){
@@ -1502,7 +1503,7 @@
           '<button class="iconbtn" id="gridToggle" aria-label="View as grid">'+gridIcon+'</button>' +
           '<span class="stage__count">('+(idx+1)+' of '+n+')</span>' +
           '<span class="stage__title">'+escapeHtml(trip.title)+'</span>' +
-          '<a class="stage__itinerary-link" href="#/trip/'+trip.slug+'/0">Itinerary</a>' +
+          (isItinerary ? '' : '<a class="stage__itinerary-link" href="#/trip/'+trip.slug+'/0">Itinerary</a>') +
         '</div>' +
         '<div class="stage">' +
           '<button class="stage__navbtn stage__navbtn--prev" id="prevBtn" aria-label="Previous"'+(idx===0?' hidden':'')+'>‹</button>' +
@@ -1650,7 +1651,9 @@
   var travelsToggle = document.getElementById('travels-toggle');
   var travelsMenu = document.getElementById('travels-menu');
   if (travelsDropdown && travelsToggle && travelsMenu){
-    travelsMenu.innerHTML = trips.map(function(t){
+    travelsMenu.innerHTML = trips.slice().sort(function(a,b){
+      return a.place.localeCompare(b.place);
+    }).map(function(t){
       return '<a class="nav__dropdown-link" href="#/trip/'+t.slug+'">'+escapeHtml(t.place)+'</a>';
     }).join('');
 
