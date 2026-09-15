@@ -34,6 +34,12 @@
     --sp-6: 9rem;
   }
 
+  ::view-transition-old(root),
+  ::view-transition-new(root){
+    animation-duration:.32s;
+    animation-timing-function:ease;
+  }
+
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
       --paper:#0f1310;
@@ -275,27 +281,27 @@
   .stage{ position:relative; flex:1; display:flex; align-items:center; justify-content:center; padding:var(--sp-4) var(--sp-5); min-height:60vh; }
   .stage__navbtn{
     position:fixed; top:50%; transform:translateY(-50%);
-    background:none; border:none; cursor:pointer; color:var(--ink-soft);
+    background:none; cursor:pointer; color:var(--ink-soft);
     font-size:3.4rem; line-height:1; padding:var(--sp-2) var(--sp-1); z-index:20;
+    border:1px solid transparent;
   }
-  .stage__navbtn:hover{ color:var(--ink); }
+  .stage__navbtn:hover, .stage__navbtn:focus-visible{ color:var(--ink); border-color:var(--ink); }
   .stage__navbtn--prev{ left:var(--sp-1); }
   .stage__navbtn--next{ right:var(--sp-1); }
   .stage__navbtn[hidden]{ display:none; }
   .stage__navbtn--itinerary{
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:.3rem; border:1px solid transparent;
+    gap:.3rem; padding:1rem 1.4rem;
   }
-  .stage__navbtn--itinerary:hover, .stage__navbtn--itinerary:focus-visible{ border-color:var(--ink); }
   .stage__navbtn-arrow{ font-size:2.6rem; line-height:1; }
   .stage__nexthint{
-    font-family:"Space Mono",monospace; font-size:.62rem; letter-spacing:.08em; text-transform:uppercase;
+    font-family:"Space Mono",monospace; font-size:.82rem; letter-spacing:.08em; text-transform:uppercase;
     line-height:1.4; text-align:center; white-space:nowrap;
   }
   @media (max-width:720px){
     .stage__navbtn{ font-size:2.4rem; }
     .stage__navbtn-arrow{ font-size:2rem; }
-    .stage__nexthint{ font-size:.56rem; }
+    .stage__nexthint{ font-size:.68rem; }
     .stage__navbtn--itinerary{ padding:.4rem .6rem; }
   }
 
@@ -1499,6 +1505,14 @@
   }
 
   function render(){
+    if (document.startViewTransition){
+      document.startViewTransition(function(){ renderRoute(); });
+    } else {
+      renderRoute();
+    }
+  }
+
+  function renderRoute(){
     if (stageKeyHandler){ document.removeEventListener('keydown', stageKeyHandler); stageKeyHandler = null; }
     if (itineraryLoopTimer){ clearTimeout(itineraryLoopTimer); itineraryLoopTimer = null; }
     var app = document.getElementById('app');
