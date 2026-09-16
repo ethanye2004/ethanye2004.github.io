@@ -1026,6 +1026,34 @@
         { type:'photo', src:'images/kenya/kenya-mara-lioness-yawn.jpg', alt:'A lioness yawning widely while resting in tall green grass', loc:'MAASAI MARA', day:'DAY 5' },
         { type:'photo', src:'images/kenya/kenya-mara-lion-resting.jpg', alt:'A male lion resting in the grass beside a lioness, its mane catching the sun', loc:'MAASAI MARA', day:'DAY 5' }
       ]
+    },
+    {
+      slug: 'paris',
+      title: 'Paris',
+      place: 'Paris',
+      coord: '48.8566°N, 2.3522°E',
+      cover: 'images/paris/paris-grand-staircase-couple.jpg',
+      coverAlt: 'A couple embracing on a grand stone staircase beneath a tall arched window',
+      slides: [
+        { type:'photo', src:'images/paris/paris-luxembourg-gardens-autumn.jpg', alt:'Golden ginkgo trees lining a gravel path in the Luxembourg Gardens, joggers passing a stone palace behind', loc:'LUXEMBOURG GARDENS', day:'DAY 1' },
+        { type:'photo', src:'images/paris/paris-street-candid.jpg', alt:'A pedestrian walking past a pair of tall weathered wooden doors on a Paris street', loc:'PARIS', day:'DAY 1' },
+        { type:'photo', src:'images/paris/paris-tram-cafe-dusk.jpg', alt:'A lit café storefront with outdoor tables at dusk, its awning glowing warm against the blue evening', loc:'PARIS', day:'DAY 1' },
+        { type:'photo', src:'images/paris/paris-notre-dame-night.jpg', alt:'Notre-Dame Cathedral’s illuminated facade rising above the Seine at night', loc:'NOTRE-DAME CATHEDRAL', day:'DAY 2' },
+        { type:'photo', src:'images/paris/paris-seine-bridge-night.jpg', alt:'Buses crossing a stone bridge over the Seine at night, city lights reflected in the water', loc:'SEINE RIVER', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/paris/paris-conciergerie-night.jpg', alt:'The turreted towers of the Conciergerie lit up along the Seine at night', loc:'THE CONCIERGERIE', day:'DAY 2' },
+          { src:'images/paris/paris-eiffel-tower-searchlight.jpg', alt:'The Eiffel Tower lit gold at night, its beacon sweeping a beam of light across the sky', loc:'EIFFEL TOWER', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/paris/paris-grand-staircase-couple.jpg', alt:'A couple embracing on a grand stone staircase beneath a tall arched window', loc:'PARIS', day:'DAY 3' },
+        { type:'photo', src:'images/paris/paris-metro-station.jpg', alt:'A worker on a ladder changing an advertisement poster on a Paris métro platform', loc:'PARIS MÉTRO', day:'DAY 4' },
+        { type:'photo-pair', photos:[
+          { src:'images/paris/paris-louvre-pyramid.jpg', alt:'The glass pyramid of the Louvre beneath the palace’s ornate facade, a Ferris wheel visible beyond', loc:'THE LOUVRE', day:'DAY 4' },
+          { src:'images/paris/paris-louvre-venus-de-milo.jpg', alt:'The Venus de Milo statue dramatically lit against a dark wall, visitors raising phones to photograph it', loc:'THE LOUVRE', day:'DAY 4' }
+        ] },
+        { type:'photo', src:'images/paris/paris-tuileries-ferris-wheel.jpg', alt:'A large Ferris wheel rising above the Tuileries Garden, the Louvre’s wing visible behind it', loc:'JARDIN DES TUILERIES', day:'DAY 4' },
+        { type:'photo', src:'images/paris/paris-orangerie-water-lilies.jpg', alt:'Museum visitors passing before one of Monet’s large Water Lilies murals', loc:'MUSÉE DE L’ORANGERIE', day:'DAY 4' },
+        { type:'photo', src:'images/paris/paris-pont-alexandre-eiffel-dusk.jpg', alt:'The Eiffel Tower silhouetted at dusk beyond the gilded statues of Pont Alexandre III, a river cruise passing below', loc:'PONT ALEXANDRE III', day:'DAY 5' }
+      ]
     }
   ];
 
@@ -1176,6 +1204,20 @@
     'images/namibia/namibia-spitzkoppe-portrait.jpg':1.5006,
     'images/namibia/namibia-spitzkoppe-rock-arch.jpg':1.5,
     'images/namibia/namibia-walvis-bay-pelican.jpg':0.6667,
+    'images/paris/paris-conciergerie-night.jpg':1.5,
+    'images/paris/paris-eiffel-tower-searchlight.jpg':0.6667,
+    'images/paris/paris-grand-staircase-couple.jpg':0.667,
+    'images/paris/paris-louvre-pyramid.jpg':1.5005,
+    'images/paris/paris-louvre-venus-de-milo.jpg':0.6667,
+    'images/paris/paris-luxembourg-gardens-autumn.jpg':0.6667,
+    'images/paris/paris-metro-station.jpg':1.5006,
+    'images/paris/paris-notre-dame-night.jpg':1.5,
+    'images/paris/paris-orangerie-water-lilies.jpg':1.5006,
+    'images/paris/paris-pont-alexandre-eiffel-dusk.jpg':1.5,
+    'images/paris/paris-seine-bridge-night.jpg':1.5,
+    'images/paris/paris-street-candid.jpg':0.6667,
+    'images/paris/paris-tram-cafe-dusk.jpg':0.6667,
+    'images/paris/paris-tuileries-ferris-wheel.jpg':1.5007,
     'images/patagonia/patagonia-alpenglow-notch.jpg':1.5006,
     'images/patagonia/patagonia-base-torres-clearing.jpg':1.5,
     'images/patagonia/patagonia-cuernos-close.jpg':1.5007,
@@ -1865,13 +1907,14 @@
     idx = Math.max(0, Math.min(n-1, idx));
     var slide = trip.slides[idx];
     var isItinerary = slide.type === 'itinerary';
+    var hasItinerary = trip.slides[0] && trip.slides[0].type === 'itinerary';
     return (
       '<div class="trip">' +
         '<div class="stage__bar col--wide">' +
           '<button class="iconbtn" id="gridToggle" aria-label="View as grid">'+gridIcon+'</button>' +
           '<span class="stage__count">('+(idx+1)+' of '+n+')</span>' +
           '<span class="stage__title">'+escapeHtml(trip.title)+'</span>' +
-          (isItinerary ? '' : '<a class="stage__itinerary-link" href="#/trip/'+trip.slug+'/0">Itinerary</a>') +
+          (hasItinerary && !isItinerary ? '<a class="stage__itinerary-link" href="#/trip/'+trip.slug+'/0">Itinerary</a>' : '') +
         '</div>' +
         '<div class="stage">' +
           '<button class="stage__navbtn stage__navbtn--prev" id="prevBtn" aria-label="Previous"'+(idx===0?' hidden':'')+'>‹</button>' +
@@ -1904,12 +1947,13 @@
         '</span>' +
       '</button>';
     }).join('');
+    var hasItinerary = trip.slides[0] && trip.slides[0].type === 'itinerary';
     return (
       '<div class="trip">' +
         '<div class="stage__bar col--wide">' +
           '<button class="iconbtn" id="frameToggle" aria-label="View as slideshow">'+frameIcon+'</button>' +
           '<span class="stage__title">'+escapeHtml(trip.title)+'</span>' +
-          '<a class="stage__itinerary-link" href="#/trip/'+trip.slug+'/0">Itinerary</a>' +
+          (hasItinerary ? '<a class="stage__itinerary-link" href="#/trip/'+trip.slug+'/0">Itinerary</a>' : '') +
         '</div>' +
         '<div class="thumbgrid">' + html + '</div>' +
       '</div>'
