@@ -239,10 +239,11 @@
     opacity:0; transition:opacity .35s ease; pointer-events:none;
   }
   .tile:hover .tile__place, .tile:focus-visible .tile__place{ opacity:1; }
+  @media (hover:none){
+    .tile__place{ opacity:1; }
+    .tile__frame::after{ background:rgba(0,0,0,.28); }
+  }
 
-  .tile--soon{ opacity:.35; cursor:default; }
-  .tile--soon .tile__frame{ display:flex; align-items:center; justify-content:center; }
-  .tile--soon .tile__frame span{ font-family:"Space Mono",monospace; font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); }
 
   /* ================= ABOUT PAGE ================= */
   .about-page{ padding-top:calc(var(--navh) + var(--sp-5)); padding-bottom:var(--sp-6); }
@@ -407,6 +408,10 @@
     opacity:0; transition:opacity .35s ease; pointer-events:none;
   }
   .thumb:hover .thumb__place, .thumb:focus-visible .thumb__place{ opacity:1; }
+  @media (hover:none){
+    .thumb__place{ opacity:1; }
+    .thumb__frame::after{ background:rgba(0,0,0,.28); }
+  }
   @media (max-width:720px){ .thumbgrid{ columns:2 180px; } }
 </style>
 </head>
@@ -979,7 +984,8 @@
           title:'Kenya',
           legs:[
             { airline:'Kenya Airways', flight:'259', fromCode:'SEZ', toCode:'NBO', dep:'3:45 AM GMT+4', arr:'6:00 AM GMT+3', duration:'3 hr 15 min', aircraft:'Embraer E190' },
-            { airline:'Kenya Airways', flight:'886', fromCode:'NBO', toCode:'BKK', dep:'12:11 AM GMT+3', arr:'1:42 PM GMT+7', duration:'9 hr 31 min', aircraft:'Boeing 787-8' }
+            { mode:'shuttle', airline:'Safari', fromCode:'NBO', toCode:'MRE' },
+            { mode:'shuttle', airline:'Safari', fromCode:'MRE', toCode:'NBO' }
           ]
         },
         { type:'photo', src:'images/kenya/kenya-nairobi-apartments.jpg', alt:'An elevated view over Nairobi rooftops, high-rise apartments rising behind rusted tin roofs strung with laundry', loc:'NAIROBI', day:'DAY 1' },
@@ -1035,6 +1041,12 @@
       cover: 'images/paris/paris-grand-staircase-couple.jpg',
       coverAlt: 'A couple embracing on a grand stone staircase beneath a tall arched window',
       slides: [
+        { type:'itinerary',
+          title:'Paris',
+          legs:[
+            { airline:'Aer Lingus', flight:'520', fromCode:'DUB', toCode:'CDG', dep:'6:58 AM GMT', arr:'9:43 AM GMT+1', duration:'1 hr 45 min', aircraft:'Airbus A321neo' }
+          ]
+        },
         { type:'photo', src:'images/paris/paris-luxembourg-gardens-autumn.jpg', alt:'Golden ginkgo trees lining a gravel path in the Luxembourg Gardens, joggers passing a stone palace behind', loc:'LUXEMBOURG GARDENS', day:'DAY 1' },
         { type:'photo', src:'images/paris/paris-street-candid.jpg', alt:'A pedestrian walking past a pair of tall weathered wooden doors on a Paris street', loc:'PARIS', day:'DAY 1' },
         { type:'photo', src:'images/paris/paris-tram-cafe-dusk.jpg', alt:'A lit café storefront with outdoor tables at dusk, its awning glowing warm against the blue evening', loc:'PARIS', day:'DAY 1' },
@@ -1406,7 +1418,7 @@
           '<span class="tile__place">'+escapeHtml(t.place)+'</span>' +
         '</div>' +
         '</a>';
-    }).join('') + '<div class="tile tile--soon"><div class="tile__frame"><span>More trips soon</span></div></div>';
+    }).join('');
 
     var heroImg = 'images/site/hero-half-dome.jpg';
     var heroImgMobile = 'images/site/hero-half-dome-mobile.jpg';
@@ -1491,7 +1503,8 @@
     DOH: [25.2731, 51.6086],
     SEZ: [-4.6743, 55.5218],
     NBO: [-1.3192, 36.9278],
-    BKK: [13.6900, 100.7501]
+    BKK: [13.6900, 100.7501],
+    MRE: [-1.5030, 35.0680]
   };
 
   // Simplified coastline outlines used as a map backdrop so routes read against real
@@ -1591,10 +1604,21 @@
     [51.6,-10.2]
   ];
 
+  // Kenya's national outline (not just its short Indian Ocean coastline), so
+  // interior-only itineraries like Nairobi-to-Maasai-Mara still render a
+  // recognizable, fully filled landmass instead of a stray coastline fragment.
+  var KENYA_OUTLINE = [
+    [4.62,35.95],[4.45,38.0],[3.9,39.8],[3.5,41.0],[1.7,41.0],
+    [0.0,41.3],[-1.2,41.3],[-1.68,41.55],[-2.3,40.9],[-3.2,40.1],
+    [-4.05,39.66],[-4.65,39.2],[-4.0,37.7],[-2.9,36.0],[-1.5,34.5],
+    [-1.0,34.0],[0.5,34.2],[2.0,34.0],[3.5,34.7],[4.2,35.3]
+  ];
+
   var COASTLINE_REGIONS = [
     { points: NORTH_AMERICA_COASTLINE, mode:'closed' },
     { points: SOUTH_AMERICA_COASTLINE, mode:'closed' },
     { points: AFRICA_COASTLINE, mode:'closed' },
+    { points: KENYA_OUTLINE, mode:'closed' },
     { points: EUROPE_COASTLINE, mode:'closed' },
     { points: UK_COASTLINE, mode:'closed' },
     { points: IRELAND_COASTLINE, mode:'closed' },
