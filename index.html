@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340;0,9..144,560;1,9..144,340;1,9..144,440&family=Abril+Fatface&family=Caveat:wght@500;600&family=Work+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script>window.goatcounter = { no_onload: true };</script>
+<script data-goatcounter="https://ethye.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
   :root{
     --paper:#eef1ee;
@@ -2128,6 +2130,50 @@
 
   window.addEventListener('hashchange', render);
   render();
+})();
+</script>
+<script>
+(function(){
+  var NO_TRACK_KEY = 'palette_no_track';
+
+  function getFlag(){
+    try { return localStorage.getItem(NO_TRACK_KEY) === '1'; }
+    catch (e) { return false; }
+  }
+  function setFlag(){
+    try { localStorage.setItem(NO_TRACK_KEY, '1'); } catch (e){}
+  }
+  function showToast(text){
+    document.addEventListener('DOMContentLoaded', function(){
+      var toast = document.createElement('div');
+      toast.textContent = text;
+      toast.style.cssText = 'position:fixed;left:50%;bottom:1.5rem;transform:translateX(-50%);' +
+        'background:#151a18;color:#f6efe1;padding:.7rem 1.2rem;border-radius:3px;' +
+        'font-family:"Space Mono",monospace;font-size:.78rem;letter-spacing:.03em;z-index:9999;' +
+        'opacity:0;transition:opacity .3s ease;pointer-events:none;';
+      document.body.appendChild(toast);
+      requestAnimationFrame(function(){ toast.style.opacity = '1'; });
+      setTimeout(function(){
+        toast.style.opacity = '0';
+        setTimeout(function(){ toast.remove(); }, 300);
+      }, 3500);
+    });
+  }
+
+  var hash = location.hash.replace(/^#\/?/, '');
+  if (hash === 'donottrack'){
+    setFlag();
+    location.hash = '';
+    showToast('Visits from this device will no longer be counted.');
+  }
+
+  if (!getFlag()){
+    window.addEventListener('load', function(){
+      if (window.goatcounter && window.goatcounter.count){
+        window.goatcounter.count({ path: location.pathname + (location.hash || '') });
+      }
+    });
+  }
 })();
 </script>
 </body>
