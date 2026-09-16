@@ -104,6 +104,7 @@
     font-family:"Fraunces", serif; font-style:normal; font-weight:400;
     font-size:1.7rem; letter-spacing:.01em; text-decoration:none;
     border:1px solid transparent; padding:.3rem .5rem; margin:-.3rem -.5rem;
+    display:flex; flex-direction:column; align-items:flex-start; line-height:1.05;
   }
   .nav__mark:hover, .nav__mark:focus-visible{ border-color:var(--ink); }
   .nav__mark-palette{ font-family:"Abril Fatface", ui-serif, Georgia, serif; text-transform:uppercase; letter-spacing:.01em; color:#e3a94c; }
@@ -414,7 +415,7 @@
 <div class="grain" aria-hidden="true"></div>
 
 <nav class="nav">
-  <a class="nav__mark" href="#"><span class="nav__mark-palette">Palette</span><span class="nav__mark-by"> by ethan</span></a>
+  <a class="nav__mark" href="#"><span class="nav__mark-palette">Palette</span><span class="nav__mark-by">by ethan</span></a>
   <div class="nav__links">
     <div class="nav__dropdown" id="travels-dropdown">
       <button class="nav__dropdown-toggle" id="travels-toggle" type="button" aria-haspopup="true" aria-expanded="false">
