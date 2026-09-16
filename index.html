@@ -982,6 +982,7 @@
       slides: [
         { type:'itinerary',
           title:'Kenya',
+          mapPad: { lat:25 },
           legs:[
             { airline:'Kenya Airways', flight:'259', fromCode:'SEZ', toCode:'NBO', dep:'3:45 AM GMT+4', arr:'6:00 AM GMT+3', duration:'3 hr 15 min', aircraft:'Embraer E190' },
             { mode:'shuttle', airline:'Safari', fromCode:'NBO', toCode:'MRE' },
@@ -1681,7 +1682,7 @@
     return '<path d="M11,0 L2,-1.4 L-9,0 L2,1.4 Z M1,-6.2 L2.6,0 L1,6.2 L-0.6,0 Z M-6,-3 L-5,0 L-6,3 L-7.2,0 Z"/>';
   }
 
-  function buildItineraryMap(legs){
+  function buildItineraryMap(legs, mapPad){
     var codes = [];
     legs.forEach(function(l){
       if (codes.indexOf(l.fromCode) === -1) codes.push(l.fromCode);
@@ -1692,8 +1693,10 @@
     var airportLons = airportPts.map(function(p){ return p[1]; });
     var minALat = Math.min.apply(null, airportLats), maxALat = Math.max.apply(null, airportLats);
     var minALon = Math.min.apply(null, airportLons), maxALon = Math.max.apply(null, airportLons);
-    var latPad = Math.max(5, (maxALat - minALat) * 0.18);
-    var lonPad = Math.max(8, (maxALon - minALon) * 0.18);
+    var minLatPad = (mapPad && mapPad.lat) || 5;
+    var minLonPad = (mapPad && mapPad.lon) || 8;
+    var latPad = Math.max(minLatPad, (maxALat - minALat) * 0.18);
+    var lonPad = Math.max(minLonPad, (maxALon - minALon) * 0.18);
     var latLo = minALat - latPad, latHi = maxALat + latPad;
     var lonLo = minALon - lonPad, lonHi = maxALon + lonPad;
 
@@ -1794,7 +1797,7 @@
   };
 
   function renderItinerary(slide){
-    var mapSvg = buildItineraryMap(slide.legs);
+    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad);
     var legsHtml = slide.legs.map(function(l){
       var mode = l.mode || 'flight';
       var logoSrc = AIRLINE_LOGO[l.airline];
