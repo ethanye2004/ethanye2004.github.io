@@ -1926,12 +1926,17 @@
     return out;
   }
 
+  function isMobileViewport(){
+    return window.innerWidth <= 720;
+  }
+
   function renderStage(trip, idx){
     var n = trip.slides.length;
     idx = Math.max(0, Math.min(n-1, idx));
     var slide = trip.slides[idx];
     var isItinerary = slide.type === 'itinerary';
     var hasItinerary = trip.slides[0] && trip.slides[0].type === 'itinerary';
+    var jumpsToGrid = isItinerary && idx<n-1 && !isMobileViewport();
     return (
       '<div class="trip">' +
         '<div class="stage__bar col--wide">' +
@@ -1943,7 +1948,7 @@
         '<div class="stage">' +
           '<button class="stage__navbtn stage__navbtn--prev" id="prevBtn" aria-label="Previous"'+(idx===0?' hidden':'')+'>‹</button>' +
           renderSlide(slide) +
-          (isItinerary && idx<n-1 ?
+          (jumpsToGrid ?
             '<button class="stage__navbtn stage__navbtn--next stage__navbtn--itinerary" id="nextBtn" aria-label="Next: view all photos">' +
               '<span class="stage__navbtn-arrow">›</span>' +
               '<span class="stage__nexthint">to the<br>photo palette</span>' +
@@ -1994,7 +1999,7 @@
     var gridBtn = document.getElementById('gridToggle');
     function goNext(){
       if (idx>=n-1) return;
-      if (isItinerary){ goto('#/trip/'+trip.slug+'/grid'); }
+      if (isItinerary && !isMobileViewport()){ goto('#/trip/'+trip.slug+'/grid'); }
       else { goto('#/trip/'+trip.slug+'/'+(idx+1)); }
     }
     if (prev) prev.addEventListener('click', function(){ if (idx>0) goto('#/trip/'+trip.slug+'/'+(idx-1)); });
