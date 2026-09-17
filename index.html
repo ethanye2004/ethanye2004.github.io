@@ -240,11 +240,8 @@
     font-size:.85rem; letter-spacing:.08em; color:#f6efe1; text-shadow:0 2px 10px rgba(0,0,0,.5);
     opacity:0; transition:opacity .35s ease; pointer-events:none;
   }
-  .tile:hover .tile__place, .tile:focus-visible .tile__place{ opacity:1; }
-  @media (hover:none){
-    .tile__place{ opacity:1; }
-    .tile__frame::after{ background:rgba(0,0,0,.28); }
-  }
+  .tile:hover .tile__place, .tile:focus-visible .tile__place, .tile.is-active .tile__place{ opacity:1; }
+  .tile.is-active .tile__frame::after{ background:rgba(0,0,0,.28); }
 
 
   /* ================= ABOUT PAGE ================= */
@@ -411,11 +408,8 @@
     font-size:.78rem; letter-spacing:.08em; color:#f6efe1; text-shadow:0 2px 10px rgba(0,0,0,.5);
     opacity:0; transition:opacity .35s ease; pointer-events:none;
   }
-  .thumb:hover .thumb__place, .thumb:focus-visible .thumb__place{ opacity:1; }
-  @media (hover:none){
-    .thumb__place{ opacity:1; }
-    .thumb__frame::after{ background:rgba(0,0,0,.28); }
-  }
+  .thumb:hover .thumb__place, .thumb:focus-visible .thumb__place, .thumb.is-active .thumb__place{ opacity:1; }
+  .thumb.is-active .thumb__frame::after{ background:rgba(0,0,0,.28); }
   @media (max-width:720px){ .thumbgrid{ columns:2 180px; } }
 </style>
 </head>
@@ -2235,6 +2229,32 @@
     });
     window.addEventListener('hashchange', closeTravels);
   }
+
+  // On touch devices there's no hover state, so the place-name caption on
+  // trip tiles and grid thumbnails stays hidden until tapped: the first tap
+  // reveals it instead of navigating, and a second tap (or the browser's
+  // native link handling) follows through to the next page.
+  function isTouchOnly(){
+    return window.matchMedia('(hover: none)').matches;
+  }
+  document.addEventListener('click', function(ev){
+    if (!isTouchOnly()) return;
+    var el = ev.target.closest('.tile, .thumb');
+    if (el){
+      if (!el.classList.contains('is-active')){
+        ev.preventDefault();
+        ev.stopPropagation();
+        document.querySelectorAll('.tile.is-active, .thumb.is-active').forEach(function(other){
+          if (other !== el) other.classList.remove('is-active');
+        });
+        el.classList.add('is-active');
+      }
+    } else {
+      document.querySelectorAll('.tile.is-active, .thumb.is-active').forEach(function(other){
+        other.classList.remove('is-active');
+      });
+    }
+  }, true);
 
   window.addEventListener('hashchange', render);
   render();
