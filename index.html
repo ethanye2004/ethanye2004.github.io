@@ -539,7 +539,8 @@
           legs:[
             { airline:'Airlink', flight:'341', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190', direction:'outbound' },
             { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'WVB', toCode:'SES' },
-            { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'SES', toCode:'WDH' }
+            { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'SES', toCode:'WDH' },
+            { airline:'Proflight Zambia', flight:'63', fromCode:'WDH', toCode:'LVI', dep:'12:20 PM', arr:'1:55 PM', duration:'1 hr 35 min', aircraft:'CRJ-200', direction:'inbound' }
           ]
         },
         { type:'photo', src:'images/namibia/namibia-walvis-bay-pelican.jpg', alt:'A great white pelican preening on a sandy beach at Walvis Bay', loc:'WALVIS BAY', day:'DAY 1' },
@@ -586,7 +587,8 @@
           legs:[
             { airline:'Air France', flight:'81', fromCode:'SFO', toCode:'CDG', dep:'8:13 PM PDT', arr:'3:38 PM GMT+2', duration:'10 hr 25 min', aircraft:'Airbus A350-900', direction:'outbound' },
             { airline:'Air France', flight:'990', fromCode:'CDG', toCode:'JNB', dep:'11:27 PM GMT+2', arr:'10:54 AM GMT+2', duration:'11 hr 27 min', aircraft:'Airbus A350-900', direction:'outbound' },
-            { airline:'FlySafair', flight:'206', fromCode:'JNB', toCode:'CPT', dep:'12:13 PM GMT+2', arr:'2:35 PM GMT+2', duration:'2 hr 22 min', aircraft:'Boeing 737-800' }
+            { airline:'FlySafair', flight:'206', fromCode:'JNB', toCode:'CPT', dep:'12:13 PM GMT+2', arr:'2:35 PM GMT+2', duration:'2 hr 22 min', aircraft:'Boeing 737-800' },
+            { airline:'Airlink', flight:'341', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190', direction:'inbound' }
           ]
         },
         { type:'photo', src:'images/south-africa/sa-cape-point-boardwalk.jpg', alt:'A wooden boardwalk leading down toward turquoise water at Dias Beach, sheer cliffs rising on either side', loc:'CAPE POINT', day:'DAY 1' },
@@ -709,7 +711,8 @@
             { airline:'Ethiopian Airlines', flight:'453', fromCode:'CAI', toCode:'ADD', dep:'3:07 AM GMT+2', arr:'7:19 AM GMT+3', duration:'3 hr 12 min', aircraft:'Boeing 777-300ER', direction:'outbound' },
             { airline:'Ethiopian Airlines', flight:'574', fromCode:'ADD', toCode:'FCO', dep:'10:42 PM GMT+3', arr:'3:21 AM GMT+1', duration:'6 hr 39 min', aircraft:'Boeing 787-8', direction:'inbound' },
             { airline:'Ethiopian Airlines', flight:'574', fromCode:'FCO', toCode:'ORD', dep:'4:04 AM GMT+1', arr:'7:49 AM CST', duration:'10 hr 45 min', aircraft:'Boeing 787-8', direction:'inbound' },
-            { airline:'American Airlines', flight:'2212', fromCode:'ORD', toCode:'SNA', dep:'11:47 AM CST', arr:'2:27 PM PST', duration:'4 hr 40 min', aircraft:'Boeing 737 MAX 8', direction:'inbound' }
+            { airline:'American Airlines', flight:'2212', fromCode:'ORD', toCode:'SNA', dep:'11:47 AM CST', arr:'2:27 PM PST', duration:'4 hr 40 min', aircraft:'Boeing 737 MAX 8', direction:'inbound' },
+            { airline:'Southwest', flight:'4409', fromCode:'SNA', toCode:'SJC', dep:'9:03 PM PST', arr:'10:04 PM PST', duration:'1 hr 1 min', aircraft:'Boeing 737-700', direction:'inbound' }
           ]
         },
         { type:'photo-pair', photos:[
@@ -745,7 +748,8 @@
           legs:[
             { airline:'EgyptAir', flight:'776', fromCode:'DUB', toCode:'CAI', dep:'7:54 PM GMT', arr:'3:04 AM GMT+2', duration:'5 hr 10 min', aircraft:'Airbus A320neo', direction:'outbound' },
             { airline:'Air Cairo', flight:'60', fromCode:'CAI', toCode:'LXR', dep:'11:15 AM GMT+2', arr:'12:39 PM GMT+2', duration:'1 hr 24 min', aircraft:'Airbus A320-200' },
-            { airline:'EgyptAir', flight:'63', fromCode:'LXR', toCode:'CAI', dep:'7:55 AM GMT+2', arr:'9:06 AM GMT+2', duration:'1 hr 11 min', aircraft:'Boeing 737-800' }
+            { airline:'EgyptAir', flight:'63', fromCode:'LXR', toCode:'CAI', dep:'7:55 AM GMT+2', arr:'9:06 AM GMT+2', duration:'1 hr 11 min', aircraft:'Boeing 737-800' },
+            { airline:'Ethiopian Airlines', flight:'453', fromCode:'CAI', toCode:'ADD', dep:'3:07 AM GMT+2', arr:'7:19 AM GMT+3', duration:'3 hr 12 min', aircraft:'Boeing 777-300ER', direction:'inbound' }
           ]
         },
         { type:'photo', src:'images/egypt/egypt-cairo-street-aerial.jpg', alt:'An elevated view of a Cairo street, cars parked at angles and a woman in black crossing between them', loc:'CAIRO', day:'DAY 1' },
@@ -1587,7 +1591,8 @@
     SZG: [47.7933, 13.0043],
     MUC: [48.3538, 11.7861],
     TFU: [30.3078, 104.4419],
-    PRG: [50.1008, 14.2632]
+    PRG: [50.1008, 14.2632],
+    SJC: [37.3626, -121.9291]
   };
 
   // Simplified coastline outlines used as a map backdrop so routes read against real
@@ -1658,6 +1663,16 @@
     [37.5,119.0],[38.9,117.7],[40.08,116.6]
   ];
 
+  // The Indochina peninsula (Myanmar's Tenasserim coast, Thailand, Cambodia and
+  // southern Vietnam), as its own closed landmass so a Bangkok-bound leg reads
+  // against real Southeast Asian geography instead of floating in open water.
+  var INDOCHINA_OUTLINE = [
+    [20.5,98.0],[19.0,97.8],[16.8,98.2],[14.0,98.2],[11.5,99.2],
+    [9.0,99.0],[7.5,99.6],[6.5,101.3],[7.3,100.4],[9.5,99.9],
+    [11.8,99.7],[13.0,100.6],[12.6,102.0],[10.8,103.5],[9.2,105.8],
+    [10.3,106.8],[10.8,106.7],[13.8,109.2],[16.0,105.5]
+  ];
+
   // Iberia, France, the Low Countries/German North Sea coast, the Baltic and Italy
   // (including the Rome/Fiumicino coast), closing back through the Mediterranean.
   // The British Isles are drawn as separate landmasses below so they don't read as
@@ -1694,6 +1709,7 @@
     { points: EUROPE_COASTLINE, mode:'closed' },
     { points: UK_COASTLINE, mode:'closed' },
     { points: IRELAND_COASTLINE, mode:'closed' },
+    { points: INDOCHINA_OUTLINE, mode:'closed' },
     { points: ASIA_COASTLINE, mode:'ribbon', dir:-1 }
   ];
 
@@ -1864,7 +1880,9 @@
     'Air Cairo': 'images/site/airlines/aircairo.png',
     'Aer Lingus': 'images/site/airlines/aer-lingus.png',
     'Qatar Airways': 'images/site/airlines/qatar-airways.png',
-    'Kenya Airways': 'images/site/airlines/kenya-airways.png'
+    'Kenya Airways': 'images/site/airlines/kenya-airways.png',
+    'Smartwings': 'images/site/airlines/smartwings.png',
+    'Proflight Zambia': 'images/site/airlines/proflight-zambia.png'
   };
 
   function renderItinerary(slide){
