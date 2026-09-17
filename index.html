@@ -1663,14 +1663,31 @@
     [37.5,119.0],[38.9,117.7],[40.08,116.6]
   ];
 
-  // The Indochina peninsula (Myanmar's Tenasserim coast, Thailand, Cambodia and
-  // southern Vietnam), as its own closed landmass so a Bangkok-bound leg reads
-  // against real Southeast Asian geography instead of floating in open water.
-  var INDOCHINA_OUTLINE = [
-    [20.5,98.0],[19.0,97.8],[16.8,98.2],[14.0,98.2],[11.5,99.2],
-    [9.0,99.0],[7.5,99.6],[6.5,101.3],[7.3,100.4],[9.5,99.9],
-    [11.8,99.7],[13.0,100.6],[12.6,102.0],[10.8,103.5],[9.2,105.8],
-    [10.3,106.8],[10.8,106.7],[13.8,109.2],[16.0,105.5]
+  // The Arabian Peninsula's full perimeter (Persian Gulf with the Qatar
+  // peninsula, the Musandam tip and Gulf of Oman, the Arabian Sea and Gulf of
+  // Aden coasts, and the Red Sea coast), so a Doha layover reads against real
+  // geography instead of floating in open water.
+  var ARABIA_OUTLINE = [
+    [30.0,48.0],[27.8,49.2],[26.2,50.2],[25.9,51.2],[26.1,51.3],
+    [25.5,51.6],[24.9,51.55],[24.5,51.4],[24.4,52.6],[25.3,55.3],
+    [26.4,56.4],[23.6,58.6],[17.0,54.8],[12.8,45.0],[15.6,42.4],
+    [18.2,41.7],[21.5,39.2],[25.3,36.6],[28.0,34.8],[29.5,35.0],
+    [30.5,42.0]
+  ];
+
+  // India, Myanmar and the Indochina peninsula (Thailand, Cambodia, southern
+  // Vietnam) traced as one continuous landmass, so a Kenya-to-Bangkok leg
+  // reads as a flight over the Asian mainland instead of empty ocean, and a
+  // Bangkok layover sits against real Southeast Asian geography.
+  var SOUTH_ASIA_OUTLINE = [
+    [24.7,66.7],[22.5,69.0],[21.6,72.6],[19.0,72.8],[15.5,73.8],
+    [12.9,74.8],[8.5,76.9],[8.1,77.5],[9.3,79.0],[11.0,79.8],
+    [13.1,80.3],[16.5,82.3],[20.3,86.7],[21.6,87.5],[22.3,89.0],
+    [22.8,91.8],[20.8,92.9],[16.8,94.5],[15.2,97.9],[12.5,98.3],
+    [10.0,98.6],[9.0,98.3],[7.9,98.3],[6.6,99.8],[6.2,100.3],
+    [6.8,101.3],[9.1,99.9],[12.0,99.9],[13.1,100.9],[12.2,102.3],
+    [10.6,103.5],[8.6,104.8],[10.3,106.7],[13.8,109.2],[16.0,105.5],
+    [20.0,98.5],[24.0,94.0],[28.5,81.0],[30.5,74.0]
   ];
 
   // Iberia, France, the Low Countries/German North Sea coast, the Baltic and Italy
@@ -1709,7 +1726,8 @@
     { points: EUROPE_COASTLINE, mode:'closed' },
     { points: UK_COASTLINE, mode:'closed' },
     { points: IRELAND_COASTLINE, mode:'closed' },
-    { points: INDOCHINA_OUTLINE, mode:'closed' },
+    { points: ARABIA_OUTLINE, mode:'closed' },
+    { points: SOUTH_ASIA_OUTLINE, mode:'closed' },
     { points: ASIA_COASTLINE, mode:'ribbon', dir:-1 }
   ];
 
@@ -1882,7 +1900,9 @@
     'Qatar Airways': 'images/site/airlines/qatar-airways.png',
     'Kenya Airways': 'images/site/airlines/kenya-airways.png',
     'Smartwings': 'images/site/airlines/smartwings.png',
-    'Proflight Zambia': 'images/site/airlines/proflight-zambia.png'
+    'Proflight Zambia': 'images/site/airlines/proflight-zambia.png',
+    'Sichuan Airlines': 'images/site/airlines/sichuan-airlines.png',
+    'Southwest': 'images/site/airlines/southwest.png'
   };
 
   function renderItinerary(slide){
