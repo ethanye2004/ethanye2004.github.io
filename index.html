@@ -1069,10 +1069,76 @@
         { type:'photo', src:'images/paris/paris-orangerie-water-lilies.jpg', alt:'Museum visitors passing before one of Monet’s large Water Lilies murals', loc:'MUSÉE DE L’ORANGERIE', day:'DAY 4' },
         { type:'photo', src:'images/paris/paris-pont-alexandre-eiffel-dusk.jpg', alt:'The Eiffel Tower silhouetted at dusk beyond the gilded statues of Pont Alexandre III, a river cruise passing below', loc:'PONT ALEXANDRE III', day:'DAY 5' }
       ]
+    },
+    {
+      slug: 'austria',
+      title: 'Austria',
+      place: 'Austria',
+      coord: '47.5162°N, 14.5501°E',
+      cover: 'images/austria/austria-hallstatt-lake-rainbow-moody.jpg',
+      coverAlt: 'A faint rainbow arching over Hallstatt’s lakeside church spire and wooden boathouses beneath brooding mountains',
+      slides: [
+        { type:'itinerary',
+          title:'Austria',
+          legs:[
+            { mode:'train', airline:'ÖBB', fromCode:'BTS', toCode:'VIE' },
+            { mode:'train', airline:'ÖBB', fromCode:'VIE', toCode:'INN' },
+            { mode:'train', airline:'ÖBB', fromCode:'INN', toCode:'SZG' },
+            { mode:'train', airline:'Deutsche Bahn', fromCode:'SZG', toCode:'MUC' },
+            { airline:'Aer Lingus', flight:'353', fromCode:'MUC', toCode:'DUB', dep:'11:18 AM GMT+1', arr:'12:45 PM GMT', duration:'2 hr 27 min', aircraft:'Airbus A321neo' }
+          ]
+        },
+        { type:'photo-pair', photos:[
+          { src:'images/austria/austria-vienna-peterskirche-night.jpg', alt:'Peterskirche’s illuminated green dome and twin bell towers rising above a quiet Vienna street at night', loc:'PETERSKIRCHE, VIENNA', day:'DAY 1' },
+          { src:'images/austria/austria-vienna-stephansdom-market-night.jpg', alt:'St. Stephen’s Cathedral’s Gothic spire lit purple above a glowing Christmas market at night', loc:'ST. STEPHEN’S CATHEDRAL, VIENNA', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/austria/austria-schonbrunn-statue-autumn.jpg', alt:'A marble statue of a soldier standing beside a gravel path lined with golden autumn trees in the Schönbrunn Palace gardens', loc:'SCHÖNBRUNN PALACE, VIENNA', day:'DAY 2' },
+        { type:'photo', src:'images/austria/austria-schonbrunn-palace-wide.jpg', alt:'Schönbrunn Palace’s long ochre facade seen from the Gloriette, its gardens and the Vienna skyline stretching behind', loc:'SCHÖNBRUNN PALACE, VIENNA', day:'DAY 2' },
+        { type:'photo', src:'images/austria/austria-belvedere-gardens-walk.jpg', alt:'A hedge-lined path leading past the Belvedere’s outbuildings toward Vienna’s red-roofed cityscape', loc:'BELVEDERE PALACE, VIENNA', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/austria/austria-hallstatt-hillside-waterfall.jpg', alt:'Traditional wood and stucco houses climbing a steep hillside beside a narrow waterfall cutting through gray rock', loc:'HALLSTATT', day:'DAY 3' },
+          { src:'images/austria/austria-hallstatt-village-cliffside.jpg', alt:'A dense cluster of traditional Hallstatt houses stacked up a forested mountainside beneath sheer gray cliffs', loc:'HALLSTATT', day:'DAY 3' }
+        ] },
+        { type:'photo-pair', photos:[
+          { src:'images/austria/austria-hallstatt-lake-rainbow-moody.jpg', alt:'A faint rainbow arching over Hallstatt’s lakeside church spire and wooden boathouses beneath brooding mountains', loc:'HALLSTATT', day:'DAY 3' },
+          { src:'images/austria/austria-hallstatt-lake-rainbow.jpg', alt:'A rainbow over Hallstatt’s lake, its church spire and pastel houses reflected in the still water beneath sunlit cliffs', loc:'HALLSTATT', day:'DAY 3' }
+        ] },
+        { type:'photo', src:'images/austria/austria-hallstatt-lake-snow-peaks.jpg', alt:'Hallstatt’s church spire and lakefront houses beneath snow-dusted peaks, a tour boat moored along the shore', loc:'HALLSTATT', day:'DAY 3' },
+        { type:'photo', src:'images/austria/austria-salzburg-mirabell-fortress.jpg', alt:'A gravel path through Mirabell Garden’s autumn trees leading toward Hohensalzburg Fortress on its hilltop', loc:'MIRABELL GARDEN, SALZBURG', day:'DAY 4' },
+        { type:'photo', src:'images/austria/austria-salzburg-church-autumn.jpg', alt:'A brick Gothic Revival church tower rising above golden autumn trees in Salzburg', loc:'SALZBURG', day:'DAY 4' },
+        { type:'photo', src:'images/austria/austria-salzburg-park-palace.jpg', alt:'A gravel path through golden autumn trees leading to a pink palace facade in Salzburg', loc:'SALZBURG', day:'DAY 4' },
+        { type:'photo-pair', photos:[
+          { src:'images/austria/austria-salzburg-old-town-gate.jpg', alt:'Golden autumn trees framing a stone archway on a quiet Salzburg old town street corner', loc:'SALZBURG OLD TOWN', day:'DAY 4' },
+          { src:'images/austria/austria-salzburg-golden-sphere.jpg', alt:'A man balanced atop a giant golden sphere sculpture in Kapitelplatz, a green cathedral dome rising behind it', loc:'KAPITELPLATZ, SALZBURG', day:'DAY 4' }
+        ] },
+        { type:'photo', src:'images/austria/austria-salzburg-fortress-view-countryside.jpg', alt:'A view from Hohensalzburg Fortress over wooded hillsides and scattered farmhouses toward the countryside beyond Salzburg', loc:'HOHENSALZBURG FORTRESS, SALZBURG', day:'DAY 4' },
+        { type:'photo-pair', photos:[
+          { src:'images/austria/austria-salzburg-fortress-old-town.jpg', alt:'Salzburg’s old town and cathedral domes seen from Hohensalzburg Fortress, the Salzach River curving through the city behind', loc:'HOHENSALZBURG FORTRESS, SALZBURG', day:'DAY 4' },
+          { src:'images/austria/austria-salzburg-fortress-domes.jpg', alt:'A closer view from Hohensalzburg Fortress over Salzburg’s cathedral domes and rooftops, the golden sphere sculpture visible in the square below', loc:'HOHENSALZBURG FORTRESS, SALZBURG', day:'DAY 4' }
+        ] }
+      ]
     }
   ];
 
   var THUMB_RATIO = {
+    'images/austria/austria-belvedere-gardens-walk.jpg':1.5,
+    'images/austria/austria-hallstatt-hillside-waterfall.jpg':0.6667,
+    'images/austria/austria-hallstatt-lake-rainbow-moody.jpg':1.5,
+    'images/austria/austria-hallstatt-lake-rainbow.jpg':0.6667,
+    'images/austria/austria-hallstatt-lake-snow-peaks.jpg':1.5,
+    'images/austria/austria-hallstatt-village-cliffside.jpg':0.6667,
+    'images/austria/austria-salzburg-church-autumn.jpg':0.6667,
+    'images/austria/austria-salzburg-fortress-domes.jpg':1.5,
+    'images/austria/austria-salzburg-fortress-old-town.jpg':0.6667,
+    'images/austria/austria-salzburg-fortress-view-countryside.jpg':1.5,
+    'images/austria/austria-salzburg-golden-sphere.jpg':0.6667,
+    'images/austria/austria-salzburg-mirabell-fortress.jpg':1.5,
+    'images/austria/austria-salzburg-old-town-gate.jpg':0.6667,
+    'images/austria/austria-salzburg-park-palace.jpg':1.5,
+    'images/austria/austria-schonbrunn-palace-wide.jpg':1.5007,
+    'images/austria/austria-schonbrunn-statue-autumn.jpg':0.6667,
+    'images/austria/austria-vienna-peterskirche-night.jpg':0.6667,
+    'images/austria/austria-vienna-stephansdom-market-night.jpg':0.6667,
     'images/china/china-apartment-candid.jpg':0.6667,
     'images/china/china-chengdu-wave-building-dusk.jpg':1.5,
     'images/china/china-chengdu-wave-building-tree.jpg':1.5,
@@ -1507,7 +1573,12 @@
     SEZ: [-4.6743, 55.5218],
     NBO: [-1.3192, 36.9278],
     BKK: [13.6900, 100.7501],
-    MRE: [-1.5030, 35.0680]
+    MRE: [-1.5030, 35.0680],
+    BTS: [48.1702, 17.2127],
+    VIE: [48.1103, 16.5697],
+    INN: [47.2602, 11.3439],
+    SZG: [47.7933, 13.0043],
+    MUC: [48.3538, 11.7861]
   };
 
   // Simplified coastline outlines used as a map backdrop so routes read against real
