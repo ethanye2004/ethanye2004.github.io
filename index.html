@@ -383,6 +383,7 @@
   .itin-leg:last-child{ border-bottom:1px solid var(--line); }
   .itin-leg__top{ display:flex; justify-content:space-between; gap:1em; font-family:"Space Mono",monospace; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:.4em; }
   .itin-leg__airline{ color:var(--ink); display:inline-flex; align-items:center; }
+  .itin-leg__direction{ color:var(--accent-2); flex-shrink:0; }
   .itin-leg__logo{
     display:inline-flex; align-items:center; justify-content:center; width:2.6em; height:1.5em;
     margin-right:.5em;
@@ -455,12 +456,13 @@
         { type:'itinerary',
           title:'China',
           legs:[
-            { airline:'Airlink', flight:'483', fromCode:'LVI', toCode:'JNB', dep:'1:49 PM GMT+2', arr:'3:38 PM GMT+2', duration:'1 hr 49 min', aircraft:'Embraer E190' },
-            { airline:'Singapore Airlines', flight:'481', fromCode:'JNB', toCode:'SIN', dep:'9:12 PM GMT+2', arr:'12:46 PM GMT+8', duration:'9 hr 34 min', aircraft:'Airbus A350-900' },
-            { airline:'Singapore Airlines', flight:'806', fromCode:'SIN', toCode:'PEK', dep:'5:00 PM GMT+8', arr:'11:00 PM GMT+8', duration:'6 hr', aircraft:'Boeing 787-10' },
+            { airline:'Airlink', flight:'483', fromCode:'LVI', toCode:'JNB', dep:'1:49 PM GMT+2', arr:'3:38 PM GMT+2', duration:'1 hr 49 min', aircraft:'Embraer E190', direction:'outbound' },
+            { airline:'Singapore Airlines', flight:'481', fromCode:'JNB', toCode:'SIN', dep:'9:12 PM GMT+2', arr:'12:46 PM GMT+8', duration:'9 hr 34 min', aircraft:'Airbus A350-900', direction:'outbound' },
+            { airline:'Singapore Airlines', flight:'806', fromCode:'SIN', toCode:'PEK', dep:'5:00 PM GMT+8', arr:'11:00 PM GMT+8', duration:'6 hr', aircraft:'Boeing 787-10', direction:'outbound' },
             { airline:'Air China', flight:'1953', fromCode:'PEK', toCode:'DYG', dep:'8:21 PM GMT+8', arr:'10:57 PM GMT+8', duration:'2 hr 36 min', aircraft:'Boeing 737-800' },
             { mode:'train', airline:'HSR', fromCode:'DYG', toCode:'CKG' },
-            { mode:'train', airline:'HSR', fromCode:'CKG', toCode:'CTU' }
+            { mode:'train', airline:'HSR', fromCode:'CKG', toCode:'CTU' },
+            { airline:'Sichuan Airlines', flight:'3937', fromCode:'TFU', toCode:'BKK', dep:'9:55 PM GMT+8', arr:'12:08 AM GMT+7', duration:'3 hr 13 min', aircraft:'Airbus A321-200', direction:'inbound' }
           ]
         },
         { type:'photo', src:'images/china/china-forbidden-city-gate.jpg', alt:'The red walls and golden roofs of the Forbidden City’s inner gate, seen across a stone bridge over the moat, crowded with visitors', loc:'FORBIDDEN CITY', day:'DAY 1' },
@@ -535,7 +537,7 @@
           title:'Namibia',
           mapPad: { lat:24, lon:20 },
           legs:[
-            { airline:'Airlink', flight:'341', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190' },
+            { airline:'Airlink', flight:'341', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190', direction:'outbound' },
             { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'WVB', toCode:'SES' },
             { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'SES', toCode:'WDH' }
           ]
@@ -582,8 +584,8 @@
         { type:'itinerary',
           title:'South Africa',
           legs:[
-            { airline:'Air France', flight:'81', fromCode:'SFO', toCode:'CDG', dep:'8:13 PM PDT', arr:'3:38 PM GMT+2', duration:'10 hr 25 min', aircraft:'Airbus A350-900' },
-            { airline:'Air France', flight:'990', fromCode:'CDG', toCode:'JNB', dep:'11:27 PM GMT+2', arr:'10:54 AM GMT+2', duration:'11 hr 27 min', aircraft:'Airbus A350-900' },
+            { airline:'Air France', flight:'81', fromCode:'SFO', toCode:'CDG', dep:'8:13 PM PDT', arr:'3:38 PM GMT+2', duration:'10 hr 25 min', aircraft:'Airbus A350-900', direction:'outbound' },
+            { airline:'Air France', flight:'990', fromCode:'CDG', toCode:'JNB', dep:'11:27 PM GMT+2', arr:'10:54 AM GMT+2', duration:'11 hr 27 min', aircraft:'Airbus A350-900', direction:'outbound' },
             { airline:'FlySafair', flight:'206', fromCode:'JNB', toCode:'CPT', dep:'12:13 PM GMT+2', arr:'2:35 PM GMT+2', duration:'2 hr 22 min', aircraft:'Boeing 737-800' }
           ]
         },
@@ -620,10 +622,10 @@
         { type:'itinerary',
           title:'Guatemala',
           legs:[
-            { airline:'Avianca', flight:'561', fromCode:'SFO', toCode:'SAL', dep:'11:59 PM PDT', arr:'6:38 AM CST', duration:'5 hr 39 min', aircraft:'Airbus A320neo' },
-            { airline:'Avianca', flight:'554', fromCode:'SAL', toCode:'GUA', dep:'8:08 AM CST', arr:'8:54 AM CST', duration:'46 min', aircraft:'Airbus A320-200' },
-            { airline:'Avianca', flight:'555', fromCode:'GUA', toCode:'SAL', dep:'3:42 PM CST', arr:'4:33 PM CST', duration:'51 min', aircraft:'Airbus A320neo' },
-            { airline:'Avianca', flight:'560', fromCode:'SAL', toCode:'SFO', dep:'5:42 PM CST', arr:'10:46 PM PDT', duration:'6 hr 4 min', aircraft:'Airbus A320neo' }
+            { airline:'Avianca', flight:'561', fromCode:'SFO', toCode:'SAL', dep:'11:59 PM PDT', arr:'6:38 AM CST', duration:'5 hr 39 min', aircraft:'Airbus A320neo', direction:'outbound' },
+            { airline:'Avianca', flight:'554', fromCode:'SAL', toCode:'GUA', dep:'8:08 AM CST', arr:'8:54 AM CST', duration:'46 min', aircraft:'Airbus A320-200', direction:'outbound' },
+            { airline:'Avianca', flight:'555', fromCode:'GUA', toCode:'SAL', dep:'3:42 PM CST', arr:'4:33 PM CST', duration:'51 min', aircraft:'Airbus A320neo', direction:'inbound' },
+            { airline:'Avianca', flight:'560', fromCode:'SAL', toCode:'SFO', dep:'5:42 PM CST', arr:'10:46 PM PDT', duration:'6 hr 4 min', aircraft:'Airbus A320neo', direction:'inbound' }
           ]
         },
         { type:'photo', src:'images/guatemala/guatemala-antigua-asado.jpg', alt:'A cook tending chicken over an open wood fire at a brick grill station in a market stall', loc:'MERCADO, ANTIGUA', day:'DAY 1' },
@@ -653,14 +655,14 @@
         { type:'itinerary',
           title:'Chile',
           legs:[
-            { airline:'Delta', flight:'1559', fromCode:'SFO', toCode:'LAX', dep:'6:20 PM PDT', arr:'7:38 PM PDT', duration:'1 hr 18 min', aircraft:'Boeing 737-800' },
-            { airline:'LATAM Peru', flight:'2477', fromCode:'LAX', toCode:'LIM', dep:'10:03 PM PDT', arr:'8:29 AM GMT-5', duration:'8 hr 26 min', aircraft:'Boeing 767-300ER' },
-            { airline:'LATAM Peru', flight:'2697', fromCode:'LIM', toCode:'SCL', dep:'9:39 AM GMT-5', arr:'2:57 PM GMT-3', duration:'3 hr 18 min', aircraft:'Boeing 787-9' },
+            { airline:'Delta', flight:'1559', fromCode:'SFO', toCode:'LAX', dep:'6:20 PM PDT', arr:'7:38 PM PDT', duration:'1 hr 18 min', aircraft:'Boeing 737-800', direction:'outbound' },
+            { airline:'LATAM Peru', flight:'2477', fromCode:'LAX', toCode:'LIM', dep:'10:03 PM PDT', arr:'8:29 AM GMT-5', duration:'8 hr 26 min', aircraft:'Boeing 767-300ER', direction:'outbound' },
+            { airline:'LATAM Peru', flight:'2697', fromCode:'LIM', toCode:'SCL', dep:'9:39 AM GMT-5', arr:'2:57 PM GMT-3', duration:'3 hr 18 min', aircraft:'Boeing 787-9', direction:'outbound' },
             { airline:'Sky Airline', flight:'1611', fromCode:'SCL', toCode:'PMC', dep:'10:48 AM GMT-3', arr:'12:33 PM GMT-3', duration:'1 hr 45 min', aircraft:'Airbus A320neo' },
             { airline:'Sky Airline', flight:'1611', fromCode:'PMC', toCode:'PNT', dep:'1:07 PM GMT-3', arr:'3:25 PM GMT-3', duration:'2 hr 18 min', aircraft:'Airbus A320neo' },
             { airline:'LATAM Chile', flight:'250', fromCode:'PNT', toCode:'SCL', dep:'9:29 AM GMT-3', arr:'12:39 PM GMT-3', duration:'3 hr 10 min', aircraft:'Airbus A320-200' },
-            { airline:'LATAM Chile', flight:'602', fromCode:'SCL', toCode:'LAX', dep:'11:20 PM GMT-3', arr:'6:18 AM PDT', duration:'10 hr 58 min', aircraft:'Boeing 787-8' },
-            { airline:'Delta', flight:'1715', fromCode:'LAX', toCode:'SFO', dep:'9:58 AM PDT', arr:'11:28 AM PDT', duration:'1 hr 30 min', aircraft:'Boeing 737-800' }
+            { airline:'LATAM Chile', flight:'602', fromCode:'SCL', toCode:'LAX', dep:'11:20 PM GMT-3', arr:'6:18 AM PDT', duration:'10 hr 58 min', aircraft:'Boeing 787-8', direction:'inbound' },
+            { airline:'Delta', flight:'1715', fromCode:'LAX', toCode:'SFO', dep:'9:58 AM PDT', arr:'11:28 AM PDT', duration:'1 hr 30 min', aircraft:'Boeing 737-800', direction:'inbound' }
           ]
         },
         { type:'photo', src:'images/patagonia/patagonia-trail-map.jpg', alt:'A hiker holding up a phone showing the marked trail map of Torres del Paine National Park', loc:'THE ROUTE' },
@@ -704,10 +706,10 @@
         { type:'itinerary',
           title:'Ethiopia',
           legs:[
-            { airline:'Ethiopian Airlines', flight:'453', fromCode:'CAI', toCode:'ADD', dep:'3:07 AM GMT+2', arr:'7:19 AM GMT+3', duration:'3 hr 12 min', aircraft:'Boeing 777-300ER' },
-            { airline:'Ethiopian Airlines', flight:'574', fromCode:'ADD', toCode:'FCO', dep:'10:42 PM GMT+3', arr:'3:21 AM GMT+1', duration:'6 hr 39 min', aircraft:'Boeing 787-8' },
-            { airline:'Ethiopian Airlines', flight:'574', fromCode:'FCO', toCode:'ORD', dep:'4:04 AM GMT+1', arr:'7:49 AM CST', duration:'10 hr 45 min', aircraft:'Boeing 787-8' },
-            { airline:'American Airlines', flight:'2212', fromCode:'ORD', toCode:'SNA', dep:'11:47 AM CST', arr:'2:27 PM PST', duration:'4 hr 40 min', aircraft:'Boeing 737 MAX 8' }
+            { airline:'Ethiopian Airlines', flight:'453', fromCode:'CAI', toCode:'ADD', dep:'3:07 AM GMT+2', arr:'7:19 AM GMT+3', duration:'3 hr 12 min', aircraft:'Boeing 777-300ER', direction:'outbound' },
+            { airline:'Ethiopian Airlines', flight:'574', fromCode:'ADD', toCode:'FCO', dep:'10:42 PM GMT+3', arr:'3:21 AM GMT+1', duration:'6 hr 39 min', aircraft:'Boeing 787-8', direction:'inbound' },
+            { airline:'Ethiopian Airlines', flight:'574', fromCode:'FCO', toCode:'ORD', dep:'4:04 AM GMT+1', arr:'7:49 AM CST', duration:'10 hr 45 min', aircraft:'Boeing 787-8', direction:'inbound' },
+            { airline:'American Airlines', flight:'2212', fromCode:'ORD', toCode:'SNA', dep:'11:47 AM CST', arr:'2:27 PM PST', duration:'4 hr 40 min', aircraft:'Boeing 737 MAX 8', direction:'inbound' }
           ]
         },
         { type:'photo-pair', photos:[
@@ -741,7 +743,7 @@
         { type:'itinerary',
           title:'Egypt',
           legs:[
-            { airline:'EgyptAir', flight:'776', fromCode:'DUB', toCode:'CAI', dep:'7:54 PM GMT', arr:'3:04 AM GMT+2', duration:'5 hr 10 min', aircraft:'Airbus A320neo' },
+            { airline:'EgyptAir', flight:'776', fromCode:'DUB', toCode:'CAI', dep:'7:54 PM GMT', arr:'3:04 AM GMT+2', duration:'5 hr 10 min', aircraft:'Airbus A320neo', direction:'outbound' },
             { airline:'Air Cairo', flight:'60', fromCode:'CAI', toCode:'LXR', dep:'11:15 AM GMT+2', arr:'12:39 PM GMT+2', duration:'1 hr 24 min', aircraft:'Airbus A320-200' },
             { airline:'EgyptAir', flight:'63', fromCode:'LXR', toCode:'CAI', dep:'7:55 AM GMT+2', arr:'9:06 AM GMT+2', duration:'1 hr 11 min', aircraft:'Boeing 737-800' }
           ]
@@ -789,12 +791,12 @@
         { type:'itinerary',
           title:'Switzerland',
           legs:[
-            { airline:'Aer Lingus', flight:'342', fromCode:'DUB', toCode:'ZRH', dep:'7:11 AM GMT+1', arr:'10:22 AM GMT+2', duration:'2 hr 11 min', aircraft:'Airbus A320-200' },
+            { airline:'Aer Lingus', flight:'342', fromCode:'DUB', toCode:'ZRH', dep:'7:11 AM GMT+1', arr:'10:22 AM GMT+2', duration:'2 hr 11 min', aircraft:'Airbus A320-200', direction:'outbound' },
             { mode:'train', airline:'SBB', fromCode:'ZRH', toCode:'LUZ' },
             { mode:'train', airline:'SBB', fromCode:'LUZ', toCode:'INT' },
             { mode:'train', airline:'SBB', fromCode:'INT', toCode:'ZER' },
             { mode:'train', airline:'SBB', fromCode:'ZER', toCode:'ZRH' },
-            { airline:'Aer Lingus', flight:'349', fromCode:'ZRH', toCode:'DUB', dep:'8:06 PM GMT+1', arr:'9:34 PM GMT', duration:'2 hr 28 min', aircraft:'Airbus A320-200' }
+            { airline:'Aer Lingus', flight:'349', fromCode:'ZRH', toCode:'DUB', dep:'8:06 PM GMT+1', arr:'9:34 PM GMT', duration:'2 hr 28 min', aircraft:'Airbus A320-200', direction:'inbound' }
           ]
         },
         { type:'photo', src:'images/switzerland/switzerland-lucerne-chapel-bridge.jpg', alt:'The Spreuerbrücke covered bridge over the Reuss river, a stone water tower with a conical spire rising behind it', loc:'LUCERNE', day:'DAY 1' },
@@ -882,12 +884,12 @@
         { type:'itinerary',
           title:'Peru',
           legs:[
-            { airline:'Avianca', flight:'563', fromCode:'SFO', toCode:'SAL', dep:'2:18 PM PDT', arr:'8:39 PM CST', duration:'5 hr 21 min', aircraft:'Airbus A320neo' },
-            { airline:'Avianca', flight:'429', fromCode:'SAL', toCode:'LIM', dep:'9:57 PM CST', arr:'3:10 AM GMT-5', duration:'4 hr 13 min', aircraft:'Airbus A320-200' },
+            { airline:'Avianca', flight:'563', fromCode:'SFO', toCode:'SAL', dep:'2:18 PM PDT', arr:'8:39 PM CST', duration:'5 hr 21 min', aircraft:'Airbus A320neo', direction:'outbound' },
+            { airline:'Avianca', flight:'429', fromCode:'SAL', toCode:'LIM', dep:'9:57 PM CST', arr:'3:10 AM GMT-5', duration:'4 hr 13 min', aircraft:'Airbus A320-200', direction:'outbound' },
             { airline:'LATAM Peru', flight:'2005', fromCode:'LIM', toCode:'CUZ', dep:'6:41 AM GMT-5', arr:'8:05 AM GMT-5', duration:'1 hr 24 min', aircraft:'Airbus A320-200' },
             { airline:'LATAM Peru', flight:'2026', fromCode:'CUZ', toCode:'LIM', dep:'6:10 PM GMT-5', arr:'7:31 PM GMT-5', duration:'1 hr 21 min', aircraft:'Airbus A320neo' },
-            { airline:'Copa', flight:'264', fromCode:'LIM', toCode:'PTY', dep:'2:27 AM GMT-5', arr:'6:04 AM EST', duration:'3 hr 37 min', aircraft:'Boeing 737-800' },
-            { airline:'Copa', flight:'382', fromCode:'PTY', toCode:'SFO', dep:'5:42 PM EST', arr:'11:32 PM PDT', duration:'7 hr 50 min', aircraft:'Boeing 737 MAX 9' }
+            { airline:'Copa', flight:'264', fromCode:'LIM', toCode:'PTY', dep:'2:27 AM GMT-5', arr:'6:04 AM EST', duration:'3 hr 37 min', aircraft:'Boeing 737-800', direction:'inbound' },
+            { airline:'Copa', flight:'382', fromCode:'PTY', toCode:'SFO', dep:'5:42 PM EST', arr:'11:32 PM PDT', duration:'7 hr 50 min', aircraft:'Boeing 737 MAX 9', direction:'inbound' }
           ]
         },
         { type:'photo', src:'images/peru/peru-cusco-parade-red.jpg', alt:'Dancers in red ponchos and embroidered vests parading past a colonial white building during a Cusco street festival', loc:'HISTORIC CENTER, CUSCO', day:'DAY 1' },
@@ -940,8 +942,9 @@
         { type:'itinerary',
           title:'Seychelles',
           legs:[
-            { airline:'Qatar Airways', flight:'738', fromCode:'SFO', toCode:'DOH', dep:'4:00 PM PDT', arr:'5:32 PM GMT+3', duration:'15 hr 32 min', aircraft:'Airbus A350-1000' },
-            { airline:'Qatar Airways', flight:'678', fromCode:'DOH', toCode:'SEZ', dep:'2:47 AM GMT+3', arr:'8:27 AM GMT+4', duration:'4 hr 40 min', aircraft:'Airbus A350-900' }
+            { airline:'Qatar Airways', flight:'738', fromCode:'SFO', toCode:'DOH', dep:'4:00 PM PDT', arr:'5:32 PM GMT+3', duration:'15 hr 32 min', aircraft:'Airbus A350-1000', direction:'outbound' },
+            { airline:'Qatar Airways', flight:'678', fromCode:'DOH', toCode:'SEZ', dep:'2:47 AM GMT+3', arr:'8:27 AM GMT+4', duration:'4 hr 40 min', aircraft:'Airbus A350-900', direction:'outbound' },
+            { airline:'Kenya Airways', flight:'259', fromCode:'SEZ', toCode:'NBO', dep:'3:45 AM GMT+4', arr:'6:00 AM GMT+3', duration:'3 hr 15 min', aircraft:'Embraer E190', direction:'inbound' }
           ]
         },
         { type:'photo', src:'images/seychelles/seychelles-petite-anse-villas.jpg', alt:'Wooden resort villas nestled in the jungle above a cove of granite boulders and turquoise water', loc:'PETITE ANSE, MAHÉ', day:'DAY 1' },
@@ -988,9 +991,10 @@
           title:'Kenya',
           mapPad: { lat:28, lon:16 },
           legs:[
-            { airline:'Kenya Airways', flight:'259', fromCode:'SEZ', toCode:'NBO', dep:'3:45 AM GMT+4', arr:'6:00 AM GMT+3', duration:'3 hr 15 min', aircraft:'Embraer E190' },
+            { airline:'Kenya Airways', flight:'259', fromCode:'SEZ', toCode:'NBO', dep:'3:45 AM GMT+4', arr:'6:00 AM GMT+3', duration:'3 hr 15 min', aircraft:'Embraer E190', direction:'outbound' },
             { mode:'shuttle', airline:'Safari', fromCode:'NBO', toCode:'MRE' },
-            { mode:'shuttle', airline:'Safari', fromCode:'MRE', toCode:'NBO' }
+            { mode:'shuttle', airline:'Safari', fromCode:'MRE', toCode:'NBO' },
+            { airline:'Kenya Airways', flight:'886', fromCode:'NBO', toCode:'BKK', dep:'12:11 AM GMT+3', arr:'1:42 PM GMT+7', duration:'9 hr 31 min', aircraft:'Boeing 787-8', direction:'inbound' }
           ]
         },
         { type:'photo', src:'images/kenya/kenya-nairobi-apartments.jpg', alt:'An elevated view over Nairobi rooftops, high-rise apartments rising behind rusted tin roofs strung with laundry', loc:'NAIROBI', day:'DAY 1' },
@@ -1049,7 +1053,8 @@
         { type:'itinerary',
           title:'Paris',
           legs:[
-            { airline:'Aer Lingus', flight:'520', fromCode:'DUB', toCode:'CDG', dep:'6:58 AM GMT', arr:'9:43 AM GMT+1', duration:'1 hr 45 min', aircraft:'Airbus A321neo' }
+            { airline:'Aer Lingus', flight:'520', fromCode:'DUB', toCode:'CDG', dep:'6:58 AM GMT', arr:'9:43 AM GMT+1', duration:'1 hr 45 min', aircraft:'Airbus A321neo', direction:'outbound' },
+            { airline:'Smartwings', flight:'1035', fromCode:'CDG', toCode:'PRG', dep:'3:50 PM GMT+1', arr:'5:52 PM GMT+1', duration:'2 hr 2 min', aircraft:'Boeing 737-800', direction:'inbound' }
           ]
         },
         { type:'photo', src:'images/paris/paris-luxembourg-gardens-autumn.jpg', alt:'Golden ginkgo trees lining a gravel path in the Luxembourg Gardens, joggers passing a stone palace behind', loc:'LUXEMBOURG GARDENS', day:'DAY 1' },
@@ -1083,11 +1088,11 @@
         { type:'itinerary',
           title:'Austria',
           legs:[
-            { mode:'train', airline:'ÖBB', fromCode:'BTS', toCode:'VIE' },
+            { mode:'train', airline:'ÖBB', fromCode:'BTS', toCode:'VIE', direction:'outbound' },
             { mode:'train', airline:'ÖBB', fromCode:'VIE', toCode:'HAL' },
             { mode:'train', airline:'ÖBB', fromCode:'HAL', toCode:'SZG' },
-            { mode:'train', airline:'Deutsche Bahn', fromCode:'SZG', toCode:'MUC' },
-            { airline:'Aer Lingus', flight:'353', fromCode:'MUC', toCode:'DUB', dep:'11:18 AM GMT+1', arr:'12:45 PM GMT', duration:'2 hr 27 min', aircraft:'Airbus A321neo' }
+            { mode:'train', airline:'Deutsche Bahn', fromCode:'SZG', toCode:'MUC', direction:'inbound' },
+            { airline:'Aer Lingus', flight:'353', fromCode:'MUC', toCode:'DUB', dep:'11:18 AM GMT+1', arr:'12:45 PM GMT', duration:'2 hr 27 min', aircraft:'Airbus A321neo', direction:'inbound' }
           ]
         },
         { type:'photo-pair', photos:[
@@ -1580,7 +1585,9 @@
     VIE: [48.1103, 16.5697],
     HAL: [47.5622, 13.6493],
     SZG: [47.7933, 13.0043],
-    MUC: [48.3538, 11.7861]
+    MUC: [48.3538, 11.7861],
+    TFU: [30.3078, 104.4419],
+    PRG: [50.1008, 14.2632]
   };
 
   // Simplified coastline outlines used as a map backdrop so routes read against real
@@ -1869,8 +1876,9 @@
       var timesHtml = (l.dep && l.arr) ? '<div class="itin-leg__times">'+escapeHtml(l.dep)+' &ndash; '+escapeHtml(l.arr)+'</div>' : '';
       var durBits = [l.duration, l.aircraft].filter(Boolean).map(escapeHtml).join(' &middot; ');
       var durHtml = durBits ? '<div class="itin-leg__duration">'+durBits+'</div>' : '';
+      var directionHtml = l.direction ? '<span class="itin-leg__direction">'+(l.direction === 'outbound' ? 'Outbound' : 'Inbound')+'</span>' : '';
       return '<div class="itin-leg">' +
-        '<div class="itin-leg__top"><span class="itin-leg__airline">'+badgeHtml+escapeHtml(l.airline)+(l.flight?' '+escapeHtml(l.flight):'')+'</span></div>' +
+        '<div class="itin-leg__top"><span class="itin-leg__airline">'+badgeHtml+escapeHtml(l.airline)+(l.flight?' '+escapeHtml(l.flight):'')+'</span>'+directionHtml+'</div>' +
         '<div class="itin-leg__route">' +
           '<span class="itin-leg__code">'+escapeHtml(l.fromCode)+'</span>' +
           '<span class="itin-leg__mode-icon"><svg viewBox="-10 -7 22 14" aria-hidden="true">'+vehicleIconInner(mode)+'</svg></span>' +
