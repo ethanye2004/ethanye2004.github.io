@@ -151,7 +151,7 @@
     text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
     padding:.5rem .9rem; white-space:nowrap; border:1px solid transparent;
   }
-  .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ color:var(--ink); background:color-mix(in srgb, var(--ink) 5%, transparent); }
+  .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ color:var(--ink); background-color:color-mix(in srgb, var(--ink) 5%, transparent); }
 
   .site-foot{
     display:flex; align-items:center; justify-content:center; gap:var(--sp-3); flex-wrap:wrap;
@@ -166,58 +166,6 @@
   }
   .site-foot__social a:hover, .site-foot__social a:focus-visible{ color:var(--accent); }
   .site-foot__social svg{ width:15px; height:15px; display:block; }
-
-  /* ---- line-draw hover box: the border traces around the element on hover ---- */
-  .nav__mark, .nav__about, .nav__dropdown-toggle, .nav__dropdown-link,
-  .site-foot__social a, .iconbtn, .stage__itinerary-link{
-    position:relative;
-  }
-  .nav__mark, .nav__about, .nav__dropdown-toggle, .nav__dropdown-link, .stage__itinerary-link, .stage__navbtn{ --hoverc:var(--ink); }
-  .site-foot__social a, .iconbtn{ --hoverc:var(--accent); }
-  .nav__mark::before, .nav__mark::after,
-  .nav__about::before, .nav__about::after,
-  .nav__dropdown-toggle::before, .nav__dropdown-toggle::after,
-  .nav__dropdown-link::before, .nav__dropdown-link::after,
-  .site-foot__social a::before, .site-foot__social a::after,
-  .iconbtn::before, .iconbtn::after,
-  .stage__itinerary-link::before, .stage__itinerary-link::after,
-  .stage__navbtn::before, .stage__navbtn::after{
-    content:''; position:absolute; width:0; height:0; pointer-events:none;
-    border:1px solid transparent;
-    transition:width .18s ease, height .18s ease, border-color 0s .18s;
-  }
-  .nav__mark::before, .nav__about::before, .nav__dropdown-toggle::before, .nav__dropdown-link::before,
-  .site-foot__social a::before, .iconbtn::before, .stage__itinerary-link::before, .stage__navbtn::before{
-    top:0; left:0;
-  }
-  .nav__mark::after, .nav__about::after, .nav__dropdown-toggle::after, .nav__dropdown-link::after,
-  .site-foot__social a::after, .iconbtn::after, .stage__itinerary-link::after, .stage__navbtn::after{
-    bottom:0; right:0;
-  }
-  .nav__mark:hover::before, .nav__mark:focus-visible::before,
-  .nav__about:hover::before, .nav__about:focus-visible::before,
-  .nav__dropdown-toggle:hover::before, .nav__dropdown-toggle:focus-visible::before,
-  .nav__dropdown.is-open .nav__dropdown-toggle::before, .nav__dropdown:hover .nav__dropdown-toggle::before,
-  .nav__dropdown-link:hover::before, .nav__dropdown-link:focus-visible::before,
-  .site-foot__social a:hover::before, .site-foot__social a:focus-visible::before,
-  .iconbtn:hover::before, .iconbtn:focus-visible::before,
-  .stage__itinerary-link:hover::before, .stage__itinerary-link:focus-visible::before,
-  .stage__navbtn:hover::before, .stage__navbtn:focus-visible::before{
-    width:100%; height:100%; border-top-color:var(--hoverc); border-right-color:var(--hoverc);
-    transition:width .18s ease, height .18s ease;
-  }
-  .nav__mark:hover::after, .nav__mark:focus-visible::after,
-  .nav__about:hover::after, .nav__about:focus-visible::after,
-  .nav__dropdown-toggle:hover::after, .nav__dropdown-toggle:focus-visible::after,
-  .nav__dropdown.is-open .nav__dropdown-toggle::after, .nav__dropdown:hover .nav__dropdown-toggle::after,
-  .nav__dropdown-link:hover::after, .nav__dropdown-link:focus-visible::after,
-  .site-foot__social a:hover::after, .site-foot__social a:focus-visible::after,
-  .iconbtn:hover::after, .iconbtn:focus-visible::after,
-  .stage__itinerary-link:hover::after, .stage__itinerary-link:focus-visible::after,
-  .stage__navbtn:hover::after, .stage__navbtn:focus-visible::after{
-    width:100%; height:100%; border-bottom-color:var(--hoverc); border-left-color:var(--hoverc);
-    transition:width .18s ease .07s, height .18s ease .07s;
-  }
 
   a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
 
@@ -462,6 +410,37 @@
   .thumb:hover .thumb__place, .thumb:focus-visible .thumb__place, .thumb.is-active .thumb__place{ opacity:1; }
   .thumb.is-active .thumb__frame::after{ background:rgba(0,0,0,.28); }
   @media (max-width:720px){ .thumbgrid{ columns:2 180px; } }
+
+  /* ---- line-draw hover box: four edges drawn as one element's own background,
+     so they always meet exactly at the corners (no separately-positioned pieces
+     to fall out of alignment). Placed last so it wins over each element's own
+     `background:` shorthand declared earlier. ---- */
+  .nav__mark, .nav__about, .nav__dropdown-toggle, .nav__dropdown-link,
+  .site-foot__social a, .iconbtn, .stage__itinerary-link, .stage__navbtn{
+    background-repeat:no-repeat;
+    background-origin:border-box;
+    background-image:
+      linear-gradient(to right, var(--hoverc) 0 0),
+      linear-gradient(to bottom, var(--hoverc) 0 0),
+      linear-gradient(to left, var(--hoverc) 0 0),
+      linear-gradient(to top, var(--hoverc) 0 0);
+    background-position:top left, top right, bottom right, bottom left;
+    background-size:0% 1px, 1px 0%, 0% 1px, 1px 0%;
+    transition:background-size .22s ease;
+  }
+  .nav__mark, .nav__about, .nav__dropdown-toggle, .nav__dropdown-link, .stage__itinerary-link, .stage__navbtn{ --hoverc:var(--ink); }
+  .site-foot__social a, .iconbtn{ --hoverc:var(--accent); }
+  .nav__mark:hover, .nav__mark:focus-visible,
+  .nav__about:hover, .nav__about:focus-visible,
+  .nav__dropdown-toggle:hover, .nav__dropdown-toggle:focus-visible,
+  .nav__dropdown.is-open .nav__dropdown-toggle, .nav__dropdown:hover .nav__dropdown-toggle,
+  .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible,
+  .site-foot__social a:hover, .site-foot__social a:focus-visible,
+  .iconbtn:hover, .iconbtn:focus-visible,
+  .stage__itinerary-link:hover, .stage__itinerary-link:focus-visible,
+  .stage__navbtn:hover, .stage__navbtn:focus-visible{
+    background-size:100% 1px, 1px 100%, 100% 1px, 1px 100%;
+  }
 </style>
 </head>
 
