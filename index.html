@@ -21,6 +21,7 @@
     --measure: 34rem;
     --wide: 78rem;
     --navh: 80px;
+    --navw: 230px;
     --fs-eyebrow: .72rem;
     --fs-caption: .8rem;
     --fs-body: 1.08rem;
@@ -153,6 +154,31 @@
     padding:.5rem .9rem; white-space:nowrap; border:1px solid transparent;
   }
   .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ color:var(--ink); background:color-mix(in srgb, var(--ink) 5%, transparent); border-color:var(--ink); }
+
+  /* ---- sidebar layout (desktop) ---- */
+  @media (min-width:761px){
+    .nav{
+      top:0; left:0; right:auto; bottom:0; width:var(--navw); height:100vh;
+      flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:var(--sp-5);
+      padding:var(--sp-4) var(--sp-3);
+      background:var(--paper); backdrop-filter:none;
+      border-bottom:none; border-right:1px solid var(--line);
+    }
+    .nav__links{ flex-direction:column; align-items:flex-start; gap:var(--sp-2); width:100%; }
+    .nav__dropdown{ width:100%; }
+    .nav__dropdown-menu{
+      top:-.4rem; right:auto; left:calc(100% + .9rem);
+      transform:translateX(-6px);
+    }
+    .nav__dropdown.is-open .nav__dropdown-menu{ transform:translateX(0); }
+    main#app{ margin-left:var(--navw); }
+    .site-foot{ margin-left:var(--navw); }
+    .trip{ padding-top:0; }
+    .about-page{ padding-top:var(--sp-5); }
+  }
+  @media (min-width:761px) and (hover:hover) and (pointer:fine){
+    .nav__dropdown:hover .nav__dropdown-menu{ transform:translateX(0); }
+  }
 
   .site-foot{
     display:flex; align-items:center; justify-content:center; gap:var(--sp-3); flex-wrap:wrap;
