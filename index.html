@@ -108,6 +108,7 @@
     border:1px solid transparent; padding:.3rem .5rem; margin:-.3rem -.5rem;
     display:flex; flex-direction:column; align-items:flex-start; line-height:1.05;
   }
+  .nav__mark:hover, .nav__mark:focus-visible{ border-color:var(--ink); }
   .nav__mark-palette{ font-family:"Abril Fatface", ui-serif, Georgia, serif; text-transform:uppercase; letter-spacing:.01em; color:#e3a94c; }
   .nav__mark-by{
     font-family:"Space Mono", monospace; font-style:normal; font-weight:400;
@@ -119,7 +120,7 @@
     text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
     border:1px solid transparent; padding:.35rem .6rem; margin:-.35rem -.6rem;
   }
-  .nav__about:hover, .nav__about:focus-visible{ color:var(--ink); }
+  .nav__about:hover, .nav__about:focus-visible{ color:var(--ink); border-color:var(--ink); }
 
   .nav__dropdown{ position:relative; }
   .nav__dropdown-toggle{
@@ -129,7 +130,7 @@
     cursor:pointer; display:flex; align-items:center; gap:.4em;
   }
   .nav__dropdown-toggle:hover, .nav__dropdown-toggle:focus-visible, .nav__dropdown.is-open .nav__dropdown-toggle{
-    color:var(--ink);
+    color:var(--ink); border-color:var(--ink);
   }
   .nav__dropdown-caret{ font-size:.6rem; transition:transform .2s ease; }
   .nav__dropdown.is-open .nav__dropdown-caret{ transform:rotate(180deg); }
@@ -143,7 +144,7 @@
   .nav__dropdown.is-open .nav__dropdown-menu{ opacity:1; visibility:visible; transform:translateY(0); }
   @media (hover:hover) and (pointer:fine){
     .nav__dropdown:hover .nav__dropdown-menu{ opacity:1; visibility:visible; transform:translateY(0); }
-    .nav__dropdown:hover .nav__dropdown-toggle{ color:var(--ink); }
+    .nav__dropdown:hover .nav__dropdown-toggle{ color:var(--ink); border-color:var(--ink); }
     .nav__dropdown:hover .nav__dropdown-caret{ transform:rotate(180deg); }
   }
   .nav__dropdown-link{
@@ -151,7 +152,7 @@
     text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
     padding:.5rem .9rem; white-space:nowrap; border:1px solid transparent;
   }
-  .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ color:var(--ink); background-color:color-mix(in srgb, var(--ink) 5%, transparent); }
+  .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ color:var(--ink); background:color-mix(in srgb, var(--ink) 5%, transparent); border-color:var(--ink); }
 
   .site-foot{
     display:flex; align-items:center; justify-content:center; gap:var(--sp-3); flex-wrap:wrap;
@@ -164,7 +165,7 @@
     color:var(--ink-soft); display:flex; text-decoration:none;
     border:1px solid transparent; padding:.35rem .5rem; margin:-.35rem -.5rem;
   }
-  .site-foot__social a:hover, .site-foot__social a:focus-visible{ color:var(--accent); }
+  .site-foot__social a:hover, .site-foot__social a:focus-visible{ color:var(--accent); border-color:var(--accent); }
   .site-foot__social svg{ width:15px; height:15px; display:block; }
 
   a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
@@ -280,7 +281,7 @@
     display:flex; align-items:center; padding:.4rem; margin:-.4rem;
     border:1px solid transparent;
   }
-  .iconbtn:hover, .iconbtn:focus-visible{ color:var(--accent); }
+  .iconbtn:hover, .iconbtn:focus-visible{ color:var(--accent); border-color:var(--accent); }
   .stage__count{ font-family:"Space Mono",monospace; font-size:.78rem; color:var(--ink-soft); }
   .stage__title{ font-family:"Space Mono",monospace; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
   .stage__itinerary-link{
@@ -288,7 +289,7 @@
     text-decoration:none; color:var(--ink-soft); padding:.3rem .6rem;
     border:1px solid transparent;
   }
-  .stage__itinerary-link:hover, .stage__itinerary-link:focus-visible{ color:var(--ink); }
+  .stage__itinerary-link:hover, .stage__itinerary-link:focus-visible{ color:var(--ink); border-color:var(--ink); }
 
   .stage{ position:relative; flex:1; display:flex; align-items:center; justify-content:center; padding:var(--sp-4) var(--sp-5); min-height:60vh; }
   .stage__navbtn{
@@ -297,7 +298,7 @@
     font-size:3.4rem; line-height:1; padding:var(--sp-2) var(--sp-1); z-index:20;
     border:1px solid transparent;
   }
-  .stage__navbtn:hover, .stage__navbtn:focus-visible{ color:var(--ink); }
+  .stage__navbtn:hover, .stage__navbtn:focus-visible{ color:var(--ink); border-color:var(--ink); }
   .stage__navbtn--prev{ left:var(--sp-1); }
   .stage__navbtn--next{ right:var(--sp-1); }
   .stage__navbtn[hidden]{ display:none; }
@@ -410,37 +411,6 @@
   .thumb:hover .thumb__place, .thumb:focus-visible .thumb__place, .thumb.is-active .thumb__place{ opacity:1; }
   .thumb.is-active .thumb__frame::after{ background:rgba(0,0,0,.28); }
   @media (max-width:720px){ .thumbgrid{ columns:2 180px; } }
-
-  /* ---- line-draw hover box: four edges drawn as one element's own background,
-     so they always meet exactly at the corners (no separately-positioned pieces
-     to fall out of alignment). Placed last so it wins over each element's own
-     `background:` shorthand declared earlier. ---- */
-  .nav__mark, .nav__about, .nav__dropdown-toggle, .nav__dropdown-link,
-  .site-foot__social a, .iconbtn, .stage__itinerary-link, .stage__navbtn{
-    background-repeat:no-repeat;
-    background-origin:border-box;
-    background-image:
-      linear-gradient(to right, var(--hoverc) 0 0),
-      linear-gradient(to bottom, var(--hoverc) 0 0),
-      linear-gradient(to left, var(--hoverc) 0 0),
-      linear-gradient(to top, var(--hoverc) 0 0);
-    background-position:top left, top right, bottom right, bottom left;
-    background-size:0% 1px, 1px 0%, 0% 1px, 1px 0%;
-    transition:background-size .22s ease;
-  }
-  .nav__mark, .nav__about, .nav__dropdown-toggle, .nav__dropdown-link, .stage__itinerary-link, .stage__navbtn{ --hoverc:var(--ink); }
-  .site-foot__social a, .iconbtn{ --hoverc:var(--accent); }
-  .nav__mark:hover, .nav__mark:focus-visible,
-  .nav__about:hover, .nav__about:focus-visible,
-  .nav__dropdown-toggle:hover, .nav__dropdown-toggle:focus-visible,
-  .nav__dropdown.is-open .nav__dropdown-toggle, .nav__dropdown:hover .nav__dropdown-toggle,
-  .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible,
-  .site-foot__social a:hover, .site-foot__social a:focus-visible,
-  .iconbtn:hover, .iconbtn:focus-visible,
-  .stage__itinerary-link:hover, .stage__itinerary-link:focus-visible,
-  .stage__navbtn:hover, .stage__navbtn:focus-visible{
-    background-size:100% 1px, 1px 100%, 100% 1px, 1px 100%;
-  }
 </style>
 </head>
 
@@ -564,7 +534,7 @@
             { airline:'Airlink', flight:'341', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190', direction:'outbound' },
             { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'WVB', toCode:'SES' },
             { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'SES', toCode:'WDH' },
-            { airline:'Proflight Zambia', flight:'63', fromCode:'WDH', toCode:'LVI', dep:'12:20 PM', arr:'1:55 PM', duration:'1 hr 35 min', aircraft:'CRJ-200', direction:'inbound' }
+            { airline:'Proflight Zambia', flight:'63', fromCode:'WDH', toCode:'LVI', dep:'12:20 PM GMT+2', arr:'1:55 PM GMT+2', duration:'1 hr 35 min', aircraft:'CRJ-200', direction:'inbound' }
           ]
         },
         { type:'photo', src:'images/namibia/namibia-walvis-bay-pelican.jpg', alt:'A great white pelican preening on a sandy beach at Walvis Bay', loc:'WALVIS BAY', day:'DAY 1' },
@@ -1141,8 +1111,8 @@
       title: 'Austria',
       place: 'Austria',
       coord: '47.5162°N, 14.5501°E',
-      cover: 'images/austria/austria-hallstatt-lake-rainbow-moody.jpg',
-      coverAlt: 'A faint rainbow arching over Hallstatt’s lakeside church spire and wooden boathouses beneath brooding mountains',
+      cover: 'images/austria/austria-hallstatt-village-cliffside.jpg',
+      coverAlt: 'A dense cluster of traditional Hallstatt houses stacked up a forested mountainside beneath sheer gray cliffs',
       slides: [
         { type:'itinerary',
           title:'Austria',
