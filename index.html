@@ -21,7 +21,6 @@
     --measure: 34rem;
     --wide: 78rem;
     --navh: 80px;
-    --navw: 230px;
     --fs-eyebrow: .72rem;
     --fs-caption: .8rem;
     --fs-body: 1.08rem;
@@ -109,7 +108,6 @@
     border:1px solid transparent; padding:.3rem .5rem; margin:-.3rem -.5rem;
     display:flex; flex-direction:column; align-items:flex-start; line-height:1.05;
   }
-  .nav__mark:hover, .nav__mark:focus-visible{ border-color:var(--ink); }
   .nav__mark-palette{ font-family:"Abril Fatface", ui-serif, Georgia, serif; text-transform:uppercase; letter-spacing:.01em; color:#e3a94c; }
   .nav__mark-by{
     font-family:"Space Mono", monospace; font-style:normal; font-weight:400;
@@ -121,7 +119,7 @@
     text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
     border:1px solid transparent; padding:.35rem .6rem; margin:-.35rem -.6rem;
   }
-  .nav__about:hover, .nav__about:focus-visible{ color:var(--ink); border-color:var(--ink); }
+  .nav__about:hover, .nav__about:focus-visible{ color:var(--ink); }
 
   .nav__dropdown{ position:relative; }
   .nav__dropdown-toggle{
@@ -131,7 +129,7 @@
     cursor:pointer; display:flex; align-items:center; gap:.4em;
   }
   .nav__dropdown-toggle:hover, .nav__dropdown-toggle:focus-visible, .nav__dropdown.is-open .nav__dropdown-toggle{
-    color:var(--ink); border-color:var(--ink);
+    color:var(--ink);
   }
   .nav__dropdown-caret{ font-size:.6rem; transition:transform .2s ease; }
   .nav__dropdown.is-open .nav__dropdown-caret{ transform:rotate(180deg); }
@@ -145,7 +143,7 @@
   .nav__dropdown.is-open .nav__dropdown-menu{ opacity:1; visibility:visible; transform:translateY(0); }
   @media (hover:hover) and (pointer:fine){
     .nav__dropdown:hover .nav__dropdown-menu{ opacity:1; visibility:visible; transform:translateY(0); }
-    .nav__dropdown:hover .nav__dropdown-toggle{ color:var(--ink); border-color:var(--ink); }
+    .nav__dropdown:hover .nav__dropdown-toggle{ color:var(--ink); }
     .nav__dropdown:hover .nav__dropdown-caret{ transform:rotate(180deg); }
   }
   .nav__dropdown-link{
@@ -153,32 +151,7 @@
     text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
     padding:.5rem .9rem; white-space:nowrap; border:1px solid transparent;
   }
-  .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ color:var(--ink); background:color-mix(in srgb, var(--ink) 5%, transparent); border-color:var(--ink); }
-
-  /* ---- sidebar layout (desktop) ---- */
-  @media (min-width:761px){
-    .nav{
-      top:0; left:0; right:auto; bottom:0; width:var(--navw); height:100vh;
-      flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:var(--sp-5);
-      padding:var(--sp-4) var(--sp-3);
-      background:var(--paper); backdrop-filter:none;
-      border-bottom:none; border-right:1px solid var(--line);
-    }
-    .nav__links{ flex-direction:column; align-items:flex-start; gap:var(--sp-2); width:100%; }
-    .nav__dropdown{ width:100%; }
-    .nav__dropdown-menu{
-      top:-.4rem; right:auto; left:calc(100% + .9rem);
-      transform:translateX(-6px);
-    }
-    .nav__dropdown.is-open .nav__dropdown-menu{ transform:translateX(0); }
-    main#app{ margin-left:var(--navw); }
-    .site-foot{ margin-left:var(--navw); }
-    .trip{ padding-top:0; }
-    .about-page{ padding-top:var(--sp-5); }
-  }
-  @media (min-width:761px) and (hover:hover) and (pointer:fine){
-    .nav__dropdown:hover .nav__dropdown-menu{ transform:translateX(0); }
-  }
+  .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ color:var(--ink); background:color-mix(in srgb, var(--ink) 5%, transparent); }
 
   .site-foot{
     display:flex; align-items:center; justify-content:center; gap:var(--sp-3); flex-wrap:wrap;
@@ -191,8 +164,60 @@
     color:var(--ink-soft); display:flex; text-decoration:none;
     border:1px solid transparent; padding:.35rem .5rem; margin:-.35rem -.5rem;
   }
-  .site-foot__social a:hover, .site-foot__social a:focus-visible{ color:var(--accent); border-color:var(--accent); }
+  .site-foot__social a:hover, .site-foot__social a:focus-visible{ color:var(--accent); }
   .site-foot__social svg{ width:15px; height:15px; display:block; }
+
+  /* ---- line-draw hover box: the border traces around the element on hover ---- */
+  .nav__mark, .nav__about, .nav__dropdown-toggle, .nav__dropdown-link,
+  .site-foot__social a, .iconbtn, .stage__itinerary-link{
+    position:relative;
+  }
+  .nav__mark, .nav__about, .nav__dropdown-toggle, .nav__dropdown-link, .stage__itinerary-link, .stage__navbtn{ --hoverc:var(--ink); }
+  .site-foot__social a, .iconbtn{ --hoverc:var(--accent); }
+  .nav__mark::before, .nav__mark::after,
+  .nav__about::before, .nav__about::after,
+  .nav__dropdown-toggle::before, .nav__dropdown-toggle::after,
+  .nav__dropdown-link::before, .nav__dropdown-link::after,
+  .site-foot__social a::before, .site-foot__social a::after,
+  .iconbtn::before, .iconbtn::after,
+  .stage__itinerary-link::before, .stage__itinerary-link::after,
+  .stage__navbtn::before, .stage__navbtn::after{
+    content:''; position:absolute; width:0; height:0; pointer-events:none;
+    border:1px solid transparent;
+    transition:width .18s ease, height .18s ease, border-color 0s .18s;
+  }
+  .nav__mark::before, .nav__about::before, .nav__dropdown-toggle::before, .nav__dropdown-link::before,
+  .site-foot__social a::before, .iconbtn::before, .stage__itinerary-link::before, .stage__navbtn::before{
+    top:0; left:0;
+  }
+  .nav__mark::after, .nav__about::after, .nav__dropdown-toggle::after, .nav__dropdown-link::after,
+  .site-foot__social a::after, .iconbtn::after, .stage__itinerary-link::after, .stage__navbtn::after{
+    bottom:0; right:0;
+  }
+  .nav__mark:hover::before, .nav__mark:focus-visible::before,
+  .nav__about:hover::before, .nav__about:focus-visible::before,
+  .nav__dropdown-toggle:hover::before, .nav__dropdown-toggle:focus-visible::before,
+  .nav__dropdown.is-open .nav__dropdown-toggle::before, .nav__dropdown:hover .nav__dropdown-toggle::before,
+  .nav__dropdown-link:hover::before, .nav__dropdown-link:focus-visible::before,
+  .site-foot__social a:hover::before, .site-foot__social a:focus-visible::before,
+  .iconbtn:hover::before, .iconbtn:focus-visible::before,
+  .stage__itinerary-link:hover::before, .stage__itinerary-link:focus-visible::before,
+  .stage__navbtn:hover::before, .stage__navbtn:focus-visible::before{
+    width:100%; height:100%; border-top-color:var(--hoverc); border-right-color:var(--hoverc);
+    transition:width .18s ease, height .18s ease;
+  }
+  .nav__mark:hover::after, .nav__mark:focus-visible::after,
+  .nav__about:hover::after, .nav__about:focus-visible::after,
+  .nav__dropdown-toggle:hover::after, .nav__dropdown-toggle:focus-visible::after,
+  .nav__dropdown.is-open .nav__dropdown-toggle::after, .nav__dropdown:hover .nav__dropdown-toggle::after,
+  .nav__dropdown-link:hover::after, .nav__dropdown-link:focus-visible::after,
+  .site-foot__social a:hover::after, .site-foot__social a:focus-visible::after,
+  .iconbtn:hover::after, .iconbtn:focus-visible::after,
+  .stage__itinerary-link:hover::after, .stage__itinerary-link:focus-visible::after,
+  .stage__navbtn:hover::after, .stage__navbtn:focus-visible::after{
+    width:100%; height:100%; border-bottom-color:var(--hoverc); border-left-color:var(--hoverc);
+    transition:width .18s ease .07s, height .18s ease .07s;
+  }
 
   a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
 
@@ -307,7 +332,7 @@
     display:flex; align-items:center; padding:.4rem; margin:-.4rem;
     border:1px solid transparent;
   }
-  .iconbtn:hover, .iconbtn:focus-visible{ color:var(--accent); border-color:var(--accent); }
+  .iconbtn:hover, .iconbtn:focus-visible{ color:var(--accent); }
   .stage__count{ font-family:"Space Mono",monospace; font-size:.78rem; color:var(--ink-soft); }
   .stage__title{ font-family:"Space Mono",monospace; font-size:.78rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); }
   .stage__itinerary-link{
@@ -315,7 +340,7 @@
     text-decoration:none; color:var(--ink-soft); padding:.3rem .6rem;
     border:1px solid transparent;
   }
-  .stage__itinerary-link:hover, .stage__itinerary-link:focus-visible{ color:var(--ink); border-color:var(--ink); }
+  .stage__itinerary-link:hover, .stage__itinerary-link:focus-visible{ color:var(--ink); }
 
   .stage{ position:relative; flex:1; display:flex; align-items:center; justify-content:center; padding:var(--sp-4) var(--sp-5); min-height:60vh; }
   .stage__navbtn{
@@ -324,7 +349,7 @@
     font-size:3.4rem; line-height:1; padding:var(--sp-2) var(--sp-1); z-index:20;
     border:1px solid transparent;
   }
-  .stage__navbtn:hover, .stage__navbtn:focus-visible{ color:var(--ink); border-color:var(--ink); }
+  .stage__navbtn:hover, .stage__navbtn:focus-visible{ color:var(--ink); }
   .stage__navbtn--prev{ left:var(--sp-1); }
   .stage__navbtn--next{ right:var(--sp-1); }
   .stage__navbtn[hidden]{ display:none; }
@@ -1104,7 +1129,7 @@
     {
       slug: 'slovakia',
       title: 'Slovakia',
-      place: 'Bratislava',
+      place: 'Slovakia',
       coord: '48.1486°N, 17.1077°E',
       cover: 'images/slovakia/slovakia-bratislava-castle-tram.jpg',
       coverAlt: 'Bratislava Castle’s white towers rising above the Old Town, a red tram rounding the tracks in the foreground',
@@ -1178,6 +1203,47 @@
           { src:'images/austria/austria-salzburg-fortress-old-town.jpg', alt:'Salzburg’s old town and cathedral domes seen from Hohensalzburg Fortress, the Salzach River curving through the city behind', loc:'HOHENSALZBURG FORTRESS, SALZBURG', day:'DAY 4' },
           { src:'images/austria/austria-salzburg-fortress-domes.jpg', alt:'A closer view from Hohensalzburg Fortress over Salzburg’s cathedral domes and rooftops, the golden sphere sculpture visible in the square below', loc:'HOHENSALZBURG FORTRESS, SALZBURG', day:'DAY 4' }
         ] }
+      ]
+    },
+    {
+      slug: 'morocco',
+      title: 'Morocco',
+      place: 'Morocco',
+      coord: '31.6295°N, 7.9811°W',
+      cover: 'images/morocco/morocco-koutoubia-mosque-sunset.jpg',
+      coverAlt: 'The Koutoubia Mosque’s minaret silhouetted against a setting sun, palm trees and crowds gathered below',
+      slides: [
+        { type:'itinerary',
+          title:'Morocco',
+          legs:[
+            { airline:'TAP Air Portugal', flight:'1327', fromCode:'DUB', toCode:'LIS', dep:'5:17 AM GMT', arr:'8:15 AM GMT', duration:'2 hr 58 min', aircraft:'Embraer E195', direction:'outbound' },
+            { airline:'TAP Air Portugal', flight:'1452', fromCode:'LIS', toCode:'RAK', dep:'9:49 AM GMT', arr:'12:26 PM GMT+1', duration:'1 hr 37 min', aircraft:'Airbus A320neo', direction:'outbound' },
+            { airline:'Ryanair', flight:'7379', fromCode:'RAK', toCode:'DUB', dep:'9:00 AM GMT+1', arr:'11:57 AM GMT', duration:'3 hr 57 min', aircraft:'Boeing 737-800', direction:'inbound' }
+          ]
+        },
+        { type:'photo', src:'images/morocco/morocco-marrakech-mosque-minaret-palms.jpg', alt:'A patterned sandstone minaret rising behind palm and citrus trees in a mosque garden', loc:'MARRAKECH', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/morocco/morocco-marrakech-souk-rugs.jpg', alt:'Colorful handwoven Berber rugs and baskets hanging in a crowded souk stall', loc:'MARRAKECH SOUK', day:'DAY 1' },
+          { src:'images/morocco/morocco-marrakech-medina-cat-window.jpg', alt:'A cat peering out from a wrought-iron window grille above a medina alley', loc:'MARRAKECH MEDINA', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/morocco/morocco-jemaa-el-fnaa-dusk-crowds.jpg', alt:'Crowds filling Jemaa el-Fnaa square at golden hour, food stalls and umbrellas scattered across the plaza', loc:'JEMAA EL-FNAA, MARRAKECH', day:'DAY 1' },
+        { type:'photo', src:'images/morocco/morocco-koutoubia-mosque-sunset.jpg', alt:'The Koutoubia Mosque’s minaret silhouetted against a setting sun, palm trees and crowds gathered below', loc:'KOUTOUBIA MOSQUE, MARRAKECH', day:'DAY 1' },
+        { type:'photo', src:'images/morocco/morocco-marrakech-souk-lanterns-night.jpg', alt:'Rows of ornate metal lanterns glowing at night in a Marrakech market', loc:'MARRAKECH SOUK', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/morocco/morocco-marrakech-medina-alley-cyclist.jpg', alt:'A cyclist and moped passing through a narrow medina alley hung with rugs and wicker lamps', loc:'MARRAKECH MEDINA', day:'DAY 2' },
+          { src:'images/morocco/morocco-marrakech-medina-alley-flag.jpg', alt:'A red Moroccan flag draped across a narrow medina alleyway lit by late afternoon sun', loc:'MARRAKECH MEDINA', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/morocco/morocco-countryside-cat-kittens.jpg', alt:'A calico cat and two kittens resting together in a patch of grass', loc:'MARRAKECH COUNTRYSIDE', day:'DAY 2' },
+        { type:'photo', src:'images/morocco/morocco-agafay-desert-atlas-view.jpg', alt:'Snow-capped High Atlas peaks rising behind arid rust-colored foothills', loc:'AGAFAY DESERT', day:'DAY 2' },
+        { type:'photo', src:'images/morocco/morocco-agafay-desert-camel.jpg', alt:'A young camel walking across the rocky desert', loc:'AGAFAY DESERT', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/morocco/morocco-ourika-valley-moped-mountains.jpg', alt:'A moped rider paused on a winding mountain road, snow-dusted Atlas peaks rising beneath heavy clouds', loc:'OURIKA VALLEY', day:'DAY 3' },
+          { src:'images/morocco/morocco-ourika-valley-village-minaret.jpg', alt:'A pink minaret rising above a small Atlas village street lined with pine trees', loc:'OURIKA VALLEY', day:'DAY 3' }
+        ] },
+        { type:'photo', src:'images/morocco/morocco-setti-fatma-village-mosque.jpg', alt:'A red mosque and stacked village houses set against a sheer rocky cliffside', loc:'SETTI FATMA, OURIKA VALLEY', day:'DAY 3' },
+        { type:'photo', src:'images/morocco/morocco-setti-fatma-waterfall.jpg', alt:'A waterfall cascading through a narrow rock gorge into a turquoise pool', loc:'SETTI FATMA, OURIKA VALLEY', day:'DAY 3' },
+        { type:'photo', src:'images/morocco/morocco-hot-air-balloons-clouds.jpg', alt:'A hot air balloon painted with Morocco’s flag star drifting above the clouds beside a yellow balloon', loc:'MARRAKECH COUNTRYSIDE', day:'DAY 4' },
+        { type:'photo', src:'images/morocco/morocco-hot-air-balloon-flag.jpg', alt:'A red hot air balloon marked with Morocco’s star rising above a sea of clouds', loc:'MARRAKECH COUNTRYSIDE', day:'DAY 4' }
       ]
     }
   ];
@@ -1320,6 +1386,23 @@
     'images/kenya/kenya-rift-valley-viewpoint.jpg':1.5,
     'images/kenya/kenya-roadside-kids.jpg':0.6667,
     'images/kenya/kenya-roadside-market.jpg':1.5,
+    'images/morocco/morocco-agafay-desert-atlas-view.jpg':1.5006,
+    'images/morocco/morocco-agafay-desert-camel.jpg':0.6667,
+    'images/morocco/morocco-countryside-cat-kittens.jpg':1.4994,
+    'images/morocco/morocco-hot-air-balloon-flag.jpg':0.6667,
+    'images/morocco/morocco-hot-air-balloons-clouds.jpg':1.5,
+    'images/morocco/morocco-jemaa-el-fnaa-dusk-crowds.jpg':1.5,
+    'images/morocco/morocco-koutoubia-mosque-sunset.jpg':1.5,
+    'images/morocco/morocco-marrakech-medina-alley-cyclist.jpg':0.6667,
+    'images/morocco/morocco-marrakech-medina-alley-flag.jpg':0.6667,
+    'images/morocco/morocco-marrakech-medina-cat-window.jpg':1.5009,
+    'images/morocco/morocco-marrakech-mosque-minaret-palms.jpg':1.5,
+    'images/morocco/morocco-marrakech-souk-lanterns-night.jpg':1.5,
+    'images/morocco/morocco-marrakech-souk-rugs.jpg':1.5,
+    'images/morocco/morocco-ourika-valley-moped-mountains.jpg':0.6664,
+    'images/morocco/morocco-ourika-valley-village-minaret.jpg':0.6667,
+    'images/morocco/morocco-setti-fatma-village-mosque.jpg':0.6667,
+    'images/morocco/morocco-setti-fatma-waterfall.jpg':0.6667,
     'images/namibia/namibia-balloon-flame.jpg':1.5,
     'images/namibia/namibia-cape-fur-seal.jpg':1.5,
     'images/namibia/namibia-deadvlei-aerial.jpg':1.5,
@@ -1579,12 +1662,13 @@
     return hero + '<div class="grid col--wide">' + tiles + '</div>';
   }
 
+  var ICON_MAIL = '<svg viewBox="0 0 512 512" fill="currentColor" aria-hidden="true"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg>';
   var ICON_INSTAGRAM = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.012-3.584.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.98-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>';
   var ICON_LINKEDIN = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.067-.926-2.067-2.067 0-1.14.925-2.066 2.067-2.066 1.14 0 2.066.925 2.066 2.066 0 1.14-.925 2.067-2.066 2.067zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>';
 
   function socialIconsHtml(){
     return (
-      '<span class="tip-wrap"><a href="mailto:ethanye@berkeley.edu" aria-label="Email: ethanye@berkeley.edu">Email</a><span class="tip-wrap__bubble" aria-hidden="true">ethanye@berkeley.edu</span></span>' +
+      '<span class="tip-wrap"><a href="mailto:ethanye@berkeley.edu" aria-label="Email: ethanye@berkeley.edu">'+ICON_MAIL+'</a><span class="tip-wrap__bubble" aria-hidden="true">ethanye@berkeley.edu</span></span>' +
       '<a href="https://www.instagram.com/ethannyee" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram">'+ICON_INSTAGRAM+'</a>' +
       '<a href="https://www.linkedin.com/in/ethan-ye/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">'+ICON_LINKEDIN+'</a>'
     );
@@ -1653,7 +1737,9 @@
     MUC: [48.3538, 11.7861],
     TFU: [30.3078, 104.4419],
     PRG: [50.1008, 14.2632],
-    SJC: [37.3626, -121.9291]
+    SJC: [37.3626, -121.9291],
+    LIS: [38.7813, -9.1359],
+    RAK: [31.6069, -8.0363]
   };
 
   // Simplified coastline outlines used as a map backdrop so routes read against real
@@ -1964,7 +2050,8 @@
     'Proflight Zambia': 'images/site/airlines/proflight-zambia.png',
     'Sichuan Airlines': 'images/site/airlines/sichuan-airlines.png',
     'Southwest': 'images/site/airlines/southwest.png',
-    'Ryanair': 'images/site/airlines/ryanair.png'
+    'Ryanair': 'images/site/airlines/ryanair.png',
+    'TAP Air Portugal': 'images/site/airlines/tap-air-portugal.png'
   };
 
   function renderItinerary(slide){
