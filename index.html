@@ -128,20 +128,19 @@
   .nav__dropdown.is-open .nav__dropdown-toggle{ color:var(--ink); }
   .nav__dropdown-toggle:hover, .nav__dropdown-toggle:focus-visible{ opacity:.5; }
   .nav__dropdown-caret{ font-size:.6rem; transition:transform .2s ease; }
-  .nav__dropdown.is-open .nav__dropdown-caret{ transform:rotate(180deg); }
+  .nav__dropdown.is-open .nav__dropdown-caret:not(.nav__dropdown-caret--sub){ transform:rotate(180deg); }
   .nav__dropdown-menu{
     position:absolute; top:calc(100% + .9rem); right:0; min-width:190px;
-    max-height:calc(100vh - 100px); overflow-y:auto;
     background:var(--paper); border:1px solid var(--line);
     padding:.4rem 0; display:flex; flex-direction:column;
     opacity:0; visibility:hidden; transform:translateY(-4px);
     transition:opacity .18s ease, transform .18s ease, visibility .18s;
   }
-  .nav__dropdown.is-open .nav__dropdown-menu{ opacity:1; visibility:visible; transform:translateY(0); }
+  .nav__dropdown.is-open .nav__dropdown-menu:not(.nav__dropdown-menu--sub){ opacity:1; visibility:visible; transform:translateY(0); }
   @media (hover:hover) and (pointer:fine){
-    .nav__dropdown:hover .nav__dropdown-menu{ opacity:1; visibility:visible; transform:translateY(0); }
-    .nav__dropdown:hover .nav__dropdown-toggle{ color:var(--ink); }
-    .nav__dropdown:hover .nav__dropdown-caret{ transform:rotate(180deg); }
+    .nav__dropdown:hover > .nav__dropdown-menu{ opacity:1; visibility:visible; transform:translateY(0); }
+    .nav__dropdown:hover > .nav__dropdown-toggle{ color:var(--ink); }
+    .nav__dropdown:hover .nav__dropdown-caret:not(.nav__dropdown-caret--sub){ transform:rotate(180deg); }
   }
   .nav__dropdown-link{
     font-family:"Space Mono", monospace; font-size:.72rem; letter-spacing:.08em;
@@ -150,14 +149,26 @@
     transition:opacity .15s ease;
   }
   .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ opacity:.5; }
-  .nav__dropdown-heading{
-    font-family:"Space Mono", monospace; font-size:.68rem; letter-spacing:.08em;
-    text-transform:uppercase; color:var(--ink-soft);
-    padding:.7rem .9rem .3rem; white-space:nowrap;
-    border-top:1px solid var(--line); margin-top:.3rem;
+
+  .nav__dropdown-toggle--sub{
+    width:100%; background:none; border:none; cursor:pointer; text-align:left;
+    display:flex; align-items:center; justify-content:space-between; gap:.4em;
   }
-  .nav__dropdown-menu > .nav__dropdown-heading:first-child{ border-top:none; margin-top:0; }
-  .nav__dropdown-link--sub{ padding-left:1.6rem; font-size:.68rem; }
+  .nav__dropdown--sub.is-open .nav__dropdown-toggle--sub{ color:var(--ink); }
+  .nav__dropdown-caret--sub{ font-size:.6rem; }
+  .nav__dropdown-menu--sub{
+    position:absolute; top:-.4rem; right:calc(100% + .5rem); left:auto;
+    min-width:190px; max-height:calc(100vh - 100px); overflow-y:auto;
+    background:var(--paper); border:1px solid var(--line);
+    padding:.4rem 0; display:flex; flex-direction:column;
+    opacity:0; visibility:hidden; transform:translateX(4px);
+    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+  }
+  .nav__dropdown--sub.is-open .nav__dropdown-menu--sub{ opacity:1; visibility:visible; transform:translateX(0); }
+  @media (hover:hover) and (pointer:fine){
+    .nav__dropdown--sub:hover .nav__dropdown-menu--sub{ opacity:1; visibility:visible; transform:translateX(0); }
+    .nav__dropdown--sub:hover .nav__dropdown-toggle--sub{ color:var(--ink); }
+  }
 
   .site-foot{
     display:flex; align-items:center; justify-content:center; gap:var(--sp-3); flex-wrap:wrap;
@@ -2518,26 +2529,48 @@
     var tripLinks = trips.slice().sort(function(a,b){
       return a.place.localeCompare(b.place);
     }).map(function(t){
-      return '<a class="nav__dropdown-link nav__dropdown-link--sub" href="#/trip/'+t.slug+'">'+escapeHtml(t.place)+'</a>';
+      return '<a class="nav__dropdown-link" href="#/trip/'+t.slug+'">'+escapeHtml(t.place)+'</a>';
     }).join('');
     var writingLinks = writings.map(function(w){
-      return '<a class="nav__dropdown-link nav__dropdown-link--sub" href="#/writing/'+w.slug+'">'+escapeHtml(w.title)+'</a>';
+      return '<a class="nav__dropdown-link" href="#/writing/'+w.slug+'">'+escapeHtml(w.title)+'</a>';
     }).join('');
+    function subDropdownHtml(id, label, linksHtml){
+      return '<div class="nav__dropdown nav__dropdown--sub" id="'+id+'-subdropdown">' +
+        '<button class="nav__dropdown-link nav__dropdown-toggle--sub" id="'+id+'-subtoggle" type="button" aria-haspopup="true" aria-expanded="false">' +
+          escapeHtml(label) + ' <span class="nav__dropdown-caret nav__dropdown-caret--sub">&#9666;</span>' +
+        '</button>' +
+        '<div class="nav__dropdown-menu nav__dropdown-menu--sub" id="'+id+'-submenu">' + linksHtml + '</div>' +
+      '</div>';
+    }
     menuMenu.innerHTML =
       '<a class="nav__dropdown-link" href="#/about">About</a>' +
-      '<span class="nav__dropdown-heading">Travels</span>' +
-      tripLinks +
-      '<span class="nav__dropdown-heading">Writings</span>' +
-      writingLinks;
+      subDropdownHtml('travels', 'Travels', tripLinks) +
+      subDropdownHtml('writings', 'Writings', writingLinks);
 
     function closeMenu(){
       menuDropdown.classList.remove('is-open');
       menuToggle.setAttribute('aria-expanded', 'false');
+      subDropdowns.forEach(function(s){ s.close(); });
     }
     function toggleMenu(){
       var open = menuDropdown.classList.toggle('is-open');
       menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
+
+    var subDropdowns = ['travels', 'writings'].map(function(id){
+      var dropdown = document.getElementById(id+'-subdropdown');
+      var toggle = document.getElementById(id+'-subtoggle');
+      function close(){
+        dropdown.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+      toggle.addEventListener('click', function(ev){
+        ev.stopPropagation();
+        var open = dropdown.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      return { close: close };
+    });
 
     menuToggle.addEventListener('click', function(ev){
       ev.stopPropagation();
