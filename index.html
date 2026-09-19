@@ -115,12 +115,6 @@
     font-size:.85rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);
   }
   .nav__links{ display:flex; gap:var(--sp-3); align-items:center; }
-  .nav__about{
-    font-family:"Space Mono", monospace; font-size:.72rem; letter-spacing:.1em;
-    text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
-    border:1px solid transparent; padding:.35rem .6rem; margin:-.35rem -.6rem;
-  }
-  .nav__about:hover, .nav__about:focus-visible{ color:var(--ink); border-color:var(--ink); }
 
   .nav__dropdown{ position:relative; }
   .nav__dropdown-toggle{
@@ -135,7 +129,8 @@
   .nav__dropdown-caret{ font-size:.6rem; transition:transform .2s ease; }
   .nav__dropdown.is-open .nav__dropdown-caret{ transform:rotate(180deg); }
   .nav__dropdown-menu{
-    position:absolute; top:calc(100% + .9rem); right:0; min-width:170px;
+    position:absolute; top:calc(100% + .9rem); right:0; min-width:190px;
+    max-height:calc(100vh - 100px); overflow-y:auto;
     background:var(--paper); border:1px solid var(--line);
     padding:.4rem 0; display:flex; flex-direction:column;
     opacity:0; visibility:hidden; transform:translateY(-4px);
@@ -153,6 +148,14 @@
     padding:.5rem .9rem; white-space:nowrap; border:1px solid transparent;
   }
   .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ color:var(--ink); background:color-mix(in srgb, var(--ink) 5%, transparent); border-color:var(--ink); }
+  .nav__dropdown-heading{
+    font-family:"Space Mono", monospace; font-size:.68rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-soft);
+    padding:.7rem .9rem .3rem; white-space:nowrap;
+    border-top:1px solid var(--line); margin-top:.3rem;
+  }
+  .nav__dropdown-menu > .nav__dropdown-heading:first-child{ border-top:none; margin-top:0; }
+  .nav__dropdown-link--sub{ padding-left:1.6rem; font-size:.68rem; }
 
   .site-foot{
     display:flex; align-items:center; justify-content:center; gap:var(--sp-3); flex-wrap:wrap;
@@ -252,6 +255,47 @@
   .about .frame img{width:100%; height:100%; object-fit:cover;}
   .about h2{font-size:clamp(1.6rem,3.2vw,2.1rem); font-weight:340; margin-bottom:var(--sp-2);}
   .about h2 .palette-word{ font-family:"Abril Fatface", ui-serif, Georgia, serif; letter-spacing:.01em; color:#e3a94c; }
+
+  /* ================= WRITINGS ================= */
+  .writings-page{ padding-top:calc(var(--navh) + var(--sp-5)); padding-bottom:var(--sp-6); }
+  .writings-page h1{ font-size:clamp(2rem,4.5vw,2.8rem); font-weight:340; margin:.3em 0 var(--sp-4); }
+  .writing-cards{ display:flex; flex-direction:column; }
+  .writing-card{
+    display:block; text-decoration:none; color:inherit;
+    padding:var(--sp-4) 0; border-top:1px solid var(--line);
+  }
+  .writing-card:last-child{ border-bottom:1px solid var(--line); }
+  .writing-card h2{ font-size:clamp(1.4rem,2.8vw,1.9rem); font-weight:340; margin:.25em 0 .2em; }
+  .writing-card__sub{ font-style:italic; color:var(--ink-soft); margin-bottom:.5em; }
+  .writing-card__byline{
+    font-family:"Space Mono",monospace; font-size:.7rem; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--ink-soft);
+  }
+  .writing-card:hover h2, .writing-card:focus-visible h2{ color:var(--accent); }
+
+  .writing-page{ padding-top:calc(var(--navh) + var(--sp-5)); padding-bottom:var(--sp-6); }
+  .writing-header{ margin-bottom:var(--sp-4); }
+  .writing-header h1{ font-size:clamp(2.1rem,5.5vw,3.4rem); font-weight:340; margin:.25em 0 .15em; }
+  .writing-header__sub{ font-style:italic; color:var(--ink-soft); font-size:var(--fs-lede); margin-bottom:var(--sp-2); }
+  .writing-byline{
+    font-family:"Space Mono",monospace; font-size:.72rem; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--ink-soft);
+  }
+  .writing-body{ font-family:"Fraunces", serif; font-size:1.15rem; line-height:1.8; }
+  .writing-body p{ margin:0 0 1.3em; }
+  .writing-recipe{
+    text-align:center; font-style:italic; color:var(--ink-soft);
+    margin:var(--sp-4) auto; max-width:24rem;
+  }
+  .writing-recipe p{ margin:0 0 .35em; }
+  .writing-stanza{ margin:0 0 1.3em; }
+  .writing-stanza p{ margin:0 0 .15em; }
+  .writing-credits{
+    border-top:1px solid var(--line); margin-top:var(--sp-5); padding-top:var(--sp-3);
+    font-family:"Space Mono",monospace; font-size:.78rem; color:var(--ink-soft); line-height:2;
+  }
+  .writing-more{ margin-top:var(--sp-2); }
+  .writing-more a{ color:var(--accent); }
 
   .tip-wrap{ position:relative; display:inline-flex; }
   .tip-wrap__bubble{
@@ -420,13 +464,12 @@
 <nav class="nav">
   <a class="nav__mark" href="#"><span class="nav__mark-palette">Palette</span><span class="nav__mark-by">by ethan</span></a>
   <div class="nav__links">
-    <div class="nav__dropdown" id="travels-dropdown">
-      <button class="nav__dropdown-toggle" id="travels-toggle" type="button" aria-haspopup="true" aria-expanded="false">
-        Travels <span class="nav__dropdown-caret">&#9662;</span>
+    <div class="nav__dropdown" id="menu-dropdown">
+      <button class="nav__dropdown-toggle" id="menu-toggle" type="button" aria-haspopup="true" aria-expanded="false">
+        Menu <span class="nav__dropdown-caret">&#9662;</span>
       </button>
-      <div class="nav__dropdown-menu" id="travels-menu"></div>
+      <div class="nav__dropdown-menu" id="menu-menu"></div>
     </div>
-    <a class="nav__about" href="#/about">About</a>
   </div>
 </nav>
 
@@ -1640,6 +1683,89 @@
     );
   }
 
+  var writings = [
+    {
+      slug: 'words-and-faces-of-chinatown',
+      eyebrow: 'The Berkeley Connection',
+      title: 'Words and Faces of Chinatown',
+      subtitle: 'A Tour of Chinese-Inspired America',
+      words: 'Ethan Ye',
+      photos: 'Luke Jensen',
+      design: 'Michael Kong',
+      blocks: [
+        { type:'p', text:'It’s 1900. I have nothing. It had been 40 years since I arrived on a floating demon, the dragon boat, ready to start a new journey. Boots, straps, jeans, coats, and pickaxes: all ready to go. The sweat on my temples drip down onto my eyelashes. I blink. Everything’s still the same. Nothing changes.' },
+        { type:'p', text:'There is no joy, only sorrow and a never-ending row of decrepit and loneliness. Remnants of those who tried have left their mark. Many have left already. Grant Street is full of the abandoned shops filled with lanterns that don’t light up anymore.' },
+        { type:'p', text:'Clay Street has no more mahjong tables. What is there left for me in this space?' },
+        { type:'p', text:'Except it’s no longer 1900. But nothing has changed. I’m headed to a small shop on the corner of Clay and Grant, ready to consume the greatness of sweet and sour chicken. The lines at New Mong Kok, a Cantonese fast-food shop, seem never ending, but nothing has changed. Standing under the cool, breezy San Francisco breeze, I feel a chill down my spine. Except this time it’s internal. It’s real.' },
+        { type:'p', text:'Nothing. Has. Changed.' },
+        { type:'p', text:'It’s sweet and sour. Except we’ve all been sour. The Chinese waitress at Mong Kok pours a pot of sauce, lathering it over the freshly fried chicken. Mix it, stir it. It’s done. But it’s still nothing much. It’s just the clumps of life from the past.' },
+        { type:'p', text:'I turn right, and the walls around me want to share a recipe with me for a famous Chinese dish. Do you want a recipe for the greatest dish of all time?' },
+        { type:'p', text:'I’ll share it with you, for after all, we share and give. Only give. We never expect anything in return. But we never get anything in return.' },
+        { type:'p', text:'I’ll show you. Listen up!' },
+        { type:'p', text:'Its name is: “Love our people like you love your food.”' },
+        { type:'recipe', lines:['Ingredients:','1 cup of accountability.','2 cups of respect.','5 tablespoons of understanding.','3 cups of love.','1 teaspoon of empathy.','2 tablespoons of listening.'] },
+        { type:'p', text:'Mix well and prepare hot. Don’t forget any ingredients! All are quite crucial. But all of these ingredients are often forgotten. Every single one. Why bother even listening to my recipe? Just don’t listen I guess.' },
+        { type:'p', text:'That’s all. What a simple recipe. Did you listen? Want me to say it again? Is that too much to ask for? For hundreds of years, we’ve been living here. Who are we to you?' },
+        { type:'p', text:'These foreigners stand in line for our food. Yet nothing’s changed. Are we the foreigners? We’re still… nothing. Is this so hard?' },
+        { type:'p', text:'I can’t stomach down sweet and sour chicken. Doesn’t matter if it’s from Panda Express. It’s a deliberate distraction. American Chinese food. Adapted to American tastes. But we’re still not American. Nothing’s changed.' },
+        { type:'p', text:'Moving on, I guess. People ask: “Why do you even care? It’s not even that big of a deal.” But it is, because nothing has changed.' },
+        { type:'p', text:'Stockton Street. I turn my head to the right. Mural, mural on the wall. All the faces on the wall. The smiles, the hats, the hats. I am greeted with this strange site. I feel like I am them, and they are me. Perhaps, I am not so out of place. But we are.' },
+        { type:'p', text:'I refocus my attention on the smiles on the wall. They seem way too ecstatic to be here. Tell me who this is for. TELL ME. Why do we need to smile? Smiling through the pain.' },
+        { type:'p', text:'Are we here just for show? Who are we to you?' },
+        { type:'p', text:'Karl, the fog, sets in. I’m still shivering. Cold. I am clouded, jaded. It’s never getting warm again. Nothing’s changed. I wonder how these faces are doing?' },
+        { type:'p', text:'In a city known for art, beauty, and life, here lies a great work of art. But only great to those who care. And who cares? No one does. Not at least those that should.' },
+        { type:'p', text:'I don’t know these faces. But it feels like I do. I look around and glance at the Chinese grandma in front of me. She’s dressed in a bright, neon yellow. Maybe that’s her on the wall, but maybe it’s just another person. She looks like she’s had that hat for years. She’s surrounded by the constant horn beeps, the shopkeepers hollering back and forth, and shoppers bartering for a good deal. To her, this is home. Home away from home, I guess. In a field of uncertainty, in a world where everything is against you, this is all she has.' },
+        { type:'stanza', lines:['Every street, every corner,','history lets me know who I ought to be.'] },
+        { type:'stanza', lines:['Maybe I do know her after all.','Maybe this is also my home away','from home.'] },
+        { type:'stanza', lines:['But I can never accept this home,','for I do not have one.'] },
+        { type:'stanza', lines:['No one recognizes me.','Nothing’s changed.','And perhaps I’ll keep it that way.'] }
+      ]
+    }
+  ];
+
+  function renderWritings(){
+    var cards = writings.map(function(w){
+      return '<a class="writing-card reveal" href="#/writing/'+w.slug+'">' +
+        '<p class="eyebrow">'+escapeHtml(w.eyebrow)+'</p>' +
+        '<h2>'+escapeHtml(w.title)+'</h2>' +
+        '<p class="writing-card__sub">'+escapeHtml(w.subtitle)+'</p>' +
+        '<p class="writing-card__byline">Words by '+escapeHtml(w.words)+'</p>' +
+      '</a>';
+    }).join('');
+    return '<div class="writings-page col reveal">' +
+      '<p class="eyebrow">Writings</p>' +
+      '<h1>From the field journal</h1>' +
+      '<div class="writing-cards">' + cards + '</div>' +
+    '</div>';
+  }
+
+  function renderWriting(w){
+    var body = w.blocks.map(function(b){
+      if (b.type === 'recipe'){
+        return '<div class="writing-recipe">' + b.lines.map(function(l){ return '<p>'+escapeHtml(l)+'</p>'; }).join('') + '</div>';
+      }
+      if (b.type === 'stanza'){
+        return '<div class="writing-stanza">' + b.lines.map(function(l){ return '<p>'+escapeHtml(l)+'</p>'; }).join('') + '</div>';
+      }
+      return '<p>'+escapeHtml(b.text)+'</p>';
+    }).join('');
+    return '<div class="writing-page col">' +
+      '<div class="writing-header reveal">' +
+        '<p class="eyebrow">'+escapeHtml(w.eyebrow)+'</p>' +
+        '<h1>'+escapeHtml(w.title)+'</h1>' +
+        '<p class="writing-header__sub">'+escapeHtml(w.subtitle)+'</p>' +
+        '<p class="writing-byline">Words '+escapeHtml(w.words)+' &middot; Photos '+escapeHtml(w.photos)+' &middot; Design '+escapeHtml(w.design)+'</p>' +
+      '</div>' +
+      '<div class="writing-body reveal">' + body + '</div>' +
+      '<div class="writing-credits reveal">' +
+        '<p>Words: '+escapeHtml(w.words)+'</p>' +
+        '<p>Photos: '+escapeHtml(w.photos)+'</p>' +
+        '<p>Design: '+escapeHtml(w.design)+'</p>' +
+        '<p class="writing-more">For more, please visit <a href="https://www.readcaravan.com" target="_blank" rel="noopener">readcaravan.com</a></p>' +
+      '</div>' +
+    '</div>';
+  }
+
   var AIRPORT_COORDS = {
     SFO: [37.6213, -122.3790],
     LAX: [33.9416, -118.4085],
@@ -2307,6 +2433,15 @@
       } else {
         window.scrollTo(0,0);
       }
+    } else if (hash.indexOf('writing/') === 0){
+      var wSlug = hash.split('/')[1];
+      var writing = writings.filter(function(w){ return w.slug===wSlug; })[0];
+      if (!writing){ location.hash = 'writings'; return; }
+      app.innerHTML = renderWriting(writing);
+      window.scrollTo(0,0);
+    } else if (hash.indexOf('writings') === 0){
+      app.innerHTML = renderWritings();
+      window.scrollTo(0,0);
     } else {
       app.innerHTML = renderHome();
       window.scrollTo(0,0);
@@ -2317,37 +2452,46 @@
   var footerSocial = document.getElementById('footer-social');
   if (footerSocial) footerSocial.innerHTML = socialIconsHtml();
 
-  var travelsDropdown = document.getElementById('travels-dropdown');
-  var travelsToggle = document.getElementById('travels-toggle');
-  var travelsMenu = document.getElementById('travels-menu');
-  if (travelsDropdown && travelsToggle && travelsMenu){
-    travelsMenu.innerHTML = trips.slice().sort(function(a,b){
+  var menuDropdown = document.getElementById('menu-dropdown');
+  var menuToggle = document.getElementById('menu-toggle');
+  var menuMenu = document.getElementById('menu-menu');
+  if (menuDropdown && menuToggle && menuMenu){
+    var tripLinks = trips.slice().sort(function(a,b){
       return a.place.localeCompare(b.place);
     }).map(function(t){
-      return '<a class="nav__dropdown-link" href="#/trip/'+t.slug+'">'+escapeHtml(t.place)+'</a>';
+      return '<a class="nav__dropdown-link nav__dropdown-link--sub" href="#/trip/'+t.slug+'">'+escapeHtml(t.place)+'</a>';
     }).join('');
+    var writingLinks = writings.map(function(w){
+      return '<a class="nav__dropdown-link nav__dropdown-link--sub" href="#/writing/'+w.slug+'">'+escapeHtml(w.title)+'</a>';
+    }).join('');
+    menuMenu.innerHTML =
+      '<a class="nav__dropdown-link" href="#/about">About</a>' +
+      '<span class="nav__dropdown-heading">Travels</span>' +
+      tripLinks +
+      '<span class="nav__dropdown-heading">Writings</span>' +
+      writingLinks;
 
-    function closeTravels(){
-      travelsDropdown.classList.remove('is-open');
-      travelsToggle.setAttribute('aria-expanded', 'false');
+    function closeMenu(){
+      menuDropdown.classList.remove('is-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
     }
-    function toggleTravels(){
-      var open = travelsDropdown.classList.toggle('is-open');
-      travelsToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    function toggleMenu(){
+      var open = menuDropdown.classList.toggle('is-open');
+      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
 
-    travelsToggle.addEventListener('click', function(ev){
+    menuToggle.addEventListener('click', function(ev){
       ev.stopPropagation();
-      toggleTravels();
+      toggleMenu();
     });
-    travelsMenu.addEventListener('click', function(){ closeTravels(); });
+    menuMenu.addEventListener('click', function(){ closeMenu(); });
     document.addEventListener('click', function(ev){
-      if (!travelsDropdown.contains(ev.target)) closeTravels();
+      if (!menuDropdown.contains(ev.target)) closeMenu();
     });
     document.addEventListener('keydown', function(ev){
-      if (ev.key === 'Escape') closeTravels();
+      if (ev.key === 'Escape') closeMenu();
     });
-    window.addEventListener('hashchange', closeTravels);
+    window.addEventListener('hashchange', closeMenu);
   }
 
   // On touch devices there's no hover state, so the place-name caption on
