@@ -136,9 +136,9 @@
     opacity:0; visibility:hidden; transform:translateY(-4px);
     transition:opacity .18s ease, transform .18s ease, visibility .18s;
   }
-  .nav__dropdown.is-open .nav__dropdown-menu:not(.nav__dropdown-menu--sub){ opacity:1; visibility:visible; transform:translateY(0); }
+  .nav__dropdown.is-open .nav__dropdown-menu:not(.nav__dropdown-menu--sub){ opacity:1; visibility:visible; transform:none; }
   @media (hover:hover) and (pointer:fine){
-    .nav__dropdown:hover > .nav__dropdown-menu{ opacity:1; visibility:visible; transform:translateY(0); }
+    .nav__dropdown:hover > .nav__dropdown-menu:not(.nav__dropdown-menu--sub){ opacity:1; visibility:visible; transform:none; }
     .nav__dropdown:hover > .nav__dropdown-toggle{ color:var(--ink); }
     .nav__dropdown:hover .nav__dropdown-caret:not(.nav__dropdown-caret--sub){ transform:rotate(180deg); }
   }
@@ -154,20 +154,22 @@
     width:100%; background:none; border:none; cursor:pointer; text-align:left;
     display:flex; align-items:center; justify-content:space-between; gap:.4em;
   }
-  .nav__dropdown--sub.is-open .nav__dropdown-toggle--sub{ color:var(--ink); }
+  .nav__dropdown--sub.is-open > .nav__dropdown-toggle--sub{ color:var(--ink); }
   .nav__dropdown-caret--sub{ font-size:.6rem; }
   .nav__dropdown-menu--sub{
     position:absolute; top:-.4rem; right:calc(100% + .5rem); left:auto;
-    min-width:190px; max-height:calc(100vh - 100px); overflow-y:auto;
+    min-width:190px;
     background:var(--paper); border:1px solid var(--line);
     padding:.4rem 0; display:flex; flex-direction:column;
-    opacity:0; visibility:hidden; transform:translateX(4px);
-    transition:opacity .18s ease, transform .18s ease, visibility .18s;
+    opacity:0; visibility:hidden; transform:none;
+    transition:opacity .18s ease, visibility .18s;
   }
-  .nav__dropdown--sub.is-open .nav__dropdown-menu--sub{ opacity:1; visibility:visible; transform:translateX(0); }
+  #travels-submenu{ max-height:calc(100vh - 100px); overflow-y:auto; }
+  #france-submenu{ position:fixed; top:0; right:auto; left:0; }
+  .nav__dropdown--sub.is-open > .nav__dropdown-menu--sub{ opacity:1; visibility:visible; }
   @media (hover:hover) and (pointer:fine){
-    .nav__dropdown--sub:hover .nav__dropdown-menu--sub{ opacity:1; visibility:visible; transform:translateX(0); }
-    .nav__dropdown--sub:hover .nav__dropdown-toggle--sub{ color:var(--ink); }
+    .nav__dropdown--sub:hover > .nav__dropdown-menu--sub{ opacity:1; visibility:visible; }
+    .nav__dropdown--sub:hover > .nav__dropdown-toggle--sub{ color:var(--ink); }
   }
 
   .site-foot{
@@ -1144,6 +1146,78 @@
       ]
     },
     {
+      slug: 'nice',
+      title: 'Nice, France',
+      place: 'Nice',
+      coord: '43.7102°N, 7.2620°E',
+      cover: 'images/nice/nice-promenade-aerial.jpg',
+      coverAlt: 'An aerial view over Nice’s red-tiled Old Town and the curving Promenade des Anglais toward the Baie des Anges',
+      slides: [
+        { type:'itinerary',
+          title:'Nice, France',
+          legs:[
+            { airline:'KLM', flight:'1134', fromCode:'DUB', toCode:'AMS', dep:'6:01 AM GMT+1', arr:'8:40 AM GMT+2', duration:'1 hr 39 min', aircraft:'Boeing 737-700', direction:'outbound' },
+            { airline:'KLM', flight:'1475', fromCode:'AMS', toCode:'NCE', dep:'9:57 AM GMT+2', arr:'11:53 AM GMT+2', duration:'1 hr 56 min', aircraft:'Airbus A321neo', direction:'outbound' },
+            { airline:'Ryanair', flight:'1959', fromCode:'NCE', toCode:'DUB', dep:'9:30 PM GMT+2', arr:'11:35 PM GMT+1', duration:'3 hr 5 min', aircraft:'Boeing 737-800', direction:'inbound' }
+          ]
+        },
+        { type:'photo', src:'images/nice/nice-old-town-cafe.jpg', alt:'Diners at wicker café tables beneath the awning of Les Petits Marchands on a sunlit Nice old town street', loc:'COURS SALEYA, NICE', day:'DAY 1' },
+        { type:'photo', src:'images/nice/nice-promenade-aerial.jpg', alt:'An aerial view over Nice’s red-tiled Old Town and the curving Promenade des Anglais toward the Baie des Anges', loc:'COLLINE DU CHÂTEAU, NICE', day:'DAY 1' },
+        { type:'photo', src:'images/nice/nice-villefranche-harbor-facades.jpg', alt:'Villefranche-sur-Mer’s pastel harborfront buildings rising beneath a pine-covered hillside at golden hour', loc:'VILLEFRANCHE-SUR-MER', day:'DAY 2' },
+        { type:'photo', src:'images/nice/nice-cap-ferrat-cove.jpg', alt:'A turquoise cove along the Cap Ferrat coastline, its rocky shore lined by villas beneath the pines', loc:'CAP FERRAT COASTLINE', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/nice/nice-cap-ferrat-cove-wide.jpg', alt:'A lone sailboat anchored in a sheltered cove along the Cap Ferrat coastline, cranes rising above the hillside villas', loc:'CAP FERRAT COASTLINE', day:'DAY 2' },
+          { src:'images/nice/nice-cap-ferrat-sailboat.jpg', alt:'A sailboat moored beneath a stone balustrade and umbrella pines along the Cap Ferrat shoreline', loc:'CAP FERRAT COASTLINE', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/nice/nice-villa-ephrussi-loggia-view.jpg', alt:'A sea view through a marble-columned loggia at Villa Ephrussi de Rothschild, bougainvillea spilling over the balustrade', loc:'VILLA EPHRUSSI DE ROTHSCHILD, CAP FERRAT', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/nice/nice-villa-ephrussi-facade-detail.jpg', alt:'A detail of Villa Ephrussi de Rothschild’s pink Belle Époque facade and garden statuary', loc:'VILLA EPHRUSSI DE ROTHSCHILD, CAP FERRAT', day:'DAY 2' },
+          { src:'images/nice/nice-villa-ephrussi-fountains.jpg', alt:'Villa Ephrussi de Rothschild’s pink facade and loggia rising above its formal fountains and gardens', loc:'VILLA EPHRUSSI DE ROTHSCHILD, CAP FERRAT', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/nice/nice-villefranche-bay-rooftops.jpg', alt:'Green-tiled rooftops framing a view over Villefranche-sur-Mer’s yacht-filled bay from Cap Ferrat', loc:'VILLEFRANCHE BAY, CAP FERRAT', day:'DAY 2' },
+        { type:'photo', src:'images/nice/nice-villefranche-bay-wide.jpg', alt:'A wide view of Villefranche-sur-Mer’s harbor and hillside town across the bay', loc:'VILLEFRANCHE-SUR-MER', day:'DAY 2' },
+        { type:'photo', src:'images/nice/nice-cap-ferrat-yachts-cliffs.jpg', alt:'Yachts anchored beneath a cliffside village along the Cap Ferrat coastline', loc:'CAP FERRAT COASTLINE', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/nice/nice-plage-mala-wide.jpg', alt:'Sunbathers filling the sand at Plage Mala, a cove beach tucked beneath Cap Ferrat’s cliffs', loc:'PLAGE MALA, CAP FERRAT', day:'DAY 2' },
+          { src:'images/nice/nice-plage-mala-cliffside.jpg', alt:'Swimmers in the clear water at Plage Mala beneath towering cliffside villas', loc:'PLAGE MALA, CAP FERRAT', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/nice/nice-plage-mala-swimmers.jpg', alt:'Sunbathers and swimmers on the rocks above a hidden cove near Plage Mala', loc:'PLAGE MALA, CAP FERRAT', day:'DAY 2' }
+      ]
+    },
+    {
+      slug: 'monaco',
+      title: 'Monaco',
+      place: 'Monaco',
+      coord: '43.7384°N, 7.4246°E',
+      cover: 'images/monaco/monaco-monte-carlo-skyline-harbor.jpg',
+      coverAlt: 'Monte Carlo’s Belle Époque skyline and superyacht-filled harbor beneath the hills of the Riviera',
+      slides: [
+        { type:'itinerary',
+          title:'Monaco',
+          legs:[
+            { mode:'train', airline:'SNCF', fromCode:'NCE', toCode:'MCM', direction:'outbound' },
+            { mode:'train', airline:'SNCF', fromCode:'MCM', toCode:'NCE', direction:'inbound' }
+          ]
+        },
+        { type:'photo', src:'images/monaco/monaco-monte-carlo-station-sign.jpg', alt:'The “Monaco Monte-Carlo” SNCF station sign glowing beneath the terminal’s wood-slatted ceiling', loc:'MONACO MONTE-CARLO STATION', day:'DAY 1' },
+        { type:'photo', src:'images/monaco/monaco-monte-carlo-skyline-harbor.jpg', alt:'Monte Carlo’s Belle Époque skyline and superyacht-filled harbor beneath the hills of the Riviera', loc:'MONTE CARLO', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/monaco/monaco-fontvieille-harbor-aerial.jpg', alt:'An aerial view over Fontvieille’s marina and apartment blocks, boats crowding the harbor below', loc:'FONTVIEILLE, MONACO', day:'DAY 1' },
+          { src:'images/monaco/monaco-fontvieille-harbor-wide.jpg', alt:'Yachts lining Fontvieille’s harbor beneath Monaco’s hillside towers and the cliffs beyond', loc:'FONTVIEILLE, MONACO', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/monaco/monaco-fort-antoine-watchtower.jpg', alt:'A stone watchtower on the ramparts of Fort Antoine overlooking the Mediterranean', loc:'FORT ANTOINE, MONACO-VILLE', day:'DAY 1' },
+        { type:'photo', src:'images/monaco/monaco-oceanographic-museum-wall.jpg', alt:'The Oceanographic Museum’s stone facade rising directly above the sea from Monaco-Ville’s cliffside', loc:'OCEANOGRAPHIC MUSEUM, MONACO-VILLE', day:'DAY 1' },
+        { type:'photo', src:'images/monaco/monaco-casino-square-supercars.jpg', alt:'A Ferrari parked before the Hermès boutiques of Casino Square, Monte Carlo’s skyline rising behind', loc:'CASINO SQUARE, MONTE CARLO', day:'DAY 1' },
+        { type:'photo', src:'images/monaco/monaco-fairmont-hairpin.jpg', alt:'A Ferrari 812 GTS rounding the famous Fairmont Hairpin as spectators look on', loc:'FAIRMONT HAIRPIN, MONTE CARLO', day:'DAY 1' },
+        { type:'photo', src:'images/monaco/monaco-coastline-water-detail.jpg', alt:'Sunlight rippling across the clear turquoise water and rocks along the Monaco coastline', loc:'MONACO COASTLINE', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/monaco/monaco-casino-slot-machines.jpg', alt:'Glowing slot machines seen through the gilded doorway of the Casino de Monte-Carlo', loc:'CASINO DE MONTE-CARLO', day:'DAY 1' },
+          { src:'images/monaco/monaco-casino-atrium-ceiling.jpg', alt:'The Casino de Monte-Carlo’s frescoed atrium ceiling and gilded balustrades rising above marble columns', loc:'CASINO DE MONTE-CARLO', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/monaco/monaco-hotel-de-paris-supercar.jpg', alt:'A matte-green Lamborghini Urus parked outside the Hôtel de Paris in Monte Carlo', loc:'HÔTEL DE PARIS, MONTE CARLO', day:'DAY 1' }
+      ]
+    },
+    {
       slug: 'czech-republic',
       title: 'Czech Republic',
       place: 'Czech Republic',
@@ -1438,6 +1512,18 @@
     'images/kenya/kenya-rift-valley-viewpoint.jpg':1.5,
     'images/kenya/kenya-roadside-kids.jpg':0.6667,
     'images/kenya/kenya-roadside-market.jpg':1.5,
+    'images/monaco/monaco-casino-atrium-ceiling.jpg':0.6667,
+    'images/monaco/monaco-casino-slot-machines.jpg':0.6667,
+    'images/monaco/monaco-casino-square-supercars.jpg':0.6667,
+    'images/monaco/monaco-coastline-water-detail.jpg':0.6667,
+    'images/monaco/monaco-fairmont-hairpin.jpg':1.5,
+    'images/monaco/monaco-fontvieille-harbor-aerial.jpg':1.5,
+    'images/monaco/monaco-fontvieille-harbor-wide.jpg':0.6667,
+    'images/monaco/monaco-fort-antoine-watchtower.jpg':0.6667,
+    'images/monaco/monaco-hotel-de-paris-supercar.jpg':0.6667,
+    'images/monaco/monaco-monte-carlo-skyline-harbor.jpg':0.6667,
+    'images/monaco/monaco-monte-carlo-station-sign.jpg':0.6667,
+    'images/monaco/monaco-oceanographic-museum-wall.jpg':0.6667,
     'images/morocco/morocco-agafay-desert-atlas-view.jpg':1.5006,
     'images/morocco/morocco-agafay-desert-camel.jpg':0.6667,
     'images/morocco/morocco-countryside-cat-kittens.jpg':1.4994,
@@ -1482,6 +1568,21 @@
     'images/namibia/namibia-spitzkoppe-portrait.jpg':1.5006,
     'images/namibia/namibia-spitzkoppe-rock-arch.jpg':1.5,
     'images/namibia/namibia-walvis-bay-pelican.jpg':0.6667,
+    'images/nice/nice-cap-ferrat-cove-wide.jpg':1.5,
+    'images/nice/nice-cap-ferrat-cove.jpg':0.6667,
+    'images/nice/nice-cap-ferrat-sailboat.jpg':0.6667,
+    'images/nice/nice-cap-ferrat-yachts-cliffs.jpg':0.6667,
+    'images/nice/nice-old-town-cafe.jpg':0.6667,
+    'images/nice/nice-plage-mala-cliffside.jpg':1.5,
+    'images/nice/nice-plage-mala-swimmers.jpg':0.6667,
+    'images/nice/nice-plage-mala-wide.jpg':0.6665,
+    'images/nice/nice-promenade-aerial.jpg':0.6667,
+    'images/nice/nice-villa-ephrussi-facade-detail.jpg':1.5,
+    'images/nice/nice-villa-ephrussi-fountains.jpg':0.6663,
+    'images/nice/nice-villa-ephrussi-loggia-view.jpg':0.6667,
+    'images/nice/nice-villefranche-bay-rooftops.jpg':0.6667,
+    'images/nice/nice-villefranche-bay-wide.jpg':1.5,
+    'images/nice/nice-villefranche-harbor-facades.jpg':0.6667,
     'images/paris/paris-conciergerie-night.jpg':1.5,
     'images/paris/paris-eiffel-tower-searchlight.jpg':0.6667,
     'images/paris/paris-grand-staircase-couple.jpg':0.667,
@@ -1923,7 +2024,10 @@
     SJC: [37.3626, -121.9291],
     LIS: [38.7813, -9.1359],
     RAK: [31.6069, -8.0363],
-    KRK: [50.0777, 19.7848]
+    KRK: [50.0777, 19.7848],
+    AMS: [52.3105, 4.7683],
+    NCE: [43.6584, 7.2159],
+    MCM: [43.7396, 7.4269]
   };
 
   // Simplified coastline outlines used as a map backdrop so routes read against real
@@ -2250,7 +2354,8 @@
     'Sichuan Airlines': 'images/site/airlines/sichuan-airlines.png',
     'Southwest': 'images/site/airlines/southwest.png',
     'Ryanair': 'images/site/airlines/ryanair.png',
-    'TAP Air Portugal': 'images/site/airlines/tap-air-portugal.png'
+    'TAP Air Portugal': 'images/site/airlines/tap-air-portugal.png',
+    'KLM': 'images/site/airlines/klm.png'
   };
 
   function renderItinerary(slide){
@@ -2565,14 +2670,6 @@
   var menuToggle = document.getElementById('menu-toggle');
   var menuMenu = document.getElementById('menu-menu');
   if (menuDropdown && menuToggle && menuMenu){
-    var tripLinks = trips.slice().sort(function(a,b){
-      return a.place.localeCompare(b.place);
-    }).map(function(t){
-      return '<a class="nav__dropdown-link" href="#/trip/'+t.slug+'">'+escapeHtml(t.place)+'</a>';
-    }).join('');
-    var writingLinks = writings.map(function(w){
-      return '<a class="nav__dropdown-link" href="#/writing/'+w.slug+'">'+escapeHtml(w.title)+'</a>';
-    }).join('');
     function subDropdownHtml(id, label, linksHtml){
       return '<div class="nav__dropdown nav__dropdown--sub" id="'+id+'-subdropdown">' +
         '<button class="nav__dropdown-link nav__dropdown-toggle--sub" id="'+id+'-subtoggle" type="button" aria-haspopup="true" aria-expanded="false">' +
@@ -2581,6 +2678,23 @@
         '<div class="nav__dropdown-menu nav__dropdown-menu--sub" id="'+id+'-submenu">' + linksHtml + '</div>' +
       '</div>';
     }
+    var franceSlugs = ['nice', 'paris'];
+    var franceLinks = trips.filter(function(t){ return franceSlugs.indexOf(t.slug) !== -1; })
+      .slice().sort(function(a,b){ return a.place.localeCompare(b.place); })
+      .map(function(t){
+        return '<a class="nav__dropdown-link" href="#/trip/'+t.slug+'">'+escapeHtml(t.place)+'</a>';
+      }).join('');
+    var tripEntries = trips.filter(function(t){ return franceSlugs.indexOf(t.slug) === -1; })
+      .map(function(t){
+        return { key: t.place, html: '<a class="nav__dropdown-link" href="#/trip/'+t.slug+'">'+escapeHtml(t.place)+'</a>' };
+      });
+    tripEntries.push({ key: 'France', html: subDropdownHtml('france', 'France', franceLinks) });
+    var tripLinks = tripEntries.sort(function(a,b){
+      return a.key.localeCompare(b.key);
+    }).map(function(e){ return e.html; }).join('');
+    var writingLinks = writings.map(function(w){
+      return '<a class="nav__dropdown-link" href="#/writing/'+w.slug+'">'+escapeHtml(w.title)+'</a>';
+    }).join('');
     menuMenu.innerHTML =
       '<a class="nav__dropdown-link" href="#/about">About</a>' +
       subDropdownHtml('travels', 'Travels', tripLinks) +
@@ -2596,20 +2710,57 @@
       menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
 
-    var subDropdowns = ['travels', 'writings'].map(function(id){
+    var subDropdownDefs = [
+      { id:'travels', children:['france'] },
+      { id:'writings', children:[] },
+      { id:'france', children:[] }
+    ];
+    var subDropdownsById = {};
+    var subDropdowns = subDropdownDefs.map(function(def){
+      var id = def.id;
       var dropdown = document.getElementById(id+'-subdropdown');
       var toggle = document.getElementById(id+'-subtoggle');
       function close(){
         dropdown.classList.remove('is-open');
         toggle.setAttribute('aria-expanded', 'false');
+        def.children.forEach(function(childId){
+          if (subDropdownsById[childId]) subDropdownsById[childId].close();
+        });
       }
       toggle.addEventListener('click', function(ev){
         ev.stopPropagation();
         var open = dropdown.classList.toggle('is-open');
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (!open){
+          def.children.forEach(function(childId){
+            if (subDropdownsById[childId]) subDropdownsById[childId].close();
+          });
+        }
       });
-      return { close: close };
+      var obj = { close: close };
+      subDropdownsById[id] = obj;
+      return obj;
     });
+
+    // #france-submenu is nested inside #travels-submenu, which needs its own
+    // scrollbar once the country list gets long; overflow on that ancestor
+    // would clip an absolutely-positioned flyout escaping to its left, so
+    // france-submenu is position:fixed instead and repositioned here to sit
+    // just left of its toggle, recalculated whenever it might move.
+    var franceToggle = document.getElementById('france-subtoggle');
+    var franceMenu = document.getElementById('france-submenu');
+    var travelsMenu = document.getElementById('travels-submenu');
+    if (franceToggle && franceMenu){
+      var positionFranceMenu = function(){
+        var r = franceToggle.getBoundingClientRect();
+        franceMenu.style.top = r.top + 'px';
+        franceMenu.style.left = Math.max(8, r.left - franceMenu.offsetWidth - 8) + 'px';
+      };
+      franceToggle.addEventListener('click', positionFranceMenu);
+      document.getElementById('france-subdropdown').addEventListener('mouseenter', positionFranceMenu);
+      if (travelsMenu) travelsMenu.addEventListener('scroll', positionFranceMenu);
+      window.addEventListener('resize', positionFranceMenu);
+    }
 
     menuToggle.addEventListener('click', function(ev){
       ev.stopPropagation();
