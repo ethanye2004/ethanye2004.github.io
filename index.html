@@ -1154,6 +1154,7 @@
       slides: [
         { type:'itinerary',
           title:'Nice, France',
+          mapPad: { lat:8, lon:12 },
           legs:[
             { airline:'KLM', flight:'1134', fromCode:'DUB', toCode:'AMS', dep:'6:01 AM GMT+1', arr:'8:40 AM GMT+2', duration:'1 hr 39 min', aircraft:'Boeing 737-700', direction:'outbound' },
             { airline:'KLM', flight:'1475', fromCode:'AMS', toCode:'NCE', dep:'9:57 AM GMT+2', arr:'11:53 AM GMT+2', duration:'1 hr 56 min', aircraft:'Airbus A321neo', direction:'outbound' },
@@ -2147,8 +2148,15 @@
     [36.1,-5.3],[37.0,-8.9],[38.7,-9.4],[41.1,-8.7],[43.5,-8.2],
     [43.4,-2.9],[44.6,-1.2],[47.2,-2.2],[48.4,-4.5],[49.5,-1.6],
     [51.0,2.2],[53.0,4.8],[54.3,10.1],[53.9,14.3],[54.7,20.5],
-    [43.3,16.4],[40.6,17.9],[38.1,15.6],[37.5,13.4],[40.8,14.3],
-    [41.8,12.5],[43.5,10.3],[44.4,8.9],[43.7,7.3],[41.4,2.2],
+    // Italian peninsula, traced in more detail (Adriatic coast down to the
+    // heel, across to the toe and Sicily, then back up the western coast)
+    // so it reads as a recognizable boot rather than a generic blob.
+    [45.4,12.3],[44.0,12.6],[43.6,13.5],[42.6,14.4],[42.0,14.9],
+    [41.9,16.2],[41.1,16.9],[40.6,18.0],[40.4,17.3],[39.0,17.1],
+    [38.1,15.7],[37.5,15.3],[36.8,13.4],[38.0,12.5],[40.6,14.8],
+    [40.85,14.25],[41.2,13.6],[41.8,12.5],[42.1,11.8],[42.8,10.9],
+    [43.5,10.2],[44.1,9.8],[44.4,8.9],[44.3,8.5],[43.9,8.0],
+    [43.7,7.3],[41.4,2.2],
     [39.5,-0.3],[36.7,-4.4]
   ];
 
