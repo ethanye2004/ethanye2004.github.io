@@ -1194,6 +1194,7 @@
       slides: [
         { type:'itinerary',
           title:'Monaco',
+          mapPad: { lat:8, lon:12 },
           legs:[
             { mode:'train', airline:'SNCF', fromCode:'NCE', toCode:'MCM', direction:'outbound' },
             { mode:'train', airline:'SNCF', fromCode:'MCM', toCode:'NCE', direction:'inbound' }
@@ -1227,6 +1228,7 @@
       slides: [
         { type:'itinerary',
           title:'Czech Republic',
+          mapPad: { lat:3, lon:4 },
           legs:[
             { airline:'Smartwings', flight:'1035', fromCode:'CDG', toCode:'PRG', dep:'3:50 PM GMT+1', arr:'5:52 PM GMT+1', duration:'2 hr 2 min', aircraft:'Boeing 737-800', direction:'outbound' },
             { airline:'Ryanair', flight:'4069', fromCode:'PRG', toCode:'KRK', dep:'7:55 AM GMT+1', arr:'9:14 AM GMT+1', duration:'1 hr 19 min', aircraft:'Boeing 737-800', direction:'inbound' }
@@ -2148,16 +2150,36 @@
     [36.1,-5.3],[37.0,-8.9],[38.7,-9.4],[41.1,-8.7],[43.5,-8.2],
     [43.4,-2.9],[44.6,-1.2],[47.2,-2.2],[48.4,-4.5],[49.5,-1.6],
     [51.0,2.2],[53.0,4.8],[54.3,10.1],[53.9,14.3],[54.7,20.5],
-    // Italian peninsula, traced in more detail (Adriatic coast down to the
-    // heel, across to the toe and Sicily, then back up the western coast)
-    // so it reads as a recognizable boot rather than a generic blob.
+    [43.3,16.4],[40.6,17.9],[38.1,15.6],[37.5,13.4],[40.8,14.3],
+    [41.8,12.5],[43.5,10.3],[44.4,8.9],[43.7,7.3],[41.4,2.2],
+    [39.5,-0.3],[36.7,-4.4]
+  ];
+
+  // Italy's own outline as a self-contained closed loop (Adriatic coast
+  // down to the heel, across the arch to the toe and Sicily, then back up
+  // the western coast to the Alps), for the same reason as FRANCE_COASTLINE
+  // below: a tight zoom near Nice/Monaco only grabs a short arc of the much
+  // bigger EUROPE_COASTLINE perimeter, which reads as a shapeless sliver
+  // rather than a recognizable boot.
+  var ITALY_COASTLINE = [
     [45.4,12.3],[44.0,12.6],[43.6,13.5],[42.6,14.4],[42.0,14.9],
     [41.9,16.2],[41.1,16.9],[40.6,18.0],[40.4,17.3],[39.0,17.1],
     [38.1,15.7],[37.5,15.3],[36.8,13.4],[38.0,12.5],[40.6,14.8],
     [40.85,14.25],[41.2,13.6],[41.8,12.5],[42.1,11.8],[42.8,10.9],
-    [43.5,10.2],[44.1,9.8],[44.4,8.9],[44.3,8.5],[43.9,8.0],
-    [43.7,7.3],[41.4,2.2],
-    [39.5,-0.3],[36.7,-4.4]
+    [43.5,10.2],[44.1,9.8],[44.4,8.9],[44.3,8.5],[43.9,8.0]
+  ];
+
+  // Poland's own outline as a self-contained closed loop (Baltic coast,
+  // the Lithuania/Belarus/Ukraine border east and south, the Carpathians
+  // near Kraków, then the Czech/German border back to the Baltic) - same
+  // reasoning as FRANCE_COASTLINE/ITALY_COASTLINE above: EUROPE_COASTLINE's
+  // Baltic coast is only two sparse points, nowhere near enough for a
+  // route like Prague-Kraków to read as passing through a recognizable
+  // Poland.
+  var POLAND_COASTLINE = [
+    [53.9,14.3],[54.35,18.65],[54.4,19.9],[54.1,22.9],[53.1,23.2],
+    [50.8,23.5],[49.9,21.9],[50.0,19.9],[50.1,18.6],[51.1,17.0],
+    [51.9,15.5]
   ];
 
   // Great Britain, simplified as its own closed landmass separate from the mainland.
