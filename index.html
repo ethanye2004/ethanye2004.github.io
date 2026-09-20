@@ -522,6 +522,96 @@
 (function(){
   var trips = [
     {
+      slug: 'namibia',
+      title: 'Namibia',
+      place: 'Namibia',
+      coord: '22.9576°S, 14.5053°E',
+      cover: 'images/namibia/namibia-deadvlei-aerial.jpg',
+      coverAlt: 'An elevated view of Deadvlei’s white clay pan and skeletal dead trees, ringed by towering red dunes',
+      slides: [
+        { type:'itinerary',
+          title:'Namibia',
+          mapPad: { lat:24, lon:20 },
+          legs:[
+            { airline:'Airlink', flight:'341', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190', direction:'outbound' },
+            { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'WVB', toCode:'SES' },
+            { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'SES', toCode:'WDH' },
+            { airline:'Proflight Zambia', flight:'63', fromCode:'WDH', toCode:'LVI', dep:'12:20 PM GMT+2', arr:'1:55 PM GMT+2', duration:'1 hr 35 min', aircraft:'CRJ-200', direction:'inbound' }
+          ]
+        },
+        { type:'photo', src:'images/namibia/namibia-walvis-bay-pelican.jpg', alt:'A great white pelican preening on a sandy beach at Walvis Bay', loc:'WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-walvis-bay-pelican-shore.jpg', alt:'A great white pelican resting on a rocky shoreline at Walvis Bay, waves breaking beyond the rocks', loc:'WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-salt-road-sign.jpg', alt:'A weathered warning sign beside a causeway road crossing Walvis Bay’s salt pans', loc:'WALVIS BAY SALT PANS', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-dune-coast-fog.jpg', alt:'Sand dunes falling toward a fog-veiled Atlantic Ocean near Walvis Bay', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-dune-coast-sunlit.jpg', alt:'Sunlight glinting off the ocean beyond a ridge of coastal sand dunes', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-dune-coast-aerial.jpg', alt:'An elevated view along a dune ridge curving beside the coastline, waves breaking on the shore below', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-dune-ocean-aerial.jpg', alt:'A high aerial view of a massive dune falling directly into the fog-veiled Atlantic, waves breaking at its base', loc:'SKELETON COAST', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-cape-fur-seal.jpg', alt:'A Cape fur seal walking across an empty beach at sunset, waves breaking behind it', loc:'CAPE CROSS', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-sandwich-harbour-sign.jpg', alt:'A weathered wooden permit sign for Namib-Naukluft Park’s Sandwich Harbour, dunes and ocean stretching behind it', loc:'SANDWICH HARBOUR', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-sandwich-harbour-dunes-sea.jpg', alt:'Towering dunes falling directly into the Atlantic at Sandwich Harbour, seen from inside a 4x4', loc:'SANDWICH HARBOUR', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-boulders.jpg', alt:'Rounded granite boulders stacked along a rock ridge at Spitzkoppe, dry scrubland stretching to the horizon', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-wide-camp.jpg', alt:'Spitzkoppe’s granite peak rising above a scattering of acacia trees and a small desert camp', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-domes.jpg', alt:'A cluster of rounded granite domes at Spitzkoppe, boulders scattered across the slope below', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-arch-peak.jpg', alt:'A natural rock arch framing the main Spitzkoppe peak in the distance', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-portrait.jpg', alt:'A hiker crossing a granite boulder with the Spitzkoppe peak rising behind him', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-arch-detail.jpg', alt:'A close, abstract view of layered granite boulders forming a natural arch, sky visible through the gap', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-rock-arch.jpg', alt:'The full span of the Spitzkoppe rock arch, a granite bridge worn smooth against the sky', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-naukluft-grassland.jpg', alt:'A dry grassland plain leading toward the folded, sun-streaked peaks of the Naukluft mountains', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-namib-naukluft-drive.jpg', alt:'A dusty gravel road running toward a jagged desert mountain range', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sesriem-road-sign.jpg', alt:'Road signs pointing toward Dead Valley Lodge, Sesriem Oshana Camp, and Sossusvlei along a gravel road', loc:'SESRIEM', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sossusvlei-balloons.jpg', alt:'Three hot air balloons rising over the desert plain at dawn, mountains silhouetted on the horizon', loc:'SOSSUSVLEI, SUNRISE', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-balloon-flame.jpg', alt:'A hot air balloon firing its burner as it drifts low over red dunes at sunrise', loc:'SOSSUSVLEI, SUNRISE', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sossusvlei-big-dune.jpg', alt:'A massive red sand dune towering over parked vehicles at its base', loc:'SOSSUSVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sossusvlei-dune-cluster.jpg', alt:'A cluster of red sand dunes catching afternoon light, tiny figures visible on the ridgelines', loc:'SOSSUSVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sossusvlei-flooded-reflection.jpg', alt:'A red dune and its slipface mirrored in a rare flooded pan at Sossusvlei', loc:'SOSSUSVLEI', day:'DAY 3' },
+        { type:'photo-pair', photos:[
+          { src:'images/namibia/namibia-desert-road-aerial.jpg', alt:'An elevated view of a car on a desert road cutting between rust-colored mountains', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
+          { src:'images/namibia/namibia-dune-ridge-aerial.jpg', alt:'Hikers climbing a knife-edge dune ridge, their shadows stretching down the slip face', loc:'SOSSUSVLEI', day:'DAY 3' }
+        ] },
+        { type:'photo-pair', photos:[
+          { src:'images/namibia/namibia-dune-climb-shadow-wide.jpg', alt:'Hikers strung along a dune ridge, the dune’s own shadow spilling down the slope beside their trail', loc:'SOSSUSVLEI', day:'DAY 3' },
+          { src:'images/namibia/namibia-dune-climb-shadow-close.jpg', alt:'A closer view of hikers on the dune ridge, deep shadow folding across the sand below their footprints', loc:'SOSSUSVLEI', day:'DAY 3' }
+        ] },
+        { type:'photo', src:'images/namibia/namibia-deadvlei-aerial.jpg', alt:'An elevated view of Deadvlei’s white clay pan and skeletal dead trees, ringed by towering red dunes', loc:'DEADVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-deadvlei-trees.jpg', alt:'Two dead camel-thorn trees standing in Deadvlei’s white clay pan against a red dune', loc:'DEADVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-deadvlei-portrait.jpg', alt:'A hiker walking across the white clay pan at Deadvlei, dead trees and a red dune behind him', loc:'DEADVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-desert-lodge-sunset-pool.jpg', alt:'Sunset over the desert plain, seen past an infinity pool at a lodge near Sesriem', loc:'DESERT LODGE', day:'DAY 3 · DUSK' },
+        { type:'photo', src:'images/namibia/namibia-desert-lodge-moonrise.jpg', alt:'The moon rising over a jagged red rock outcrop, lit gold by the last light of dusk', loc:'DESERT LODGE', day:'DAY 3 · DUSK' },
+        { type:'photo', src:'images/namibia/namibia-desert-lodge-dusk.jpg', alt:'Thatched-roof lodge chalets at dusk, mountains silhouetted behind under a pink sky', loc:'DESERT LODGE', day:'DAY 3 · DUSK' }
+      ]
+    },
+    {
+      slug: 'zambezi-river-basin',
+      title: 'Zambezi River Basin (Botswana, Zambia, Zimbabwe)',
+      place: 'Zambezi River Basin',
+      coord: '17.9243°S, 25.8572°E',
+      cover: 'images/zambezi/zambezi-victoria-falls-vertical.jpg',
+      coverAlt: 'A curtain of water cascading down Victoria Falls’ sheer basalt cliff, framed by overhanging trees',
+      slides: [
+        { type:'itinerary',
+          title:'Zambezi River Basin',
+          legs:[
+            { airline:'Proflight Zambia', flight:'63', fromCode:'WDH', toCode:'LVI', dep:'12:20 PM GMT+2', arr:'1:55 PM GMT+2', duration:'1 hr 35 min', aircraft:'CRJ-200', direction:'outbound' },
+            { airline:'Airlink', flight:'483', fromCode:'LVI', toCode:'JNB', dep:'1:49 PM GMT+2', arr:'3:38 PM GMT+2', duration:'1 hr 49 min', aircraft:'Embraer E190', direction:'inbound' }
+          ]
+        },
+        { type:'photo', src:'images/zambezi/zambezi-river-journey-info-sign.jpg', alt:'An interpretive sign mapping the Zambezi River’s course through six countries from its source to the Indian Ocean', loc:'LIVINGSTONE, ZAMBIA', day:'DAY 1' },
+        { type:'photo', src:'images/zambezi/zambezi-victoria-falls-wide.jpg', alt:'The full curtain of Victoria Falls thundering into the gorge, spray drifting above the tree-lined riverbank', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' },
+        { type:'photo', src:'images/zambezi/zambezi-victoria-falls-rainbow.jpg', alt:'A rainbow arcing over the Zambezi River’s rapids as spray rises from Victoria Falls in the distance', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/zambezi/zambezi-victoria-falls-vertical.jpg', alt:'A curtain of water cascading down Victoria Falls’ sheer basalt cliff, framed by overhanging trees', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' },
+          { src:'images/zambezi/zambezi-victoria-falls-gorge-mist.jpg', alt:'Mist rising from Victoria Falls fills the basalt gorge, the Zambezi River churning through rapids below', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/zambezi/zambezi-chobe-elephant-riverbank.jpg', alt:'An elephant walking along the Chobe River’s bank, tusks catching the light beside the water', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' },
+        { type:'photo', src:'images/zambezi/zambezi-chobe-elephant-vehicle.jpg', alt:'An elephant crossing close beside a safari vehicle as a guide watches from behind the wheel', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/zambezi/zambezi-chobe-crocodile.jpg', alt:'A Nile crocodile stretched out on the muddy bank of a Chobe waterhole', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' },
+          { src:'images/zambezi/zambezi-chobe-hippo.jpg', alt:'A hippo’s eyes and nostrils breaking the surface of the Chobe River', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/zambezi/zambezi-chobe-elephants-wading-egret.jpg', alt:'A herd of elephants wading across the Chobe River, a white egret perched on one’s back', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' }
+      ]
+    },
+    {
       slug: 'china',
       title: 'China',
       place: 'China',
@@ -602,86 +692,6 @@
       ]
     },
     {
-      slug: 'namibia',
-      title: 'Namibia',
-      place: 'Namibia',
-      coord: '22.9576°S, 14.5053°E',
-      cover: 'images/namibia/namibia-deadvlei-aerial.jpg',
-      coverAlt: 'An elevated view of Deadvlei’s white clay pan and skeletal dead trees, ringed by towering red dunes',
-      slides: [
-        { type:'itinerary',
-          title:'Namibia',
-          mapPad: { lat:24, lon:20 },
-          legs:[
-            { airline:'Airlink', flight:'341', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190', direction:'outbound' },
-            { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'WVB', toCode:'SES' },
-            { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'SES', toCode:'WDH' },
-            { airline:'Proflight Zambia', flight:'63', fromCode:'WDH', toCode:'LVI', dep:'12:20 PM GMT+2', arr:'1:55 PM GMT+2', duration:'1 hr 35 min', aircraft:'CRJ-200', direction:'inbound' }
-          ]
-        },
-        { type:'photo', src:'images/namibia/namibia-walvis-bay-pelican.jpg', alt:'A great white pelican preening on a sandy beach at Walvis Bay', loc:'WALVIS BAY', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-salt-road-sign.jpg', alt:'A weathered warning sign beside a causeway road crossing Walvis Bay’s salt pans', loc:'WALVIS BAY SALT PANS', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-dune-coast-fog.jpg', alt:'Sand dunes falling toward a fog-veiled Atlantic Ocean near Walvis Bay', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-dune-coast-sunlit.jpg', alt:'Sunlight glinting off the ocean beyond a ridge of coastal sand dunes', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-dune-coast-aerial.jpg', alt:'An elevated view along a dune ridge curving beside the coastline, waves breaking on the shore below', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-dune-ocean-aerial.jpg', alt:'A high aerial view of a massive dune falling directly into the fog-veiled Atlantic, waves breaking at its base', loc:'SKELETON COAST', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-cape-fur-seal.jpg', alt:'A Cape fur seal walking across an empty beach at sunset, waves breaking behind it', loc:'CAPE CROSS', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-spitzkoppe-boulders.jpg', alt:'Rounded granite boulders stacked along a rock ridge at Spitzkoppe, dry scrubland stretching to the horizon', loc:'SPITZKOPPE', day:'DAY 2' },
-        { type:'photo', src:'images/namibia/namibia-spitzkoppe-arch-peak.jpg', alt:'A natural rock arch framing the main Spitzkoppe peak in the distance', loc:'SPITZKOPPE', day:'DAY 2' },
-        { type:'photo', src:'images/namibia/namibia-spitzkoppe-portrait.jpg', alt:'A hiker crossing a granite boulder with the Spitzkoppe peak rising behind him', loc:'SPITZKOPPE', day:'DAY 2' },
-        { type:'photo', src:'images/namibia/namibia-spitzkoppe-arch-detail.jpg', alt:'A close, abstract view of layered granite boulders forming a natural arch, sky visible through the gap', loc:'SPITZKOPPE', day:'DAY 2' },
-        { type:'photo', src:'images/namibia/namibia-spitzkoppe-rock-arch.jpg', alt:'The full span of the Spitzkoppe rock arch, a granite bridge worn smooth against the sky', loc:'SPITZKOPPE', day:'DAY 2' },
-        { type:'photo', src:'images/namibia/namibia-naukluft-grassland.jpg', alt:'A dry grassland plain leading toward the folded, sun-streaked peaks of the Naukluft mountains', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-namib-naukluft-drive.jpg', alt:'A dusty gravel road running toward a jagged desert mountain range', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-sesriem-road-sign.jpg', alt:'Road signs pointing toward Dead Valley Lodge, Sesriem Oshana Camp, and Sossusvlei along a gravel road', loc:'SESRIEM', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-sossusvlei-balloons.jpg', alt:'Three hot air balloons rising over the desert plain at dawn, mountains silhouetted on the horizon', loc:'SOSSUSVLEI, SUNRISE', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-balloon-flame.jpg', alt:'A hot air balloon firing its burner as it drifts low over red dunes at sunrise', loc:'SOSSUSVLEI, SUNRISE', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-sossusvlei-big-dune.jpg', alt:'A massive red sand dune towering over parked vehicles at its base', loc:'SOSSUSVLEI', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-sossusvlei-dune-cluster.jpg', alt:'A cluster of red sand dunes catching afternoon light, tiny figures visible on the ridgelines', loc:'SOSSUSVLEI', day:'DAY 3' },
-        { type:'photo-pair', photos:[
-          { src:'images/namibia/namibia-desert-road-aerial.jpg', alt:'An elevated view of a car on a desert road cutting between rust-colored mountains', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
-          { src:'images/namibia/namibia-dune-ridge-aerial.jpg', alt:'Hikers climbing a knife-edge dune ridge, their shadows stretching down the slip face', loc:'SOSSUSVLEI', day:'DAY 3' }
-        ] },
-        { type:'photo', src:'images/namibia/namibia-deadvlei-aerial.jpg', alt:'An elevated view of Deadvlei’s white clay pan and skeletal dead trees, ringed by towering red dunes', loc:'DEADVLEI', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-deadvlei-trees.jpg', alt:'Two dead camel-thorn trees standing in Deadvlei’s white clay pan against a red dune', loc:'DEADVLEI', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-deadvlei-portrait.jpg', alt:'A hiker walking across the white clay pan at Deadvlei, dead trees and a red dune behind him', loc:'DEADVLEI', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-desert-lodge-sunset-pool.jpg', alt:'Sunset over the desert plain, seen past an infinity pool at a lodge near Sesriem', loc:'DESERT LODGE', day:'DAY 3 · DUSK' },
-        { type:'photo', src:'images/namibia/namibia-desert-lodge-moonrise.jpg', alt:'The moon rising over a jagged red rock outcrop, lit gold by the last light of dusk', loc:'DESERT LODGE', day:'DAY 3 · DUSK' },
-        { type:'photo', src:'images/namibia/namibia-desert-lodge-dusk.jpg', alt:'Thatched-roof lodge chalets at dusk, mountains silhouetted behind under a pink sky', loc:'DESERT LODGE', day:'DAY 3 · DUSK' }
-      ]
-    },
-    {
-      slug: 'zambezi-river-basin',
-      title: 'Zambezi River Basin (Botswana, Zambia, Zimbabwe)',
-      place: 'Zambezi River Basin',
-      coord: '17.9243°S, 25.8572°E',
-      cover: 'images/zambezi/zambezi-victoria-falls-vertical.jpg',
-      coverAlt: 'A curtain of water cascading down Victoria Falls’ sheer basalt cliff, framed by overhanging trees',
-      slides: [
-        { type:'itinerary',
-          title:'Zambezi River Basin',
-          legs:[
-            { airline:'Proflight Zambia', flight:'63', fromCode:'WDH', toCode:'LVI', dep:'12:20 PM GMT+2', arr:'1:55 PM GMT+2', duration:'1 hr 35 min', aircraft:'CRJ-200', direction:'outbound' },
-            { airline:'Airlink', flight:'483', fromCode:'LVI', toCode:'JNB', dep:'1:49 PM GMT+2', arr:'3:38 PM GMT+2', duration:'1 hr 49 min', aircraft:'Embraer E190', direction:'inbound' }
-          ]
-        },
-        { type:'photo', src:'images/zambezi/zambezi-river-journey-info-sign.jpg', alt:'An interpretive sign mapping the Zambezi River’s course through six countries from its source to the Indian Ocean', loc:'LIVINGSTONE, ZAMBIA', day:'DAY 1' },
-        { type:'photo', src:'images/zambezi/zambezi-victoria-falls-wide.jpg', alt:'The full curtain of Victoria Falls thundering into the gorge, spray drifting above the tree-lined riverbank', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' },
-        { type:'photo', src:'images/zambezi/zambezi-victoria-falls-rainbow.jpg', alt:'A rainbow arcing over the Zambezi River’s rapids as spray rises from Victoria Falls in the distance', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' },
-        { type:'photo-pair', photos:[
-          { src:'images/zambezi/zambezi-victoria-falls-vertical.jpg', alt:'A curtain of water cascading down Victoria Falls’ sheer basalt cliff, framed by overhanging trees', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' },
-          { src:'images/zambezi/zambezi-victoria-falls-gorge-mist.jpg', alt:'Mist rising from Victoria Falls fills the basalt gorge, the Zambezi River churning through rapids below', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' }
-        ] },
-        { type:'photo', src:'images/zambezi/zambezi-chobe-elephant-riverbank.jpg', alt:'An elephant walking along the Chobe River’s bank, tusks catching the light beside the water', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' },
-        { type:'photo', src:'images/zambezi/zambezi-chobe-elephant-vehicle.jpg', alt:'An elephant crossing close beside a safari vehicle as a guide watches from behind the wheel', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' },
-        { type:'photo-pair', photos:[
-          { src:'images/zambezi/zambezi-chobe-crocodile.jpg', alt:'A Nile crocodile stretched out on the muddy bank of a Chobe waterhole', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' },
-          { src:'images/zambezi/zambezi-chobe-hippo.jpg', alt:'A hippo’s eyes and nostrils breaking the surface of the Chobe River', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' }
-        ] },
-        { type:'photo', src:'images/zambezi/zambezi-chobe-elephants-wading-egret.jpg', alt:'A herd of elephants wading across the Chobe River, a white egret perched on one’s back', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' }
-      ]
-    },
-    {
       slug: 'south-africa',
       title: 'South Africa',
       place: 'South Africa',
@@ -698,12 +708,16 @@
             { airline:'Airlink', flight:'341', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190', direction:'inbound' }
           ]
         },
+        { type:'photo', src:'images/south-africa/sa-table-mountain-city-view.jpg', alt:'Table Mountain’s flat summit wreathed in cloud above Cape Town’s city bowl, seen from an elevated vantage', loc:'CAPE TOWN', day:'DAY 1' },
         { type:'photo', src:'images/south-africa/sa-cape-point-boardwalk.jpg', alt:'A wooden boardwalk leading down toward turquoise water at Dias Beach, sheer cliffs rising on either side', loc:'CAPE POINT', day:'DAY 1' },
         { type:'photo', src:'images/south-africa/sa-cape-point-cliffs.jpg', alt:'Sandstone cliffs at the tip of the Cape Peninsula, waves breaking over rocks with a kelp bed offshore', loc:'CAPE POINT', day:'DAY 1' },
         { type:'photo', src:'images/south-africa/sa-cape-point-hikers.jpg', alt:'A small group of hikers gathered on a rocky outcrop at Cape Point as storm clouds roll low over the cliffs and ocean below', loc:'CAPE POINT', day:'DAY 1' },
         { type:'photo', src:'images/south-africa/sa-cape-point-tidepools.jpg', alt:'A close view of dark tide-pool rocks meeting turquoise water below the Cape Point cliffs', loc:'CAPE POINT', day:'DAY 1' },
+        { type:'photo', src:'images/south-africa/sa-cape-point-fog-cove.jpg', alt:'A fog-shrouded cliff overlooking a white-sand cove at the Cape of Good Hope, waves rolling in past a rocky outcrop', loc:'CAPE POINT', day:'DAY 1' },
         { type:'photo', src:'images/south-africa/sa-cape-of-good-hope-sign.jpg', alt:'The wooden Cape of Good Hope sign board, dry coastal scrub and ocean stretching behind it', loc:'CAPE OF GOOD HOPE', day:'DAY 1' },
         { type:'photo', src:'images/south-africa/sa-boulders-penguins.jpg', alt:'A colony of African penguins nesting in the sand among driftwood and rocks', loc:'BOULDERS BEACH', day:'DAY 1' },
+        { type:'photo', src:'images/south-africa/sa-boulders-penguin-portrait.jpg', alt:'A single African penguin standing on the sand beneath a bare tree branch at Boulders Beach', loc:'BOULDERS BEACH', day:'DAY 1' },
+        { type:'photo', src:'images/south-africa/sa-kirstenbosch-mountain-view.jpg', alt:'Kirstenbosch Botanical Garden’s lawns and trees leading up toward Table Mountain’s cloud-capped slopes', loc:'KIRSTENBOSCH NATIONAL BOTANICAL GARDEN', day:'DAY 2' },
         { type:'photo', src:'images/south-africa/sa-hout-bay.jpg', alt:'The Sentinel peak rising above the fishing town of Hout Bay, seen across the harbor water', loc:'HOUT BAY', day:'DAY 2' },
         { type:'photo', src:'images/south-africa/sa-chapmans-peak.jpg', alt:'A cliffside road cut into the mountainside above the Atlantic, cloud spilling over the ridge', loc:'CHAPMAN’S PEAK DRIVE', day:'DAY 2' },
         { type:'photo', src:'images/south-africa/sa-noordhoek-view.jpg', alt:'A long white-sand beach curving along a bay, mountains fading into cloud in the distance', loc:'NOORDHOEK', day:'DAY 2' },
@@ -892,99 +906,6 @@
       ]
     },
     {
-      slug: 'switzerland',
-      title: 'Switzerland',
-      place: 'Switzerland',
-      coord: '46.0207°N, 7.7491°E',
-      cover: 'images/switzerland/switzerland-gornergrat-matterhorn.jpg',
-      coverAlt: 'The Matterhorn rising above a snowfield as a red Gornergrat railway train rounds the ridge below it',
-      slides: [
-        { type:'itinerary',
-          title:'Switzerland',
-          legs:[
-            { airline:'Aer Lingus', flight:'342', fromCode:'DUB', toCode:'ZRH', dep:'7:11 AM GMT+1', arr:'10:22 AM GMT+2', duration:'2 hr 11 min', aircraft:'Airbus A320-200', direction:'outbound' },
-            { mode:'train', airline:'SBB', fromCode:'ZRH', toCode:'LUZ' },
-            { mode:'train', airline:'SBB', fromCode:'LUZ', toCode:'INT' },
-            { mode:'train', airline:'SBB', fromCode:'INT', toCode:'ZER' },
-            { mode:'train', airline:'SBB', fromCode:'ZER', toCode:'ZRH' },
-            { airline:'Aer Lingus', flight:'349', fromCode:'ZRH', toCode:'DUB', dep:'8:06 PM GMT+1', arr:'9:34 PM GMT', duration:'2 hr 28 min', aircraft:'Airbus A320-200', direction:'inbound' }
-          ]
-        },
-        { type:'photo', src:'images/switzerland/switzerland-lucerne-chapel-bridge.jpg', alt:'The Spreuerbrücke covered bridge over the Reuss river, a stone water tower with a conical spire rising behind it', loc:'LUCERNE', day:'DAY 1' },
-        { type:'photo', src:'images/switzerland/switzerland-lucerne-bridge-alps.jpg', alt:'A covered bridge over the Reuss river with red-dormered rooftops and snow-capped Alps rising in the distance', loc:'LUCERNE', day:'DAY 1' },
-        { type:'photo-pair', photos:[
-          { src:'images/switzerland/switzerland-lucerne-riverside-view.jpg', alt:'An elevated view over Lucerne’s riverside rooftops and wooded hillsides in autumn color', loc:'LUCERNE', day:'DAY 1' },
-          { src:'images/switzerland/switzerland-lucerne-wall-path.jpg', alt:'A leaf-strewn path beneath a golden autumn tree along Lucerne’s old city wall', loc:'LUCERNE', day:'DAY 1' }
-        ] },
-        { type:'photo', src:'images/switzerland/switzerland-lucerne-musegg-tower.jpg', alt:'A stone Musegg wall tower framed by autumn trees, snow-covered Alps rising behind Lucerne’s old town', loc:'LUCERNE', day:'DAY 1' },
-        { type:'photo', src:'images/switzerland/switzerland-lucerne-playground.jpg', alt:'A family playing on an outdoor basketball court in a Lucerne neighborhood, autumn trees and chalets behind them', loc:'LUCERNE', day:'DAY 1' },
-        { type:'photo', src:'images/switzerland/switzerland-lucerne-lake-panorama.jpg', alt:'A panoramic view over Lake Lucerne and the old town toward snow-dusted Alps in the distance', loc:'LUCERNE', day:'DAY 1' },
-        { type:'photo', src:'images/switzerland/switzerland-stoos-valley-view.jpg', alt:'A green alpine valley dotted with farmhouses beneath a towering pyramid-shaped peak', loc:'STOOS', day:'DAY 2' },
-        { type:'photo', src:'images/switzerland/switzerland-stoos-village-dusk.jpg', alt:'A snow-dusted mountain village at dusk beneath a jagged, cloud-wrapped peak', loc:'STOOS', day:'DAY 2' },
-        { type:'photo', src:'images/switzerland/switzerland-stoos-village-wide.jpg', alt:'A wide view of a mountain village scattered across a hillside beneath fresh snow and low cloud', loc:'STOOS', day:'DAY 2' },
-        { type:'photo', src:'images/switzerland/switzerland-stoos-chapel-mythen.jpg', alt:'A small wooden chapel on a grassy knoll framed by the twin Mythen peaks', loc:'STOOS', day:'DAY 2' },
-        { type:'photo-pair', photos:[
-          { src:'images/switzerland/switzerland-fronalpstock-lake-view.jpg', alt:'A fjord-like alpine lake framed by snow-dusted cliffs and forested mountains, seen from a high ridge', loc:'STOOS', day:'DAY 2' },
-          { src:'images/switzerland/switzerland-fronalpstock-cliff-lake.jpg', alt:'A snow-dusted cliff edge dropping toward a deep blue alpine lake, distant peaks fading into cloud', loc:'STOOS', day:'DAY 2' }
-        ] },
-        { type:'photo', src:'images/switzerland/switzerland-stoos-hotel-klosterli.jpg', alt:'A red-shuttered mountain hotel with an outdoor terrace, set against a forested hillside in fog', loc:'STOOS', day:'DAY 2' },
-        { type:'photo-pair', photos:[
-          { src:'images/switzerland/switzerland-vitznau-park-hotel.jpg', alt:'A grand turreted lakeside hotel lit at dusk, reflected in the still waters of Lake Lucerne', loc:'VITZNAU', day:'DAY 2' },
-          { src:'images/switzerland/switzerland-weggis-beau-rivage.jpg', alt:'The lakefront Hotel Beau Rivage with palm trees and a Swiss flag, seen from the water at dusk', loc:'WEGGIS', day:'DAY 2' }
-        ] },
-        { type:'photo-pair', photos:[
-          { src:'images/switzerland/switzerland-chalet-blue-shutters.jpg', alt:'A traditional Swiss chalet with blue shutters and red geraniums, fog rolling over the mountainside behind it', loc:'LAUTERBRUNNEN VALLEY', day:'DAY 3' },
-          { src:'images/switzerland/switzerland-countryside-chalet-autumn.jpg', alt:'A wooden chalet with a tiled roof set against a hillside of autumn forest', loc:'LAUTERBRUNNEN VALLEY', day:'DAY 3' }
-        ] },
-        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-valley-forest.jpg', alt:'A hillside of dense autumn forest, gold and orange leaves mixed among evergreens', loc:'LAUTERBRUNNEN VALLEY', day:'DAY 3' },
-        { type:'photo', src:'images/switzerland/switzerland-cows-meadow.jpg', alt:'Cows grazing in a green meadow beneath a hillside of autumn forest', loc:'LAUTERBRUNNEN VALLEY', day:'DAY 3' },
-        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-staubbach-falls.jpg', alt:'Staubbach Falls dropping down a sheer rock face above the rooftops of Lauterbrunnen village', loc:'LAUTERBRUNNEN', day:'DAY 3' },
-        { type:'photo', src:'images/switzerland/switzerland-wengen-mountainside.jpg', alt:'The car-free village of Wengen spread across a mountainside beneath snow-dusted, cloud-wrapped peaks', loc:'WENGEN', day:'DAY 3' },
-        { type:'photo', src:'images/switzerland/switzerland-mannlichen-ridge-hiker.jpg', alt:'A lone hiker on a snow-covered ridge as the Eiger emerges through parting clouds', loc:'MÄNNLICHEN', day:'DAY 3' },
-        { type:'photo', src:'images/switzerland/switzerland-grindelwald-valley-arrival.jpg', alt:'A green valley village beneath the sheer, snow-dusted north faces of the Eiger and Wetterhorn', loc:'GRINDELWALD', day:'DAY 3' },
-        { type:'photo', src:'images/switzerland/switzerland-grindelwald-cliffwalk.jpg', alt:'A suspension footbridge crossing a fog-filled alpine valley, snow-covered ridgelines on both sides', loc:'GRINDELWALD FIRST', day:'DAY 4' },
-        { type:'photo-pair', photos:[
-          { src:'images/switzerland/switzerland-grindelwald-chalet-mountains.jpg', alt:'A wooden chalet with a pizzeria sign, towering snow-covered peaks rising directly behind it', loc:'GRINDELWALD', day:'DAY 4' },
-          { src:'images/switzerland/switzerland-grindelwald-dusk.jpg', alt:'The Sunstar hotel and village storefronts at dusk, snow-covered peaks fading into cloud above', loc:'GRINDELWALD', day:'DAY 4' }
-        ] },
-        { type:'photo', src:'images/switzerland/switzerland-lakeside-chalet.jpg', alt:'A traditional wooden chalet on a forested hillside above a still lake in full autumn color', loc:'LAKE BRIENZ', day:'DAY 5' },
-        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-waterfall.jpg', alt:'Staubbach Falls pouring off a sheer cliff directly above the rooftops of Lauterbrunnen village', loc:'LAUTERBRUNNEN', day:'DAY 6' },
-        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-valley.jpg', alt:'An elevated view of Lauterbrunnen’s church steeple and valley floor, hemmed in by sheer cliffs and snow-capped peaks', loc:'LAUTERBRUNNEN', day:'DAY 6' },
-        { type:'photo', src:'images/switzerland/switzerland-wengen-village.jpg', alt:'The car-free village of Wengen with Hotel Regina at its center, snow-covered peaks rising behind', loc:'WENGEN', day:'DAY 6' },
-        { type:'photo', src:'images/switzerland/switzerland-eiger-village.jpg', alt:'The Eiger’s sunlit peak rising directly behind a cluster of chalet rooftops', loc:'MÜRREN', day:'DAY 7' },
-        { type:'photo', src:'images/switzerland/switzerland-murren-cablecar.jpg', alt:'A cable car line strung across a deep valley, snow-covered peaks and a chalet village behind it', loc:'MÜRREN', day:'DAY 7' },
-        { type:'photo-pair', photos:[
-          { src:'images/switzerland/switzerland-chalet-cart.jpg', alt:'An antique wooden horse cart beside a dark timber chalet balcony, a snow-covered peak framed through bare branches', loc:'MÜRREN', day:'DAY 7' },
-          { src:'images/switzerland/switzerland-swiss-flag-eiger.jpg', alt:'A Swiss flag hanging above a village street, the Eiger’s sunlit face rising at the end of it', loc:'MÜRREN', day:'DAY 7' }
-        ] },
-        { type:'photo', src:'images/switzerland/switzerland-snowy-trail.jpg', alt:'A snow-covered path leading past timber huts toward the Eiger and surrounding peaks', loc:'MÜRREN', day:'DAY 7' },
-        { type:'photo', src:'images/switzerland/switzerland-solar-chalet.jpg', alt:'A solar-paneled wooden chalet on a snowfield beneath a jagged summit and cable car station', loc:'MÜRREN', day:'DAY 7' },
-        { type:'photo', src:'images/switzerland/switzerland-calves-mountains.jpg', alt:'Two calves standing in a snowy pen with a sweeping range of snow-covered peaks behind them', loc:'MÜRREN', day:'DAY 7' },
-        { type:'photo', src:'images/switzerland/switzerland-barn-peaks.jpg', alt:'A weathered wooden barn on a snowy slope beneath the Eiger and Mönch', loc:'MÜRREN', day:'DAY 7' },
-        { type:'photo-pair', photos:[
-          { src:'images/switzerland/switzerland-alpine-stream.jpg', alt:'A snowmelt stream running through a snowy high alpine meadow, a sharp peak rising beyond', loc:'MÜRREN', day:'DAY 7' },
-          { src:'images/switzerland/switzerland-paraglider-close.jpg', alt:'A yellow paraglider descending past sheer cliffs beneath a snow-covered summit', loc:'MÜRREN', day:'DAY 7' }
-        ] },
-        { type:'photo', src:'images/switzerland/switzerland-murren-peaks-wide.jpg', alt:'A wide view of chalets scattered across a snowy hillside beneath the Eiger, Mönch and Jungfrau', loc:'MÜRREN', day:'DAY 7' },
-        { type:'photo', src:'images/switzerland/switzerland-paraglider-far.jpg', alt:'A distant yellow paraglider suspended against a towering snow-covered peak and sheer cliff face', loc:'MÜRREN', day:'DAY 7' },
-        { type:'photo-pair', photos:[
-          { src:'images/switzerland/switzerland-hut-pasture.jpg', alt:'A small wooden hut on a green hillside pasture, snow-covered peaks rising behind it', loc:'MÜRREN', day:'DAY 7' },
-          { src:'images/switzerland/switzerland-window-flowers.jpg', alt:'A man arranging a flower box in a chalet window, a snow-covered peak filling the valley view beside him', loc:'MÜRREN', day:'DAY 7' }
-        ] },
-        { type:'photo', src:'images/switzerland/switzerland-murren-village.jpg', alt:'A wide view over Mürren’s chalet rooftops toward a massive snow-covered peak', loc:'MÜRREN', day:'DAY 7' },
-        { type:'photo', src:'images/switzerland/switzerland-chalet-facade.jpg', alt:'A dark timber chalet facade with flower-boxed balconies, a snow-covered peak rising behind it', loc:'MÜRREN', day:'DAY 7' },
-        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-overlook.jpg', alt:'A high overlook down into the Lauterbrunnen valley, autumn color streaking the forested slopes below snow-capped peaks', loc:'MÜRREN', day:'DAY 7' },
-        { type:'photo', src:'images/switzerland/switzerland-murren-massif-shadow.jpg', alt:'A sheer snow-covered massif catching afternoon light above a shadowed, forested valley', loc:'MÜRREN', day:'DAY 7' },
-        { type:'photo', src:'images/switzerland/switzerland-oeschinensee.jpg', alt:'The turquoise waters of Lake Oeschinen reflecting a wall of sheer cliffs and snow-covered peaks', loc:'OESCHINENSEE, KANDERSTEG', day:'DAY 8' },
-        { type:'photo', src:'images/switzerland/switzerland-gornergrat-matterhorn.jpg', alt:'The Matterhorn rising above a snowfield as a red Gornergrat railway train rounds the ridge below it', loc:'GORNERGRAT', day:'DAY 9' },
-        { type:'photo', src:'images/switzerland/switzerland-gornergrat-peak-glacier.jpg', alt:'A dark rocky summit capped with glacier ice, jagged Alpine peaks lining the horizon beyond', loc:'GORNERGRAT', day:'DAY 9' },
-        { type:'photo', src:'images/switzerland/switzerland-matterhorn-dusk.jpg', alt:'The Matterhorn silhouetted against a pink dusk sky above dark ridgelines', loc:'ZERMATT', day:'DAY 9 · DUSK' },
-        { type:'photo', src:'images/switzerland/switzerland-zermatt-town-lights.jpg', alt:'Zermatt’s lit windows spread across the valley floor beneath the dark silhouette of the Matterhorn at blue hour', loc:'ZERMATT', day:'DAY 9 · NIGHT' },
-        { type:'photo', src:'images/switzerland/switzerland-matterhorn-window.jpg', alt:'The Matterhorn’s summit catching golden alpenglow light, framed by a dark window edge and silhouetted trees', loc:'ZERMATT', day:'DAY 10' },
-        { type:'photo', src:'images/switzerland/switzerland-matterhorn-larches.jpg', alt:'The Matterhorn framed by golden autumn larch trees under a pale sky', loc:'ZERMATT', day:'DAY 10' }
-      ]
-    },
-    {
       slug: 'peru',
       title: 'Peru',
       place: 'Peru',
@@ -1154,41 +1075,6 @@
       ]
     },
     {
-      slug: 'paris',
-      title: 'Paris',
-      place: 'Paris',
-      coord: '48.8566°N, 2.3522°E',
-      cover: 'images/paris/paris-grand-staircase-couple.jpg',
-      coverAlt: 'A couple embracing on a grand stone staircase beneath a tall arched window',
-      slides: [
-        { type:'itinerary',
-          title:'Paris',
-          legs:[
-            { airline:'Aer Lingus', flight:'520', fromCode:'DUB', toCode:'CDG', dep:'6:58 AM GMT', arr:'9:43 AM GMT+1', duration:'1 hr 45 min', aircraft:'Airbus A321neo', direction:'outbound' },
-            { airline:'Smartwings', flight:'1035', fromCode:'CDG', toCode:'PRG', dep:'3:50 PM GMT+1', arr:'5:52 PM GMT+1', duration:'2 hr 2 min', aircraft:'Boeing 737-800', direction:'inbound' }
-          ]
-        },
-        { type:'photo', src:'images/paris/paris-luxembourg-gardens-autumn.jpg', alt:'Golden ginkgo trees lining a gravel path in the Luxembourg Gardens, joggers passing a stone palace behind', loc:'LUXEMBOURG GARDENS', day:'DAY 1' },
-        { type:'photo', src:'images/paris/paris-street-candid.jpg', alt:'A pedestrian walking past a pair of tall weathered wooden doors on a Paris street', loc:'PARIS', day:'DAY 1' },
-        { type:'photo', src:'images/paris/paris-tram-cafe-dusk.jpg', alt:'A lit café storefront with outdoor tables at dusk, its awning glowing warm against the blue evening', loc:'PARIS', day:'DAY 1' },
-        { type:'photo', src:'images/paris/paris-notre-dame-night.jpg', alt:'Notre-Dame Cathedral’s illuminated facade rising above the Seine at night', loc:'NOTRE-DAME CATHEDRAL', day:'DAY 2' },
-        { type:'photo', src:'images/paris/paris-seine-bridge-night.jpg', alt:'Buses crossing a stone bridge over the Seine at night, city lights reflected in the water', loc:'SEINE RIVER', day:'DAY 2' },
-        { type:'photo-pair', photos:[
-          { src:'images/paris/paris-conciergerie-night.jpg', alt:'The turreted towers of the Conciergerie lit up along the Seine at night', loc:'THE CONCIERGERIE', day:'DAY 2' },
-          { src:'images/paris/paris-eiffel-tower-searchlight.jpg', alt:'The Eiffel Tower lit gold at night, its beacon sweeping a beam of light across the sky', loc:'EIFFEL TOWER', day:'DAY 2' }
-        ] },
-        { type:'photo', src:'images/paris/paris-grand-staircase-couple.jpg', alt:'A couple embracing on a grand stone staircase beneath a tall arched window', loc:'PARIS', day:'DAY 3' },
-        { type:'photo', src:'images/paris/paris-metro-station.jpg', alt:'A worker on a ladder changing an advertisement poster on a Paris métro platform', loc:'PARIS MÉTRO', day:'DAY 4' },
-        { type:'photo-pair', photos:[
-          { src:'images/paris/paris-louvre-pyramid.jpg', alt:'The glass pyramid of the Louvre beneath the palace’s ornate facade, a Ferris wheel visible beyond', loc:'THE LOUVRE', day:'DAY 4' },
-          { src:'images/paris/paris-louvre-venus-de-milo.jpg', alt:'The Venus de Milo statue dramatically lit against a dark wall, visitors raising phones to photograph it', loc:'THE LOUVRE', day:'DAY 4' }
-        ] },
-        { type:'photo', src:'images/paris/paris-tuileries-ferris-wheel.jpg', alt:'A large Ferris wheel rising above the Tuileries Garden, the Louvre’s wing visible behind it', loc:'JARDIN DES TUILERIES', day:'DAY 4' },
-        { type:'photo', src:'images/paris/paris-orangerie-water-lilies.jpg', alt:'Museum visitors passing before one of Monet’s large Water Lilies murals', loc:'MUSÉE DE L’ORANGERIE', day:'DAY 4' },
-        { type:'photo', src:'images/paris/paris-pont-alexandre-eiffel-dusk.jpg', alt:'The Eiffel Tower silhouetted at dusk beyond the gilded statues of Pont Alexandre III, a river cruise passing below', loc:'PONT ALEXANDRE III', day:'DAY 5' }
-      ]
-    },
-    {
       slug: 'nice',
       title: 'Nice, France',
       place: 'Nice',
@@ -1263,31 +1149,96 @@
       ]
     },
     {
-      slug: 'czech-republic',
-      title: 'Czech Republic',
-      place: 'Czech Republic',
-      coord: '50.0755°N, 14.4378°E',
-      cover: 'images/czech-republic/czech-republic-prague-castle-vltava-wide.jpg',
-      coverAlt: 'Prague Castle and St. Vitus Cathedral rising above the Vltava River and Malá Strana’s red-tiled rooftops',
+      slug: 'switzerland',
+      title: 'Switzerland',
+      place: 'Switzerland',
+      coord: '46.0207°N, 7.7491°E',
+      cover: 'images/switzerland/switzerland-gornergrat-matterhorn.jpg',
+      coverAlt: 'The Matterhorn rising above a snowfield as a red Gornergrat railway train rounds the ridge below it',
       slides: [
         { type:'itinerary',
-          title:'Czech Republic',
-          mapPad: { lat:3, lon:4 },
+          title:'Switzerland',
           legs:[
-            { airline:'Smartwings', flight:'1035', fromCode:'CDG', toCode:'PRG', dep:'3:50 PM GMT+1', arr:'5:52 PM GMT+1', duration:'2 hr 2 min', aircraft:'Boeing 737-800', direction:'outbound' },
-            { airline:'Ryanair', flight:'4069', fromCode:'PRG', toCode:'KRK', dep:'7:55 AM GMT+1', arr:'9:14 AM GMT+1', duration:'1 hr 19 min', aircraft:'Boeing 737-800', direction:'inbound' }
+            { airline:'Aer Lingus', flight:'342', fromCode:'DUB', toCode:'ZRH', dep:'7:11 AM GMT+1', arr:'10:22 AM GMT+2', duration:'2 hr 11 min', aircraft:'Airbus A320-200', direction:'outbound' },
+            { mode:'train', airline:'SBB', fromCode:'ZRH', toCode:'LUZ' },
+            { mode:'train', airline:'SBB', fromCode:'LUZ', toCode:'INT' },
+            { mode:'train', airline:'SBB', fromCode:'INT', toCode:'ZER' },
+            { mode:'train', airline:'SBB', fromCode:'ZER', toCode:'ZRH' },
+            { airline:'Aer Lingus', flight:'349', fromCode:'ZRH', toCode:'DUB', dep:'8:06 PM GMT+1', arr:'9:34 PM GMT', duration:'2 hr 28 min', aircraft:'Airbus A320-200', direction:'inbound' }
           ]
         },
-        { type:'photo', src:'images/czech-republic/czech-republic-mala-strana-st-nicholas-night.jpg', alt:'St. Nicholas Church’s illuminated bell tower and dome rising above a Malá Strana tram stop at night', loc:'ST. NICHOLAS CHURCH, MALÁ STRANA', day:'DAY 1' },
-        { type:'photo', src:'images/czech-republic/czech-republic-thunovska-street-sign.jpg', alt:'A gaslit street lamp beside a “Thunovská” street sign in Prague’s Malá Strana district', loc:'THUNOVSKÁ, MALÁ STRANA', day:'DAY 1' },
-        { type:'photo', src:'images/czech-republic/czech-republic-national-theatre-alley-night.jpg', alt:'A narrow alley framing the National Theatre’s gilded chariot sculpture atop its dome, lit up at night', loc:'NATIONAL THEATRE, PRAGUE', day:'DAY 1' },
+        { type:'photo', src:'images/switzerland/switzerland-lucerne-chapel-bridge.jpg', alt:'The Spreuerbrücke covered bridge over the Reuss river, a stone water tower with a conical spire rising behind it', loc:'LUCERNE', day:'DAY 1' },
+        { type:'photo', src:'images/switzerland/switzerland-lucerne-bridge-alps.jpg', alt:'A covered bridge over the Reuss river with red-dormered rooftops and snow-capped Alps rising in the distance', loc:'LUCERNE', day:'DAY 1' },
         { type:'photo-pair', photos:[
-          { src:'images/czech-republic/czech-republic-prague-castle-vltava-wide.jpg', alt:'Prague Castle and St. Vitus Cathedral rising above the Vltava River and Malá Strana’s red-tiled rooftops', loc:'PRAGUE CASTLE', day:'DAY 2' },
-          { src:'images/czech-republic/czech-republic-prague-castle-vltava-close.jpg', alt:'A closer view of Prague Castle’s spires above the Vltava, red rooftops and church towers filling the foreground', loc:'PRAGUE CASTLE', day:'DAY 2' }
+          { src:'images/switzerland/switzerland-lucerne-riverside-view.jpg', alt:'An elevated view over Lucerne’s riverside rooftops and wooded hillsides in autumn color', loc:'LUCERNE', day:'DAY 1' },
+          { src:'images/switzerland/switzerland-lucerne-wall-path.jpg', alt:'A leaf-strewn path beneath a golden autumn tree along Lucerne’s old city wall', loc:'LUCERNE', day:'DAY 1' }
         ] },
-        { type:'photo', src:'images/czech-republic/czech-republic-castle-gardens-panorama.jpg', alt:'A sweeping view over the Vltava and Prague’s Old Town rooftops from the castle gardens', loc:'PRAGUE CASTLE GARDENS', day:'DAY 2' },
-        { type:'photo', src:'images/czech-republic/czech-republic-tyn-church-street-night.jpg', alt:'Pedestrians strolling a cobbled street toward the illuminated Gothic spires of the Church of Our Lady before Týn at night', loc:'OLD TOWN, PRAGUE', day:'DAY 2' },
-        { type:'photo', src:'images/czech-republic/czech-republic-old-town-square-christmas-market.jpg', alt:'A towering Christmas tree strung with lights beside the Church of Our Lady before Týn, crowds filling the Old Town Square Christmas market', loc:'OLD TOWN SQUARE, PRAGUE', day:'DAY 2' }
+        { type:'photo', src:'images/switzerland/switzerland-lucerne-musegg-tower.jpg', alt:'A stone Musegg wall tower framed by autumn trees, snow-covered Alps rising behind Lucerne’s old town', loc:'LUCERNE', day:'DAY 1' },
+        { type:'photo', src:'images/switzerland/switzerland-lucerne-playground.jpg', alt:'A family playing on an outdoor basketball court in a Lucerne neighborhood, autumn trees and chalets behind them', loc:'LUCERNE', day:'DAY 1' },
+        { type:'photo', src:'images/switzerland/switzerland-lucerne-lake-panorama.jpg', alt:'A panoramic view over Lake Lucerne and the old town toward snow-dusted Alps in the distance', loc:'LUCERNE', day:'DAY 1' },
+        { type:'photo', src:'images/switzerland/switzerland-stoos-valley-view.jpg', alt:'A green alpine valley dotted with farmhouses beneath a towering pyramid-shaped peak', loc:'STOOS', day:'DAY 2' },
+        { type:'photo', src:'images/switzerland/switzerland-stoos-village-dusk.jpg', alt:'A snow-dusted mountain village at dusk beneath a jagged, cloud-wrapped peak', loc:'STOOS', day:'DAY 2' },
+        { type:'photo', src:'images/switzerland/switzerland-stoos-village-wide.jpg', alt:'A wide view of a mountain village scattered across a hillside beneath fresh snow and low cloud', loc:'STOOS', day:'DAY 2' },
+        { type:'photo', src:'images/switzerland/switzerland-stoos-chapel-mythen.jpg', alt:'A small wooden chapel on a grassy knoll framed by the twin Mythen peaks', loc:'STOOS', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/switzerland/switzerland-fronalpstock-lake-view.jpg', alt:'A fjord-like alpine lake framed by snow-dusted cliffs and forested mountains, seen from a high ridge', loc:'STOOS', day:'DAY 2' },
+          { src:'images/switzerland/switzerland-fronalpstock-cliff-lake.jpg', alt:'A snow-dusted cliff edge dropping toward a deep blue alpine lake, distant peaks fading into cloud', loc:'STOOS', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/switzerland/switzerland-stoos-hotel-klosterli.jpg', alt:'A red-shuttered mountain hotel with an outdoor terrace, set against a forested hillside in fog', loc:'STOOS', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/switzerland/switzerland-vitznau-park-hotel.jpg', alt:'A grand turreted lakeside hotel lit at dusk, reflected in the still waters of Lake Lucerne', loc:'VITZNAU', day:'DAY 2' },
+          { src:'images/switzerland/switzerland-weggis-beau-rivage.jpg', alt:'The lakefront Hotel Beau Rivage with palm trees and a Swiss flag, seen from the water at dusk', loc:'WEGGIS', day:'DAY 2' }
+        ] },
+        { type:'photo-pair', photos:[
+          { src:'images/switzerland/switzerland-chalet-blue-shutters.jpg', alt:'A traditional Swiss chalet with blue shutters and red geraniums, fog rolling over the mountainside behind it', loc:'LAUTERBRUNNEN VALLEY', day:'DAY 3' },
+          { src:'images/switzerland/switzerland-countryside-chalet-autumn.jpg', alt:'A wooden chalet with a tiled roof set against a hillside of autumn forest', loc:'LAUTERBRUNNEN VALLEY', day:'DAY 3' }
+        ] },
+        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-valley-forest.jpg', alt:'A hillside of dense autumn forest, gold and orange leaves mixed among evergreens', loc:'LAUTERBRUNNEN VALLEY', day:'DAY 3' },
+        { type:'photo', src:'images/switzerland/switzerland-cows-meadow.jpg', alt:'Cows grazing in a green meadow beneath a hillside of autumn forest', loc:'LAUTERBRUNNEN VALLEY', day:'DAY 3' },
+        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-staubbach-falls.jpg', alt:'Staubbach Falls dropping down a sheer rock face above the rooftops of Lauterbrunnen village', loc:'LAUTERBRUNNEN', day:'DAY 3' },
+        { type:'photo', src:'images/switzerland/switzerland-wengen-mountainside.jpg', alt:'The car-free village of Wengen spread across a mountainside beneath snow-dusted, cloud-wrapped peaks', loc:'WENGEN', day:'DAY 3' },
+        { type:'photo', src:'images/switzerland/switzerland-mannlichen-ridge-hiker.jpg', alt:'A lone hiker on a snow-covered ridge as the Eiger emerges through parting clouds', loc:'MÄNNLICHEN', day:'DAY 3' },
+        { type:'photo', src:'images/switzerland/switzerland-grindelwald-valley-arrival.jpg', alt:'A green valley village beneath the sheer, snow-dusted north faces of the Eiger and Wetterhorn', loc:'GRINDELWALD', day:'DAY 3' },
+        { type:'photo', src:'images/switzerland/switzerland-grindelwald-cliffwalk.jpg', alt:'A suspension footbridge crossing a fog-filled alpine valley, snow-covered ridgelines on both sides', loc:'GRINDELWALD FIRST', day:'DAY 4' },
+        { type:'photo-pair', photos:[
+          { src:'images/switzerland/switzerland-grindelwald-chalet-mountains.jpg', alt:'A wooden chalet with a pizzeria sign, towering snow-covered peaks rising directly behind it', loc:'GRINDELWALD', day:'DAY 4' },
+          { src:'images/switzerland/switzerland-grindelwald-dusk.jpg', alt:'The Sunstar hotel and village storefronts at dusk, snow-covered peaks fading into cloud above', loc:'GRINDELWALD', day:'DAY 4' }
+        ] },
+        { type:'photo', src:'images/switzerland/switzerland-lakeside-chalet.jpg', alt:'A traditional wooden chalet on a forested hillside above a still lake in full autumn color', loc:'LAKE BRIENZ', day:'DAY 5' },
+        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-waterfall.jpg', alt:'Staubbach Falls pouring off a sheer cliff directly above the rooftops of Lauterbrunnen village', loc:'LAUTERBRUNNEN', day:'DAY 6' },
+        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-valley.jpg', alt:'An elevated view of Lauterbrunnen’s church steeple and valley floor, hemmed in by sheer cliffs and snow-capped peaks', loc:'LAUTERBRUNNEN', day:'DAY 6' },
+        { type:'photo', src:'images/switzerland/switzerland-wengen-village.jpg', alt:'The car-free village of Wengen with Hotel Regina at its center, snow-covered peaks rising behind', loc:'WENGEN', day:'DAY 6' },
+        { type:'photo', src:'images/switzerland/switzerland-eiger-village.jpg', alt:'The Eiger’s sunlit peak rising directly behind a cluster of chalet rooftops', loc:'MÜRREN', day:'DAY 7' },
+        { type:'photo', src:'images/switzerland/switzerland-murren-cablecar.jpg', alt:'A cable car line strung across a deep valley, snow-covered peaks and a chalet village behind it', loc:'MÜRREN', day:'DAY 7' },
+        { type:'photo-pair', photos:[
+          { src:'images/switzerland/switzerland-chalet-cart.jpg', alt:'An antique wooden horse cart beside a dark timber chalet balcony, a snow-covered peak framed through bare branches', loc:'MÜRREN', day:'DAY 7' },
+          { src:'images/switzerland/switzerland-swiss-flag-eiger.jpg', alt:'A Swiss flag hanging above a village street, the Eiger’s sunlit face rising at the end of it', loc:'MÜRREN', day:'DAY 7' }
+        ] },
+        { type:'photo', src:'images/switzerland/switzerland-snowy-trail.jpg', alt:'A snow-covered path leading past timber huts toward the Eiger and surrounding peaks', loc:'MÜRREN', day:'DAY 7' },
+        { type:'photo', src:'images/switzerland/switzerland-solar-chalet.jpg', alt:'A solar-paneled wooden chalet on a snowfield beneath a jagged summit and cable car station', loc:'MÜRREN', day:'DAY 7' },
+        { type:'photo', src:'images/switzerland/switzerland-calves-mountains.jpg', alt:'Two calves standing in a snowy pen with a sweeping range of snow-covered peaks behind them', loc:'MÜRREN', day:'DAY 7' },
+        { type:'photo', src:'images/switzerland/switzerland-barn-peaks.jpg', alt:'A weathered wooden barn on a snowy slope beneath the Eiger and Mönch', loc:'MÜRREN', day:'DAY 7' },
+        { type:'photo-pair', photos:[
+          { src:'images/switzerland/switzerland-alpine-stream.jpg', alt:'A snowmelt stream running through a snowy high alpine meadow, a sharp peak rising beyond', loc:'MÜRREN', day:'DAY 7' },
+          { src:'images/switzerland/switzerland-paraglider-close.jpg', alt:'A yellow paraglider descending past sheer cliffs beneath a snow-covered summit', loc:'MÜRREN', day:'DAY 7' }
+        ] },
+        { type:'photo', src:'images/switzerland/switzerland-murren-peaks-wide.jpg', alt:'A wide view of chalets scattered across a snowy hillside beneath the Eiger, Mönch and Jungfrau', loc:'MÜRREN', day:'DAY 7' },
+        { type:'photo', src:'images/switzerland/switzerland-paraglider-far.jpg', alt:'A distant yellow paraglider suspended against a towering snow-covered peak and sheer cliff face', loc:'MÜRREN', day:'DAY 7' },
+        { type:'photo-pair', photos:[
+          { src:'images/switzerland/switzerland-hut-pasture.jpg', alt:'A small wooden hut on a green hillside pasture, snow-covered peaks rising behind it', loc:'MÜRREN', day:'DAY 7' },
+          { src:'images/switzerland/switzerland-window-flowers.jpg', alt:'A man arranging a flower box in a chalet window, a snow-covered peak filling the valley view beside him', loc:'MÜRREN', day:'DAY 7' }
+        ] },
+        { type:'photo', src:'images/switzerland/switzerland-murren-village.jpg', alt:'A wide view over Mürren’s chalet rooftops toward a massive snow-covered peak', loc:'MÜRREN', day:'DAY 7' },
+        { type:'photo', src:'images/switzerland/switzerland-chalet-facade.jpg', alt:'A dark timber chalet facade with flower-boxed balconies, a snow-covered peak rising behind it', loc:'MÜRREN', day:'DAY 7' },
+        { type:'photo', src:'images/switzerland/switzerland-lauterbrunnen-overlook.jpg', alt:'A high overlook down into the Lauterbrunnen valley, autumn color streaking the forested slopes below snow-capped peaks', loc:'MÜRREN', day:'DAY 7' },
+        { type:'photo', src:'images/switzerland/switzerland-murren-massif-shadow.jpg', alt:'A sheer snow-covered massif catching afternoon light above a shadowed, forested valley', loc:'MÜRREN', day:'DAY 7' },
+        { type:'photo', src:'images/switzerland/switzerland-oeschinensee.jpg', alt:'The turquoise waters of Lake Oeschinen reflecting a wall of sheer cliffs and snow-covered peaks', loc:'OESCHINENSEE, KANDERSTEG', day:'DAY 8' },
+        { type:'photo', src:'images/switzerland/switzerland-gornergrat-matterhorn.jpg', alt:'The Matterhorn rising above a snowfield as a red Gornergrat railway train rounds the ridge below it', loc:'GORNERGRAT', day:'DAY 9' },
+        { type:'photo', src:'images/switzerland/switzerland-gornergrat-peak-glacier.jpg', alt:'A dark rocky summit capped with glacier ice, jagged Alpine peaks lining the horizon beyond', loc:'GORNERGRAT', day:'DAY 9' },
+        { type:'photo', src:'images/switzerland/switzerland-matterhorn-dusk.jpg', alt:'The Matterhorn silhouetted against a pink dusk sky above dark ridgelines', loc:'ZERMATT', day:'DAY 9 · DUSK' },
+        { type:'photo', src:'images/switzerland/switzerland-zermatt-town-lights.jpg', alt:'Zermatt’s lit windows spread across the valley floor beneath the dark silhouette of the Matterhorn at blue hour', loc:'ZERMATT', day:'DAY 9 · NIGHT' },
+        { type:'photo', src:'images/switzerland/switzerland-matterhorn-window.jpg', alt:'The Matterhorn’s summit catching golden alpenglow light, framed by a dark window edge and silhouetted trees', loc:'ZERMATT', day:'DAY 10' },
+        { type:'photo', src:'images/switzerland/switzerland-matterhorn-larches.jpg', alt:'The Matterhorn framed by golden autumn larch trees under a pale sky', loc:'ZERMATT', day:'DAY 10' }
       ]
     },
     {
@@ -1409,7 +1360,70 @@
         { type:'photo', src:'images/morocco/morocco-hot-air-balloons-clouds.jpg', alt:'A hot air balloon painted with Morocco’s flag star drifting above the clouds beside a yellow balloon', loc:'MARRAKECH COUNTRYSIDE', day:'DAY 4' },
         { type:'photo', src:'images/morocco/morocco-hot-air-balloon-flag.jpg', alt:'A red hot air balloon marked with Morocco’s star rising above a sea of clouds', loc:'MARRAKECH COUNTRYSIDE', day:'DAY 4' }
       ]
-    }
+    },
+    {
+      slug: 'paris',
+      title: 'Paris',
+      place: 'Paris',
+      coord: '48.8566°N, 2.3522°E',
+      cover: 'images/paris/paris-grand-staircase-couple.jpg',
+      coverAlt: 'A couple embracing on a grand stone staircase beneath a tall arched window',
+      slides: [
+        { type:'itinerary',
+          title:'Paris',
+          legs:[
+            { airline:'Aer Lingus', flight:'520', fromCode:'DUB', toCode:'CDG', dep:'6:58 AM GMT', arr:'9:43 AM GMT+1', duration:'1 hr 45 min', aircraft:'Airbus A321neo', direction:'outbound' },
+            { airline:'Smartwings', flight:'1035', fromCode:'CDG', toCode:'PRG', dep:'3:50 PM GMT+1', arr:'5:52 PM GMT+1', duration:'2 hr 2 min', aircraft:'Boeing 737-800', direction:'inbound' }
+          ]
+        },
+        { type:'photo', src:'images/paris/paris-luxembourg-gardens-autumn.jpg', alt:'Golden ginkgo trees lining a gravel path in the Luxembourg Gardens, joggers passing a stone palace behind', loc:'LUXEMBOURG GARDENS', day:'DAY 1' },
+        { type:'photo', src:'images/paris/paris-street-candid.jpg', alt:'A pedestrian walking past a pair of tall weathered wooden doors on a Paris street', loc:'PARIS', day:'DAY 1' },
+        { type:'photo', src:'images/paris/paris-tram-cafe-dusk.jpg', alt:'A lit café storefront with outdoor tables at dusk, its awning glowing warm against the blue evening', loc:'PARIS', day:'DAY 1' },
+        { type:'photo', src:'images/paris/paris-notre-dame-night.jpg', alt:'Notre-Dame Cathedral’s illuminated facade rising above the Seine at night', loc:'NOTRE-DAME CATHEDRAL', day:'DAY 2' },
+        { type:'photo', src:'images/paris/paris-seine-bridge-night.jpg', alt:'Buses crossing a stone bridge over the Seine at night, city lights reflected in the water', loc:'SEINE RIVER', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/paris/paris-conciergerie-night.jpg', alt:'The turreted towers of the Conciergerie lit up along the Seine at night', loc:'THE CONCIERGERIE', day:'DAY 2' },
+          { src:'images/paris/paris-eiffel-tower-searchlight.jpg', alt:'The Eiffel Tower lit gold at night, its beacon sweeping a beam of light across the sky', loc:'EIFFEL TOWER', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/paris/paris-grand-staircase-couple.jpg', alt:'A couple embracing on a grand stone staircase beneath a tall arched window', loc:'PARIS', day:'DAY 3' },
+        { type:'photo', src:'images/paris/paris-metro-station.jpg', alt:'A worker on a ladder changing an advertisement poster on a Paris métro platform', loc:'PARIS MÉTRO', day:'DAY 4' },
+        { type:'photo-pair', photos:[
+          { src:'images/paris/paris-louvre-pyramid.jpg', alt:'The glass pyramid of the Louvre beneath the palace’s ornate facade, a Ferris wheel visible beyond', loc:'THE LOUVRE', day:'DAY 4' },
+          { src:'images/paris/paris-louvre-venus-de-milo.jpg', alt:'The Venus de Milo statue dramatically lit against a dark wall, visitors raising phones to photograph it', loc:'THE LOUVRE', day:'DAY 4' }
+        ] },
+        { type:'photo', src:'images/paris/paris-tuileries-ferris-wheel.jpg', alt:'A large Ferris wheel rising above the Tuileries Garden, the Louvre’s wing visible behind it', loc:'JARDIN DES TUILERIES', day:'DAY 4' },
+        { type:'photo', src:'images/paris/paris-orangerie-water-lilies.jpg', alt:'Museum visitors passing before one of Monet’s large Water Lilies murals', loc:'MUSÉE DE L’ORANGERIE', day:'DAY 4' },
+        { type:'photo', src:'images/paris/paris-pont-alexandre-eiffel-dusk.jpg', alt:'The Eiffel Tower silhouetted at dusk beyond the gilded statues of Pont Alexandre III, a river cruise passing below', loc:'PONT ALEXANDRE III', day:'DAY 5' }
+      ]
+    },
+    {
+      slug: 'czech-republic',
+      title: 'Czech Republic',
+      place: 'Czech Republic',
+      coord: '50.0755°N, 14.4378°E',
+      cover: 'images/czech-republic/czech-republic-prague-castle-vltava-wide.jpg',
+      coverAlt: 'Prague Castle and St. Vitus Cathedral rising above the Vltava River and Malá Strana’s red-tiled rooftops',
+      slides: [
+        { type:'itinerary',
+          title:'Czech Republic',
+          mapPad: { lat:3, lon:4 },
+          legs:[
+            { airline:'Smartwings', flight:'1035', fromCode:'CDG', toCode:'PRG', dep:'3:50 PM GMT+1', arr:'5:52 PM GMT+1', duration:'2 hr 2 min', aircraft:'Boeing 737-800', direction:'outbound' },
+            { airline:'Ryanair', flight:'4069', fromCode:'PRG', toCode:'KRK', dep:'7:55 AM GMT+1', arr:'9:14 AM GMT+1', duration:'1 hr 19 min', aircraft:'Boeing 737-800', direction:'inbound' }
+          ]
+        },
+        { type:'photo', src:'images/czech-republic/czech-republic-mala-strana-st-nicholas-night.jpg', alt:'St. Nicholas Church’s illuminated bell tower and dome rising above a Malá Strana tram stop at night', loc:'ST. NICHOLAS CHURCH, MALÁ STRANA', day:'DAY 1' },
+        { type:'photo', src:'images/czech-republic/czech-republic-thunovska-street-sign.jpg', alt:'A gaslit street lamp beside a “Thunovská” street sign in Prague’s Malá Strana district', loc:'THUNOVSKÁ, MALÁ STRANA', day:'DAY 1' },
+        { type:'photo', src:'images/czech-republic/czech-republic-national-theatre-alley-night.jpg', alt:'A narrow alley framing the National Theatre’s gilded chariot sculpture atop its dome, lit up at night', loc:'NATIONAL THEATRE, PRAGUE', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/czech-republic/czech-republic-prague-castle-vltava-wide.jpg', alt:'Prague Castle and St. Vitus Cathedral rising above the Vltava River and Malá Strana’s red-tiled rooftops', loc:'PRAGUE CASTLE', day:'DAY 2' },
+          { src:'images/czech-republic/czech-republic-prague-castle-vltava-close.jpg', alt:'A closer view of Prague Castle’s spires above the Vltava, red rooftops and church towers filling the foreground', loc:'PRAGUE CASTLE', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/czech-republic/czech-republic-castle-gardens-panorama.jpg', alt:'A sweeping view over the Vltava and Prague’s Old Town rooftops from the castle gardens', loc:'PRAGUE CASTLE GARDENS', day:'DAY 2' },
+        { type:'photo', src:'images/czech-republic/czech-republic-tyn-church-street-night.jpg', alt:'Pedestrians strolling a cobbled street toward the illuminated Gothic spires of the Church of Our Lady before Týn at night', loc:'OLD TOWN, PRAGUE', day:'DAY 2' },
+        { type:'photo', src:'images/czech-republic/czech-republic-old-town-square-christmas-market.jpg', alt:'A towering Christmas tree strung with lights beside the Church of Our Lady before Týn, crowds filling the Old Town Square Christmas market', loc:'OLD TOWN SQUARE, PRAGUE', day:'DAY 2' }
+      ]
+    },
   ];
 
   var THUMB_RATIO = {
@@ -1596,6 +1610,8 @@
     'images/namibia/namibia-desert-lodge-moonrise.jpg':0.6667,
     'images/namibia/namibia-desert-lodge-sunset-pool.jpg':1.5,
     'images/namibia/namibia-desert-road-aerial.jpg':0.6667,
+    'images/namibia/namibia-dune-climb-shadow-close.jpg':0.6667,
+    'images/namibia/namibia-dune-climb-shadow-wide.jpg':0.6667,
     'images/namibia/namibia-dune-coast-aerial.jpg':1.5,
     'images/namibia/namibia-dune-coast-fog.jpg':1.5,
     'images/namibia/namibia-dune-coast-sunlit.jpg':1.5,
@@ -1604,15 +1620,21 @@
     'images/namibia/namibia-namib-naukluft-drive.jpg':1.5,
     'images/namibia/namibia-naukluft-grassland.jpg':1.5,
     'images/namibia/namibia-salt-road-sign.jpg':0.6667,
+    'images/namibia/namibia-sandwich-harbour-dunes-sea.jpg':0.6667,
+    'images/namibia/namibia-sandwich-harbour-sign.jpg':1.5,
     'images/namibia/namibia-sesriem-road-sign.jpg':1.5,
     'images/namibia/namibia-sossusvlei-balloons.jpg':1.5,
     'images/namibia/namibia-sossusvlei-big-dune.jpg':1.5,
     'images/namibia/namibia-sossusvlei-dune-cluster.jpg':1.5,
+    'images/namibia/namibia-sossusvlei-flooded-reflection.jpg':1.5,
     'images/namibia/namibia-spitzkoppe-arch-detail.jpg':0.6667,
     'images/namibia/namibia-spitzkoppe-arch-peak.jpg':1.5,
     'images/namibia/namibia-spitzkoppe-boulders.jpg':1.5,
+    'images/namibia/namibia-spitzkoppe-domes.jpg':0.6669,
     'images/namibia/namibia-spitzkoppe-portrait.jpg':1.5006,
     'images/namibia/namibia-spitzkoppe-rock-arch.jpg':1.5,
+    'images/namibia/namibia-spitzkoppe-wide-camp.jpg':0.6669,
+    'images/namibia/namibia-walvis-bay-pelican-shore.jpg':1.5,
     'images/namibia/namibia-walvis-bay-pelican.jpg':0.6667,
     'images/nice/nice-cap-ferrat-cove-wide.jpg':1.5,
     'images/nice/nice-cap-ferrat-cove.jpg':0.6667,
@@ -1732,16 +1754,19 @@
     'images/slovakia/slovakia-bratislava-old-town-hall-clock-tower.jpg':0.6667,
     'images/slovakia/slovakia-bratislava-old-town-street.jpg':0.6667,
     'images/slovakia/slovakia-bratislava-vysoka-ulica-corner.jpg':1.5007,
+    'images/south-africa/sa-boulders-penguin-portrait.jpg':0.6667,
     'images/south-africa/sa-boulders-penguins.jpg':1.5,
     'images/south-africa/sa-cableway.jpg':1.5,
     'images/south-africa/sa-camps-bay.jpg':1.5,
     'images/south-africa/sa-cape-of-good-hope-sign.jpg':0.6667,
     'images/south-africa/sa-cape-point-boardwalk.jpg':1.5,
     'images/south-africa/sa-cape-point-cliffs.jpg':1.5,
+    'images/south-africa/sa-cape-point-fog-cove.jpg':0.6667,
     'images/south-africa/sa-cape-point-hikers.jpg':1.5,
     'images/south-africa/sa-cape-point-tidepools.jpg':0.6667,
     'images/south-africa/sa-chapmans-peak.jpg':1.5,
     'images/south-africa/sa-hout-bay.jpg':1.5,
+    'images/south-africa/sa-kirstenbosch-mountain-view.jpg':1.5,
     'images/south-africa/sa-lions-head-car.jpg':0.6667,
     'images/south-africa/sa-lions-head-silhouette.jpg':1.5,
     'images/south-africa/sa-muizenberg-huts.jpg':1.5,
@@ -1750,6 +1775,7 @@
     'images/south-africa/sa-noordhoek-view.jpg':1.5,
     'images/south-africa/sa-signal-hill.jpg':1.5,
     'images/south-africa/sa-sunset-silhouette.jpg':1.5,
+    'images/south-africa/sa-table-mountain-city-view.jpg':1.5,
     'images/south-africa/sa-table-mountain-cliff.jpg':0.6667,
     'images/south-africa/sa-table-mountain-golden.jpg':1.5,
     'images/switzerland/switzerland-alpine-stream.jpg':0.6667,
