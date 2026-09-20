@@ -522,96 +522,6 @@
 (function(){
   var trips = [
     {
-      slug: 'namibia',
-      title: 'Namibia',
-      place: 'Namibia',
-      coord: '22.9576°S, 14.5053°E',
-      cover: 'images/namibia/namibia-deadvlei-aerial.jpg',
-      coverAlt: 'An elevated view of Deadvlei’s white clay pan and skeletal dead trees, ringed by towering red dunes',
-      slides: [
-        { type:'itinerary',
-          title:'Namibia',
-          mapPad: { lat:24, lon:20 },
-          legs:[
-            { airline:'Airlink', flight:'341', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190', direction:'outbound' },
-            { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'WVB', toCode:'SES' },
-            { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'SES', toCode:'WDH' },
-            { airline:'Proflight Zambia', flight:'63', fromCode:'WDH', toCode:'LVI', dep:'12:20 PM GMT+2', arr:'1:55 PM GMT+2', duration:'1 hr 35 min', aircraft:'CRJ-200', direction:'inbound' }
-          ]
-        },
-        { type:'photo', src:'images/namibia/namibia-walvis-bay-pelican.jpg', alt:'A great white pelican preening on a sandy beach at Walvis Bay', loc:'WALVIS BAY', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-walvis-bay-pelican-shore.jpg', alt:'A great white pelican resting on a rocky shoreline at Walvis Bay, waves breaking beyond the rocks', loc:'WALVIS BAY', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-salt-road-sign.jpg', alt:'A weathered warning sign beside a causeway road crossing Walvis Bay’s salt pans', loc:'WALVIS BAY SALT PANS', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-dune-coast-fog.jpg', alt:'Sand dunes falling toward a fog-veiled Atlantic Ocean near Walvis Bay', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-dune-coast-sunlit.jpg', alt:'Sunlight glinting off the ocean beyond a ridge of coastal sand dunes', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-dune-coast-aerial.jpg', alt:'An elevated view along a dune ridge curving beside the coastline, waves breaking on the shore below', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-dune-ocean-aerial.jpg', alt:'A high aerial view of a massive dune falling directly into the fog-veiled Atlantic, waves breaking at its base', loc:'SKELETON COAST', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-cape-fur-seal.jpg', alt:'A Cape fur seal walking across an empty beach at sunset, waves breaking behind it', loc:'CAPE CROSS', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-sandwich-harbour-sign.jpg', alt:'A weathered wooden permit sign for Namib-Naukluft Park’s Sandwich Harbour, dunes and ocean stretching behind it', loc:'SANDWICH HARBOUR', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-sandwich-harbour-dunes-sea.jpg', alt:'Towering dunes falling directly into the Atlantic at Sandwich Harbour, seen from inside a 4x4', loc:'SANDWICH HARBOUR', day:'DAY 1' },
-        { type:'photo', src:'images/namibia/namibia-spitzkoppe-boulders.jpg', alt:'Rounded granite boulders stacked along a rock ridge at Spitzkoppe, dry scrubland stretching to the horizon', loc:'SPITZKOPPE', day:'DAY 2' },
-        { type:'photo', src:'images/namibia/namibia-spitzkoppe-wide-camp.jpg', alt:'Spitzkoppe’s granite peak rising above a scattering of acacia trees and a small desert camp', loc:'SPITZKOPPE', day:'DAY 2' },
-        { type:'photo', src:'images/namibia/namibia-spitzkoppe-domes.jpg', alt:'A cluster of rounded granite domes at Spitzkoppe, boulders scattered across the slope below', loc:'SPITZKOPPE', day:'DAY 2' },
-        { type:'photo', src:'images/namibia/namibia-spitzkoppe-arch-peak.jpg', alt:'A natural rock arch framing the main Spitzkoppe peak in the distance', loc:'SPITZKOPPE', day:'DAY 2' },
-        { type:'photo', src:'images/namibia/namibia-spitzkoppe-portrait.jpg', alt:'A hiker crossing a granite boulder with the Spitzkoppe peak rising behind him', loc:'SPITZKOPPE', day:'DAY 2' },
-        { type:'photo', src:'images/namibia/namibia-spitzkoppe-arch-detail.jpg', alt:'A close, abstract view of layered granite boulders forming a natural arch, sky visible through the gap', loc:'SPITZKOPPE', day:'DAY 2' },
-        { type:'photo', src:'images/namibia/namibia-spitzkoppe-rock-arch.jpg', alt:'The full span of the Spitzkoppe rock arch, a granite bridge worn smooth against the sky', loc:'SPITZKOPPE', day:'DAY 2' },
-        { type:'photo', src:'images/namibia/namibia-naukluft-grassland.jpg', alt:'A dry grassland plain leading toward the folded, sun-streaked peaks of the Naukluft mountains', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-namib-naukluft-drive.jpg', alt:'A dusty gravel road running toward a jagged desert mountain range', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-sesriem-road-sign.jpg', alt:'Road signs pointing toward Dead Valley Lodge, Sesriem Oshana Camp, and Sossusvlei along a gravel road', loc:'SESRIEM', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-sossusvlei-balloons.jpg', alt:'Three hot air balloons rising over the desert plain at dawn, mountains silhouetted on the horizon', loc:'SOSSUSVLEI, SUNRISE', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-balloon-flame.jpg', alt:'A hot air balloon firing its burner as it drifts low over red dunes at sunrise', loc:'SOSSUSVLEI, SUNRISE', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-sossusvlei-big-dune.jpg', alt:'A massive red sand dune towering over parked vehicles at its base', loc:'SOSSUSVLEI', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-sossusvlei-dune-cluster.jpg', alt:'A cluster of red sand dunes catching afternoon light, tiny figures visible on the ridgelines', loc:'SOSSUSVLEI', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-sossusvlei-flooded-reflection.jpg', alt:'A red dune and its slipface mirrored in a rare flooded pan at Sossusvlei', loc:'SOSSUSVLEI', day:'DAY 3' },
-        { type:'photo-pair', photos:[
-          { src:'images/namibia/namibia-desert-road-aerial.jpg', alt:'An elevated view of a car on a desert road cutting between rust-colored mountains', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
-          { src:'images/namibia/namibia-dune-ridge-aerial.jpg', alt:'Hikers climbing a knife-edge dune ridge, their shadows stretching down the slip face', loc:'SOSSUSVLEI', day:'DAY 3' }
-        ] },
-        { type:'photo-pair', photos:[
-          { src:'images/namibia/namibia-dune-climb-shadow-wide.jpg', alt:'Hikers strung along a dune ridge, the dune’s own shadow spilling down the slope beside their trail', loc:'SOSSUSVLEI', day:'DAY 3' },
-          { src:'images/namibia/namibia-dune-climb-shadow-close.jpg', alt:'A closer view of hikers on the dune ridge, deep shadow folding across the sand below their footprints', loc:'SOSSUSVLEI', day:'DAY 3' }
-        ] },
-        { type:'photo', src:'images/namibia/namibia-deadvlei-aerial.jpg', alt:'An elevated view of Deadvlei’s white clay pan and skeletal dead trees, ringed by towering red dunes', loc:'DEADVLEI', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-deadvlei-trees.jpg', alt:'Two dead camel-thorn trees standing in Deadvlei’s white clay pan against a red dune', loc:'DEADVLEI', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-deadvlei-portrait.jpg', alt:'A hiker walking across the white clay pan at Deadvlei, dead trees and a red dune behind him', loc:'DEADVLEI', day:'DAY 3' },
-        { type:'photo', src:'images/namibia/namibia-desert-lodge-sunset-pool.jpg', alt:'Sunset over the desert plain, seen past an infinity pool at a lodge near Sesriem', loc:'DESERT LODGE', day:'DAY 3 · DUSK' },
-        { type:'photo', src:'images/namibia/namibia-desert-lodge-moonrise.jpg', alt:'The moon rising over a jagged red rock outcrop, lit gold by the last light of dusk', loc:'DESERT LODGE', day:'DAY 3 · DUSK' },
-        { type:'photo', src:'images/namibia/namibia-desert-lodge-dusk.jpg', alt:'Thatched-roof lodge chalets at dusk, mountains silhouetted behind under a pink sky', loc:'DESERT LODGE', day:'DAY 3 · DUSK' }
-      ]
-    },
-    {
-      slug: 'zambezi-river-basin',
-      title: 'Zambezi River Basin (Botswana, Zambia, Zimbabwe)',
-      place: 'Zambezi River Basin',
-      coord: '17.9243°S, 25.8572°E',
-      cover: 'images/zambezi/zambezi-victoria-falls-vertical.jpg',
-      coverAlt: 'A curtain of water cascading down Victoria Falls’ sheer basalt cliff, framed by overhanging trees',
-      slides: [
-        { type:'itinerary',
-          title:'Zambezi River Basin',
-          legs:[
-            { airline:'Proflight Zambia', flight:'63', fromCode:'WDH', toCode:'LVI', dep:'12:20 PM GMT+2', arr:'1:55 PM GMT+2', duration:'1 hr 35 min', aircraft:'CRJ-200', direction:'outbound' },
-            { airline:'Airlink', flight:'483', fromCode:'LVI', toCode:'JNB', dep:'1:49 PM GMT+2', arr:'3:38 PM GMT+2', duration:'1 hr 49 min', aircraft:'Embraer E190', direction:'inbound' }
-          ]
-        },
-        { type:'photo', src:'images/zambezi/zambezi-river-journey-info-sign.jpg', alt:'An interpretive sign mapping the Zambezi River’s course through six countries from its source to the Indian Ocean', loc:'LIVINGSTONE, ZAMBIA', day:'DAY 1' },
-        { type:'photo', src:'images/zambezi/zambezi-victoria-falls-wide.jpg', alt:'The full curtain of Victoria Falls thundering into the gorge, spray drifting above the tree-lined riverbank', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' },
-        { type:'photo', src:'images/zambezi/zambezi-victoria-falls-rainbow.jpg', alt:'A rainbow arcing over the Zambezi River’s rapids as spray rises from Victoria Falls in the distance', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' },
-        { type:'photo-pair', photos:[
-          { src:'images/zambezi/zambezi-victoria-falls-vertical.jpg', alt:'A curtain of water cascading down Victoria Falls’ sheer basalt cliff, framed by overhanging trees', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' },
-          { src:'images/zambezi/zambezi-victoria-falls-gorge-mist.jpg', alt:'Mist rising from Victoria Falls fills the basalt gorge, the Zambezi River churning through rapids below', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' }
-        ] },
-        { type:'photo', src:'images/zambezi/zambezi-chobe-elephant-riverbank.jpg', alt:'An elephant walking along the Chobe River’s bank, tusks catching the light beside the water', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' },
-        { type:'photo', src:'images/zambezi/zambezi-chobe-elephant-vehicle.jpg', alt:'An elephant crossing close beside a safari vehicle as a guide watches from behind the wheel', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' },
-        { type:'photo-pair', photos:[
-          { src:'images/zambezi/zambezi-chobe-crocodile.jpg', alt:'A Nile crocodile stretched out on the muddy bank of a Chobe waterhole', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' },
-          { src:'images/zambezi/zambezi-chobe-hippo.jpg', alt:'A hippo’s eyes and nostrils breaking the surface of the Chobe River', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' }
-        ] },
-        { type:'photo', src:'images/zambezi/zambezi-chobe-elephants-wading-egret.jpg', alt:'A herd of elephants wading across the Chobe River, a white egret perched on one’s back', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' }
-      ]
-    },
-    {
       slug: 'china',
       title: 'China',
       place: 'China',
@@ -689,6 +599,96 @@
         { type:'photo', src:'images/china/china-jiuzhaigou-lake-aerial.jpg', alt:'An elevated view over a turquoise lake at Jiuzhaigou, fallen trees visible beneath the clear water, forest and mountains reflected on the surface', loc:'JIUZHAIGOU', day:'DAY 12' },
         { type:'photo', src:'images/china/china-pearl-shoal-waterfall.jpg', alt:'Water cascading over wide travertine terraces at Pearl Shoal Waterfall, forested mountains behind', loc:'PEARL SHOAL WATERFALL', day:'DAY 12' },
         { type:'photo', src:'images/china/china-five-flower-lake.jpg', alt:'Crystal-clear turquoise water at Five Flower Lake, submerged rocks and fallen logs visible beneath the surface', loc:'FIVE FLOWER LAKE', day:'DAY 12' }
+      ]
+    },
+    {
+      slug: 'zambezi-river-basin',
+      title: 'Zambezi River Basin (Botswana, Zambia, Zimbabwe)',
+      place: 'Zambezi River Basin',
+      coord: '17.9243°S, 25.8572°E',
+      cover: 'images/zambezi/zambezi-victoria-falls-vertical.jpg',
+      coverAlt: 'A curtain of water cascading down Victoria Falls’ sheer basalt cliff, framed by overhanging trees',
+      slides: [
+        { type:'itinerary',
+          title:'Zambezi River Basin',
+          legs:[
+            { airline:'Proflight Zambia', flight:'63', fromCode:'WDH', toCode:'LVI', dep:'12:20 PM GMT+2', arr:'1:55 PM GMT+2', duration:'1 hr 35 min', aircraft:'CRJ-200', direction:'outbound' },
+            { airline:'Airlink', flight:'483', fromCode:'LVI', toCode:'JNB', dep:'1:49 PM GMT+2', arr:'3:38 PM GMT+2', duration:'1 hr 49 min', aircraft:'Embraer E190', direction:'inbound' }
+          ]
+        },
+        { type:'photo', src:'images/zambezi/zambezi-river-journey-info-sign.jpg', alt:'An interpretive sign mapping the Zambezi River’s course through six countries from its source to the Indian Ocean', loc:'LIVINGSTONE, ZAMBIA', day:'DAY 1' },
+        { type:'photo', src:'images/zambezi/zambezi-victoria-falls-wide.jpg', alt:'The full curtain of Victoria Falls thundering into the gorge, spray drifting above the tree-lined riverbank', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' },
+        { type:'photo', src:'images/zambezi/zambezi-victoria-falls-rainbow.jpg', alt:'A rainbow arcing over the Zambezi River’s rapids as spray rises from Victoria Falls in the distance', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/zambezi/zambezi-victoria-falls-vertical.jpg', alt:'A curtain of water cascading down Victoria Falls’ sheer basalt cliff, framed by overhanging trees', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' },
+          { src:'images/zambezi/zambezi-victoria-falls-gorge-mist.jpg', alt:'Mist rising from Victoria Falls fills the basalt gorge, the Zambezi River churning through rapids below', loc:'VICTORIA FALLS, ZIMBABWE', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/zambezi/zambezi-chobe-elephant-riverbank.jpg', alt:'An elephant walking along the Chobe River’s bank, tusks catching the light beside the water', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' },
+        { type:'photo', src:'images/zambezi/zambezi-chobe-elephant-vehicle.jpg', alt:'An elephant crossing close beside a safari vehicle as a guide watches from behind the wheel', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/zambezi/zambezi-chobe-crocodile.jpg', alt:'A Nile crocodile stretched out on the muddy bank of a Chobe waterhole', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' },
+          { src:'images/zambezi/zambezi-chobe-hippo.jpg', alt:'A hippo’s eyes and nostrils breaking the surface of the Chobe River', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/zambezi/zambezi-chobe-elephants-wading-egret.jpg', alt:'A herd of elephants wading across the Chobe River, a white egret perched on one’s back', loc:'CHOBE NATIONAL PARK, BOTSWANA', day:'DAY 2' }
+      ]
+    },
+    {
+      slug: 'namibia',
+      title: 'Namibia',
+      place: 'Namibia',
+      coord: '22.9576°S, 14.5053°E',
+      cover: 'images/namibia/namibia-deadvlei-aerial.jpg',
+      coverAlt: 'An elevated view of Deadvlei’s white clay pan and skeletal dead trees, ringed by towering red dunes',
+      slides: [
+        { type:'itinerary',
+          title:'Namibia',
+          mapPad: { lat:24, lon:20 },
+          legs:[
+            { airline:'Airlink', flight:'341', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190', direction:'outbound' },
+            { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'WVB', toCode:'SES' },
+            { mode:'shuttle', airline:'GO2 Shuttle', fromCode:'SES', toCode:'WDH' },
+            { airline:'Proflight Zambia', flight:'63', fromCode:'WDH', toCode:'LVI', dep:'12:20 PM GMT+2', arr:'1:55 PM GMT+2', duration:'1 hr 35 min', aircraft:'CRJ-200', direction:'inbound' }
+          ]
+        },
+        { type:'photo', src:'images/namibia/namibia-walvis-bay-pelican.jpg', alt:'A great white pelican preening on a sandy beach at Walvis Bay', loc:'WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-walvis-bay-pelican-shore.jpg', alt:'A great white pelican resting on a rocky shoreline at Walvis Bay, waves breaking beyond the rocks', loc:'WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-salt-road-sign.jpg', alt:'A weathered warning sign beside a causeway road crossing Walvis Bay’s salt pans', loc:'WALVIS BAY SALT PANS', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-dune-coast-fog.jpg', alt:'Sand dunes falling toward a fog-veiled Atlantic Ocean near Walvis Bay', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-dune-coast-sunlit.jpg', alt:'Sunlight glinting off the ocean beyond a ridge of coastal sand dunes', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-dune-coast-aerial.jpg', alt:'An elevated view along a dune ridge curving beside the coastline, waves breaking on the shore below', loc:'DUNE 7, WALVIS BAY', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-dune-ocean-aerial.jpg', alt:'A high aerial view of a massive dune falling directly into the fog-veiled Atlantic, waves breaking at its base', loc:'SKELETON COAST', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-cape-fur-seal.jpg', alt:'A Cape fur seal walking across an empty beach at sunset, waves breaking behind it', loc:'CAPE CROSS', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-sandwich-harbour-sign.jpg', alt:'A weathered wooden permit sign for Namib-Naukluft Park’s Sandwich Harbour, dunes and ocean stretching behind it', loc:'SANDWICH HARBOUR', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-sandwich-harbour-dunes-sea.jpg', alt:'Towering dunes falling directly into the Atlantic at Sandwich Harbour, seen from inside a 4x4', loc:'SANDWICH HARBOUR', day:'DAY 1' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-boulders.jpg', alt:'Rounded granite boulders stacked along a rock ridge at Spitzkoppe, dry scrubland stretching to the horizon', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-wide-camp.jpg', alt:'Spitzkoppe’s granite peak rising above a scattering of acacia trees and a small desert camp', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-domes.jpg', alt:'A cluster of rounded granite domes at Spitzkoppe, boulders scattered across the slope below', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-arch-peak.jpg', alt:'A natural rock arch framing the main Spitzkoppe peak in the distance', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-portrait.jpg', alt:'A hiker crossing a granite boulder with the Spitzkoppe peak rising behind him', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-arch-detail.jpg', alt:'A close, abstract view of layered granite boulders forming a natural arch, sky visible through the gap', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-spitzkoppe-rock-arch.jpg', alt:'The full span of the Spitzkoppe rock arch, a granite bridge worn smooth against the sky', loc:'SPITZKOPPE', day:'DAY 2' },
+        { type:'photo', src:'images/namibia/namibia-naukluft-grassland.jpg', alt:'A dry grassland plain leading toward the folded, sun-streaked peaks of the Naukluft mountains', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-namib-naukluft-drive.jpg', alt:'A dusty gravel road running toward a jagged desert mountain range', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sesriem-road-sign.jpg', alt:'Road signs pointing toward Dead Valley Lodge, Sesriem Oshana Camp, and Sossusvlei along a gravel road', loc:'SESRIEM', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sossusvlei-balloons.jpg', alt:'Three hot air balloons rising over the desert plain at dawn, mountains silhouetted on the horizon', loc:'SOSSUSVLEI, SUNRISE', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-balloon-flame.jpg', alt:'A hot air balloon firing its burner as it drifts low over red dunes at sunrise', loc:'SOSSUSVLEI, SUNRISE', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sossusvlei-big-dune.jpg', alt:'A massive red sand dune towering over parked vehicles at its base', loc:'SOSSUSVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sossusvlei-dune-cluster.jpg', alt:'A cluster of red sand dunes catching afternoon light, tiny figures visible on the ridgelines', loc:'SOSSUSVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-sossusvlei-flooded-reflection.jpg', alt:'A red dune and its slipface mirrored in a rare flooded pan at Sossusvlei', loc:'SOSSUSVLEI', day:'DAY 3' },
+        { type:'photo-pair', photos:[
+          { src:'images/namibia/namibia-desert-road-aerial.jpg', alt:'An elevated view of a car on a desert road cutting between rust-colored mountains', loc:'NAMIB-NAUKLUFT', day:'DAY 3' },
+          { src:'images/namibia/namibia-dune-ridge-aerial.jpg', alt:'Hikers climbing a knife-edge dune ridge, their shadows stretching down the slip face', loc:'SOSSUSVLEI', day:'DAY 3' }
+        ] },
+        { type:'photo-pair', photos:[
+          { src:'images/namibia/namibia-dune-climb-shadow-wide.jpg', alt:'Hikers strung along a dune ridge, the dune’s own shadow spilling down the slope beside their trail', loc:'SOSSUSVLEI', day:'DAY 3' },
+          { src:'images/namibia/namibia-dune-climb-shadow-close.jpg', alt:'A closer view of hikers on the dune ridge, deep shadow folding across the sand below their footprints', loc:'SOSSUSVLEI', day:'DAY 3' }
+        ] },
+        { type:'photo', src:'images/namibia/namibia-deadvlei-aerial.jpg', alt:'An elevated view of Deadvlei’s white clay pan and skeletal dead trees, ringed by towering red dunes', loc:'DEADVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-deadvlei-trees.jpg', alt:'Two dead camel-thorn trees standing in Deadvlei’s white clay pan against a red dune', loc:'DEADVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-deadvlei-portrait.jpg', alt:'A hiker walking across the white clay pan at Deadvlei, dead trees and a red dune behind him', loc:'DEADVLEI', day:'DAY 3' },
+        { type:'photo', src:'images/namibia/namibia-desert-lodge-sunset-pool.jpg', alt:'Sunset over the desert plain, seen past an infinity pool at a lodge near Sesriem', loc:'DESERT LODGE', day:'DAY 3 · DUSK' },
+        { type:'photo', src:'images/namibia/namibia-desert-lodge-moonrise.jpg', alt:'The moon rising over a jagged red rock outcrop, lit gold by the last light of dusk', loc:'DESERT LODGE', day:'DAY 3 · DUSK' },
+        { type:'photo', src:'images/namibia/namibia-desert-lodge-dusk.jpg', alt:'Thatched-roof lodge chalets at dusk, mountains silhouetted behind under a pink sky', loc:'DESERT LODGE', day:'DAY 3 · DUSK' }
       ]
     },
     {
