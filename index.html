@@ -2198,11 +2198,30 @@
     [51.6,-10.2]
   ];
 
+  // France's own outline as a self-contained closed loop (Atlantic and
+  // Channel coasts, the Belgian/German/Swiss/Italian land border, then the
+  // Mediterranean coast and the Pyrenees back to the Atlantic). Kept apart
+  // from EUROPE_COASTLINE's single continent-wide perimeter because a tight
+  // zoom (e.g. Nice/Monaco) only ever captures a short arc of that bigger
+  // loop, which closes back on itself into a shapeless sliver rather than a
+  // recognizable country - this loop is small enough to render whole even
+  // at a local zoom.
+  var FRANCE_COASTLINE = [
+    [43.4,-1.5],[44.6,-1.2],[47.2,-2.2],[48.4,-4.5],[49.5,-1.6],
+    [50.9,1.6],[50.8,2.9],[49.5,5.9],[48.6,7.8],[47.6,7.6],
+    [46.2,6.1],[44.9,7.0],[43.9,7.5],[43.7,7.3],[43.55,7.0],
+    [43.27,6.65],[43.12,5.93],[43.3,5.37],[43.6,3.9],[42.7,3.0],
+    [42.45,2.5],[42.7,1.0],[42.85,-0.5]
+  ];
+
   var COASTLINE_REGIONS = [
     { points: NORTH_AMERICA_COASTLINE, mode:'closed' },
     { points: SOUTH_AMERICA_COASTLINE, mode:'closed' },
     { points: AFRICA_COASTLINE, mode:'closed' },
     { points: EUROPE_COASTLINE, mode:'closed' },
+    { points: FRANCE_COASTLINE, mode:'closed' },
+    { points: ITALY_COASTLINE, mode:'closed' },
+    { points: POLAND_COASTLINE, mode:'closed' },
     { points: UK_COASTLINE, mode:'closed' },
     { points: IRELAND_COASTLINE, mode:'closed' },
     { points: ARABIA_OUTLINE, mode:'closed' },
