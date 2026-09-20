@@ -145,7 +145,7 @@
   .nav__dropdown-link{
     font-family:"Space Mono", monospace; font-size:.72rem; letter-spacing:.08em;
     text-transform:uppercase; text-decoration:none; color:var(--ink-soft);
-    padding:.5rem .9rem; white-space:nowrap;
+    padding:.5rem .9rem;
     transition:opacity .15s ease;
   }
   .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ opacity:.5; }
@@ -157,15 +157,14 @@
   .nav__dropdown--sub.is-open > .nav__dropdown-toggle--sub{ color:var(--ink); }
   .nav__dropdown-caret--sub{ font-size:.6rem; }
   .nav__dropdown-menu--sub{
-    position:absolute; top:-.4rem; right:calc(100% + .5rem); left:auto;
-    min-width:190px;
+    position:fixed; top:0; left:0;
+    width:max-content; min-width:190px; max-width:calc(100vw - 16px);
     background:var(--paper); border:1px solid var(--line);
     padding:.4rem 0; display:flex; flex-direction:column;
     opacity:0; visibility:hidden; transform:none;
     transition:opacity .18s ease, visibility .18s;
   }
   #travels-submenu{ max-height:calc(100vh - 100px); overflow-y:auto; }
-  #france-submenu{ position:fixed; top:0; right:auto; left:0; }
   .nav__dropdown--sub.is-open > .nav__dropdown-menu--sub{ opacity:1; visibility:visible; }
   @media (hover:hover) and (pointer:fine){
     .nav__dropdown--sub:hover > .nav__dropdown-menu--sub{ opacity:1; visibility:visible; }
@@ -2715,11 +2714,37 @@
       { id:'writings', children:[] },
       { id:'france', children:[] }
     ];
+    // Every sub-flyout is position:fixed (an ancestor's overflow-y:auto, needed
+    // once the Travels list is long, would otherwise clip a flyout escaping to
+    // its side - the same "overflow-y forces overflow-x" trap hit elsewhere on
+    // this site) and positioned here from its toggle's live bounding rect, so
+    // it's placed correctly regardless of nesting depth or scroll position.
+    // It prefers opening to the left of its toggle (matching the outer Menu
+    // panel's own left-of-the-right-edge placement) but flips to the right,
+    // and clamps both axes into the viewport, whenever there isn't room -
+    // which is exactly what was clipping Writings/Travels on narrow phones.
+    function positionSubMenu(toggle, menu){
+      var r = toggle.getBoundingClientRect();
+      var vw = window.innerWidth, vh = window.innerHeight;
+      var mw = menu.offsetWidth, mh = menu.offsetHeight;
+      var left = r.left - mw - 8;
+      if (left < 8) left = r.right + 8;
+      if (left + mw > vw - 8) left = vw - mw - 8;
+      if (left < 8) left = 8;
+      var top = r.top;
+      if (top + mh > vh - 8) top = vh - mh - 8;
+      if (top < 8) top = 8;
+      menu.style.left = left + 'px';
+      menu.style.top = top + 'px';
+    }
+
     var subDropdownsById = {};
     var subDropdowns = subDropdownDefs.map(function(def){
       var id = def.id;
       var dropdown = document.getElementById(id+'-subdropdown');
       var toggle = document.getElementById(id+'-subtoggle');
+      var menu = document.getElementById(id+'-submenu');
+      var reposition = function(){ positionSubMenu(toggle, menu); };
       function close(){
         dropdown.classList.remove('is-open');
         toggle.setAttribute('aria-expanded', 'false');
@@ -2729,6 +2754,7 @@
       }
       toggle.addEventListener('click', function(ev){
         ev.stopPropagation();
+        reposition();
         var open = dropdown.classList.toggle('is-open');
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         if (!open){
@@ -2737,29 +2763,15 @@
           });
         }
       });
-      var obj = { close: close };
+      dropdown.addEventListener('mouseenter', reposition);
+      window.addEventListener('resize', reposition);
+      var obj = { close: close, reposition: reposition };
       subDropdownsById[id] = obj;
       return obj;
     });
-
-    // #france-submenu is nested inside #travels-submenu, which needs its own
-    // scrollbar once the country list gets long; overflow on that ancestor
-    // would clip an absolutely-positioned flyout escaping to its left, so
-    // france-submenu is position:fixed instead and repositioned here to sit
-    // just left of its toggle, recalculated whenever it might move.
-    var franceToggle = document.getElementById('france-subtoggle');
-    var franceMenu = document.getElementById('france-submenu');
     var travelsMenu = document.getElementById('travels-submenu');
-    if (franceToggle && franceMenu){
-      var positionFranceMenu = function(){
-        var r = franceToggle.getBoundingClientRect();
-        franceMenu.style.top = r.top + 'px';
-        franceMenu.style.left = Math.max(8, r.left - franceMenu.offsetWidth - 8) + 'px';
-      };
-      franceToggle.addEventListener('click', positionFranceMenu);
-      document.getElementById('france-subdropdown').addEventListener('mouseenter', positionFranceMenu);
-      if (travelsMenu) travelsMenu.addEventListener('scroll', positionFranceMenu);
-      window.addEventListener('resize', positionFranceMenu);
+    if (travelsMenu && subDropdownsById.france){
+      travelsMenu.addEventListener('scroll', subDropdownsById.france.reposition);
     }
 
     menuToggle.addEventListener('click', function(ev){
