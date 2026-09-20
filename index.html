@@ -2695,7 +2695,7 @@
       return '<a class="nav__dropdown-link" href="#/writing/'+w.slug+'">'+escapeHtml(w.title)+'</a>';
     }).join('');
     menuMenu.innerHTML =
-      '<a class="nav__dropdown-link" href="#/about">About</a>' +
+      '<a class="nav__dropdown-link" href="#/about" id="menu-about-link">About</a>' +
       subDropdownHtml('travels', 'Travels', tripLinks) +
       subDropdownHtml('writings', 'Writings', writingLinks);
 
@@ -2710,9 +2710,9 @@
     }
 
     var subDropdownDefs = [
-      { id:'travels', children:['france'] },
-      { id:'writings', children:[] },
-      { id:'france', children:[] }
+      { id:'travels', children:['france'], siblings:['writings'] },
+      { id:'writings', children:[], siblings:['travels'] },
+      { id:'france', children:[], siblings:[] }
     ];
     // Every sub-flyout is position:fixed (an ancestor's overflow-y:auto, needed
     // once the Travels list is long, would otherwise clip a flyout escaping to
@@ -2763,15 +2763,35 @@
           });
         }
       });
-      dropdown.addEventListener('mouseenter', reposition);
+      dropdown.addEventListener('mouseenter', function(){
+        reposition();
+        def.siblings.forEach(function(siblingId){
+          if (subDropdownsById[siblingId]) subDropdownsById[siblingId].close();
+        });
+      });
       window.addEventListener('resize', reposition);
       var obj = { close: close, reposition: reposition };
       subDropdownsById[id] = obj;
       return obj;
     });
+
+    // Hovering any plain link closes whichever sibling flyout is currently
+    // open, so only one branch of the menu is ever showing at a time -
+    // otherwise a flyout opened by an earlier click (is-open) or a lingering
+    // hover stays visible after the mouse has moved elsewhere in the menu.
+    var aboutLink = document.getElementById('menu-about-link');
+    if (aboutLink){
+      aboutLink.addEventListener('mouseenter', function(){
+        subDropdownsById.travels.close();
+        subDropdownsById.writings.close();
+      });
+    }
     var travelsMenu = document.getElementById('travels-submenu');
     if (travelsMenu && subDropdownsById.france){
       travelsMenu.addEventListener('scroll', subDropdownsById.france.reposition);
+      Array.prototype.forEach.call(travelsMenu.querySelectorAll(':scope > a.nav__dropdown-link'), function(link){
+        link.addEventListener('mouseenter', function(){ subDropdownsById.france.close(); });
+      });
     }
 
     menuToggle.addEventListener('click', function(ev){
