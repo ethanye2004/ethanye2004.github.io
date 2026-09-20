@@ -170,6 +170,19 @@
     .nav__dropdown--sub:hover > .nav__dropdown-menu--sub{ opacity:1; visibility:visible; }
     .nav__dropdown--sub:hover > .nav__dropdown-toggle--sub{ color:var(--ink); }
   }
+  /* Fills the gap between a toggle and its flyout (which sits a few px
+     away, not flush against it) with a visible, hoverable strip - so the
+     panel reads as one connected shape and the cursor has an actual path
+     to follow instead of losing hover in the empty gap between the two. */
+  .nav__dropdown-bridge{
+    position:fixed; background:var(--paper);
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .18s ease, visibility .18s;
+  }
+  .nav__dropdown--sub.is-open > .nav__dropdown-bridge{ opacity:1; visibility:visible; pointer-events:auto; }
+  @media (hover:hover) and (pointer:fine){
+    .nav__dropdown--sub:hover > .nav__dropdown-bridge{ opacity:1; visibility:visible; pointer-events:auto; }
+  }
 
   .site-foot{
     display:flex; align-items:center; justify-content:center; gap:var(--sp-3); flex-wrap:wrap;
@@ -2764,6 +2777,7 @@
         '<button class="nav__dropdown-link nav__dropdown-toggle--sub" id="'+id+'-subtoggle" type="button" aria-haspopup="true" aria-expanded="false">' +
           escapeHtml(label) + ' <span class="nav__dropdown-caret nav__dropdown-caret--sub">&#9666;</span>' +
         '</button>' +
+        '<div class="nav__dropdown-bridge" id="'+id+'-bridge"></div>' +
         '<div class="nav__dropdown-menu nav__dropdown-menu--sub" id="'+id+'-submenu">' + linksHtml + '</div>' +
       '</div>';
     }
@@ -2827,6 +2841,31 @@
       menu.style.left = left + 'px';
       menu.style.top = top + 'px';
     }
+    // Fills the visible gap between the toggle and its (already positioned)
+    // flyout with a hoverable, paper-colored strip, so the two read as one
+    // connected shape and there's an actual path for the cursor to travel
+    // along instead of a dead zone that loses hover partway across.
+    function positionBridge(toggle, menu, bridge){
+      var r = toggle.getBoundingClientRect();
+      var menuLeft = parseFloat(menu.style.left);
+      var menuTop = parseFloat(menu.style.top);
+      var menuRight = menuLeft + menu.offsetWidth;
+      var menuBottom = menuTop + menu.offsetHeight;
+      var left, width;
+      if (menuLeft >= r.right){
+        left = r.right;
+        width = menuLeft - r.right;
+      } else {
+        left = menuRight;
+        width = r.left - menuRight;
+      }
+      var top = Math.min(r.top, menuTop);
+      var bottom = Math.max(r.bottom, menuBottom);
+      bridge.style.left = left + 'px';
+      bridge.style.top = top + 'px';
+      bridge.style.width = Math.max(0, width) + 'px';
+      bridge.style.height = Math.max(0, bottom - top) + 'px';
+    }
 
     var subDropdownsById = {};
     var subDropdowns = subDropdownDefs.map(function(def){
@@ -2834,7 +2873,11 @@
       var dropdown = document.getElementById(id+'-subdropdown');
       var toggle = document.getElementById(id+'-subtoggle');
       var menu = document.getElementById(id+'-submenu');
-      var reposition = function(){ positionSubMenu(toggle, menu); };
+      var bridge = document.getElementById(id+'-bridge');
+      var reposition = function(){
+        positionSubMenu(toggle, menu);
+        positionBridge(toggle, menu, bridge);
+      };
       var closeTimer = null;
       function clearCloseTimer(){
         if (closeTimer){ clearTimeout(closeTimer); closeTimer = null; }
@@ -2876,6 +2919,8 @@
       dropdown.addEventListener('mouseleave', scheduleClose);
       menu.addEventListener('mouseenter', clearCloseTimer);
       menu.addEventListener('mouseleave', scheduleClose);
+      bridge.addEventListener('mouseenter', clearCloseTimer);
+      bridge.addEventListener('mouseleave', scheduleClose);
       window.addEventListener('resize', reposition);
       var obj = { close: close, reposition: reposition };
       subDropdownsById[id] = obj;
