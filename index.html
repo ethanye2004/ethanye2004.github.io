@@ -2859,8 +2859,13 @@
         left = menuRight;
         width = r.left - menuRight;
       }
-      var top = Math.min(r.top, menuTop);
-      var bottom = Math.max(r.bottom, menuBottom);
+      // Only the vertical range where the toggle's own row and the flyout
+      // actually line up (their overlap, not their combined span) - a tall
+      // flyout is taller than the one-row toggle, and spanning the bridge
+      // down to match it left a paper-colored bar hanging well past the
+      // toggle with nothing on the other side of it.
+      var top = Math.max(r.top, menuTop);
+      var bottom = Math.min(r.bottom, menuBottom);
       bridge.style.left = left + 'px';
       bridge.style.top = top + 'px';
       bridge.style.width = Math.max(0, width) + 'px';
