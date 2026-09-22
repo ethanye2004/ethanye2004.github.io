@@ -109,7 +109,10 @@
     display:flex; flex-direction:column; align-items:flex-start; line-height:1.05;
     transition:opacity .15s ease;
   }
-  .nav__mark:hover, .nav__mark:focus-visible{ opacity:.5; }
+  .nav__mark:focus-visible{ opacity:.5; }
+  @media (hover:hover) and (pointer:fine){
+    .nav__mark:hover{ opacity:.5; }
+  }
   .nav__mark-palette{ font-family:"Abril Fatface", ui-serif, Georgia, serif; text-transform:uppercase; letter-spacing:.01em; color:#e3a94c; }
   .nav__mark-by{
     font-family:"Space Mono", monospace; font-style:normal; font-weight:400;
@@ -126,7 +129,7 @@
     transition:opacity .15s ease;
   }
   .nav__dropdown.is-open .nav__dropdown-toggle{ color:var(--ink); }
-  .nav__dropdown-toggle:hover, .nav__dropdown-toggle:focus-visible{ opacity:.5; }
+  .nav__dropdown-toggle:focus-visible{ opacity:.5; }
   .nav__dropdown-caret{ font-size:.6rem; transition:transform .2s ease; }
   .nav__dropdown.is-open .nav__dropdown-caret:not(.nav__dropdown-caret--sub){ transform:rotate(180deg); }
   .nav__dropdown-menu{
@@ -138,6 +141,7 @@
   }
   .nav__dropdown.is-open .nav__dropdown-menu:not(.nav__dropdown-menu--sub){ opacity:1; visibility:visible; transform:none; }
   @media (hover:hover) and (pointer:fine){
+    .nav__dropdown-toggle:hover{ opacity:.5; }
     .nav__dropdown:hover > .nav__dropdown-menu:not(.nav__dropdown-menu--sub){ opacity:1; visibility:visible; transform:none; }
     .nav__dropdown:hover > .nav__dropdown-toggle{ color:var(--ink); }
     .nav__dropdown:hover .nav__dropdown-caret:not(.nav__dropdown-caret--sub){ transform:rotate(180deg); }
@@ -148,7 +152,10 @@
     padding:.5rem .9rem;
     transition:opacity .15s ease;
   }
-  .nav__dropdown-link:hover, .nav__dropdown-link:focus-visible{ opacity:.5; }
+  .nav__dropdown-link:focus-visible{ opacity:.5; }
+  @media (hover:hover) and (pointer:fine){
+    .nav__dropdown-link:hover{ opacity:.5; }
+  }
 
   .nav__dropdown-toggle--sub{
     width:100%; background:none; border:none; cursor:pointer; text-align:left;
@@ -2844,6 +2851,12 @@
       { id:'writings', children:[], siblings:['travels'] },
       { id:'france', children:[], siblings:[] }
     ];
+    // Touch devices sometimes fire a synthetic mouseenter right before the
+    // click on a tap; wiring mouseenter to auto-open here would then have
+    // that same tap's click immediately close what it just opened, forcing
+    // a second tap. Hover-driven open/close is a hover-capable-device-only
+    // affordance, so it's skipped entirely on touch.
+    var isHoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     // Every sub-flyout is position:fixed (an ancestor's overflow-y:auto, needed
     // once the Travels list is long, would otherwise clip a flyout escaping to
     // its side - the same "overflow-y forces overflow-x" trap hit elsewhere on
@@ -2946,12 +2959,14 @@
         ev.stopPropagation();
         if (dropdown.classList.contains('is-open')) close(); else open();
       });
-      dropdown.addEventListener('mouseenter', open);
-      dropdown.addEventListener('mouseleave', scheduleClose);
-      menu.addEventListener('mouseenter', clearCloseTimer);
-      menu.addEventListener('mouseleave', scheduleClose);
-      bridge.addEventListener('mouseenter', clearCloseTimer);
-      bridge.addEventListener('mouseleave', scheduleClose);
+      if (isHoverCapable){
+        dropdown.addEventListener('mouseenter', open);
+        dropdown.addEventListener('mouseleave', scheduleClose);
+        menu.addEventListener('mouseenter', clearCloseTimer);
+        menu.addEventListener('mouseleave', scheduleClose);
+        bridge.addEventListener('mouseenter', clearCloseTimer);
+        bridge.addEventListener('mouseleave', scheduleClose);
+      }
       window.addEventListener('resize', reposition);
       var obj = { close: close, reposition: reposition };
       subDropdownsById[id] = obj;
@@ -2963,7 +2978,7 @@
     // otherwise a flyout opened by an earlier click (is-open) or a lingering
     // hover stays visible after the mouse has moved elsewhere in the menu.
     var aboutLink = document.getElementById('menu-about-link');
-    if (aboutLink){
+    if (aboutLink && isHoverCapable){
       aboutLink.addEventListener('mouseenter', function(){
         subDropdownsById.travels.close();
         subDropdownsById.writings.close();
@@ -2972,9 +2987,11 @@
     var travelsMenu = document.getElementById('travels-submenu');
     if (travelsMenu && subDropdownsById.france){
       travelsMenu.addEventListener('scroll', subDropdownsById.france.reposition);
-      Array.prototype.forEach.call(travelsMenu.querySelectorAll(':scope > a.nav__dropdown-link'), function(link){
-        link.addEventListener('mouseenter', function(){ subDropdownsById.france.close(); });
-      });
+      if (isHoverCapable){
+        Array.prototype.forEach.call(travelsMenu.querySelectorAll(':scope > a.nav__dropdown-link'), function(link){
+          link.addEventListener('mouseenter', function(){ subDropdownsById.france.close(); });
+        });
+      }
     }
 
     menuToggle.addEventListener('click', function(ev){
