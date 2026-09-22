@@ -922,7 +922,6 @@
       slides: [
         { type:'itinerary',
           title:'Czech Republic',
-          mapPad: { lat:3, lon:4 },
           legs:[
             { airline:'Smartwings', flight:'1035', fromCode:'CDG', toCode:'PRG', dep:'3:50 PM GMT+1', arr:'5:52 PM GMT+1', duration:'2 hr 2 min', aircraft:'Boeing 737-800', direction:'outbound' },
             { airline:'Ryanair', flight:'4069', fromCode:'PRG', toCode:'KRK', dep:'7:55 AM GMT+1', arr:'9:14 AM GMT+1', duration:'1 hr 19 min', aircraft:'Boeing 737-800', direction:'inbound' }
@@ -1267,8 +1266,8 @@
       title: 'Hungary',
       place: 'Hungary',
       coord: '47.4979°N, 19.0402°E',
-      cover: 'images/hungary/hungary-parliament-night.jpg',
-      coverAlt: 'The Hungarian Parliament Building illuminated at night, its facade glowing gold above the Danube',
+      cover: 'images/hungary/hungary-matthias-church-tower.jpg',
+      coverAlt: 'Matthias Church’s Gothic bell tower rising beside its colorful Zsolnay-tiled roof',
       slides: [
         { type:'itinerary',
           title:'Hungary',
@@ -1588,7 +1587,7 @@
     'images/guatemala/guatemala-fuego-eruption-night.jpg':1.5,
     'images/hungary/hungary-buda-street-church-view.jpg':0.6667,
     'images/hungary/hungary-castle-garden-bazaar-view.jpg':1.5,
-    'images/hungary/hungary-chain-bridge-aerial.jpg':1.5,
+    'images/hungary/hungary-chain-bridge-aerial.jpg':0.6667,
     'images/hungary/hungary-great-market-hall-signs.jpg':0.6667,
     'images/hungary/hungary-heroes-square-statue.jpg':0.6667,
     'images/hungary/hungary-matthias-church-roofline.jpg':0.6667,
@@ -2283,44 +2282,26 @@
     [20.0,98.5],[24.0,94.0],[28.5,81.0],[30.5,74.0]
   ];
 
-  // Iberia, France, the Low Countries/German North Sea coast, the Baltic and Italy
-  // (including the Rome/Fiumicino coast), closing back through the Mediterranean.
-  // The British Isles are drawn as separate landmasses below so they don't read as
-  // fused to the mainland.
+  // Iberia, France, the Low Countries/German North Sea coast, the Baltic,
+  // then east along the Poland/Ukraine/Romania border and down through the
+  // Balkans to Italy (the Adriatic crossing at Otranto is simplified to a
+  // straight jump) and back along the Mediterranean to Gibraltar. One
+  // single perimeter, detailed enough that Iberia and Italy both read as
+  // their actual shapes and the eastern edge sits well past Hungary, so a
+  // landlocked country like that shows up correctly as interior territory
+  // without needing its own outline. The British Isles are drawn as
+  // separate landmasses below so they don't read as fused to the mainland.
   var EUROPE_COASTLINE = [
-    [36.1,-5.3],[37.0,-8.9],[38.7,-9.4],[41.1,-8.7],[43.5,-8.2],
+    [36.1,-5.3],[37.0,-8.9],[38.7,-9.4],[41.1,-8.7],[42.9,-9.3],[43.5,-8.2],
     [43.4,-2.9],[44.6,-1.2],[47.2,-2.2],[48.4,-4.5],[49.5,-1.6],
     [51.0,2.2],[53.0,4.8],[54.3,10.1],[53.9,14.3],[54.7,20.5],
-    [43.3,16.4],[40.6,17.9],[38.1,15.6],[37.5,13.4],[40.8,14.3],
-    [41.8,12.5],[43.5,10.3],[44.4,8.9],[43.7,7.3],[41.4,2.2],
-    [39.5,-0.3],[36.7,-4.4]
-  ];
-
-  // Italy's own outline as a self-contained closed loop (Adriatic coast
-  // down to the heel, across the arch to the toe and Sicily, then back up
-  // the western coast to the Alps), for the same reason as FRANCE_COASTLINE
-  // below: a tight zoom near Nice/Monaco only grabs a short arc of the much
-  // bigger EUROPE_COASTLINE perimeter, which reads as a shapeless sliver
-  // rather than a recognizable boot.
-  var ITALY_COASTLINE = [
-    [45.4,12.3],[44.0,12.6],[43.6,13.5],[42.6,14.4],[42.0,14.9],
-    [41.9,16.2],[41.1,16.9],[40.6,18.0],[40.4,17.3],[39.0,17.1],
-    [38.1,15.7],[37.5,15.3],[36.8,13.4],[38.0,12.5],[40.6,14.8],
-    [40.85,14.25],[41.2,13.6],[41.8,12.5],[42.1,11.8],[42.8,10.9],
-    [43.5,10.2],[44.1,9.8],[44.4,8.9],[44.3,8.5],[43.9,8.0]
-  ];
-
-  // Poland's own outline as a self-contained closed loop (Baltic coast,
-  // the Lithuania/Belarus/Ukraine border east and south, the Carpathians
-  // near Kraków, then the Czech/German border back to the Baltic) - same
-  // reasoning as FRANCE_COASTLINE/ITALY_COASTLINE above: EUROPE_COASTLINE's
-  // Baltic coast is only two sparse points, nowhere near enough for a
-  // route like Prague-Kraków to read as passing through a recognizable
-  // Poland.
-  var POLAND_COASTLINE = [
-    [53.9,14.3],[54.35,18.65],[54.4,19.9],[54.1,22.9],[53.1,23.2],
-    [50.8,23.5],[49.9,21.9],[50.0,19.9],[50.1,18.6],[51.1,17.0],
-    [51.9,15.5]
+    [52.2,23.7],[48.2,24.0],[47.5,25.0],[45.5,24.5],[44.0,22.5],
+    [43.5,20.0],[42.5,19.3],[41.3,19.8],
+    [40.6,18.0],[40.4,17.3],[39.0,17.1],[38.1,15.7],[37.5,15.3],
+    [36.8,13.4],[38.0,12.5],[40.6,14.8],[40.85,14.25],[41.2,13.6],
+    [41.8,12.5],[42.1,11.8],[42.8,10.9],[43.5,10.2],[44.1,9.8],
+    [44.4,8.9],[44.3,8.5],[43.9,8.0],
+    [43.7,7.3],[41.4,2.2],[39.5,-0.3],[36.7,-4.4]
   ];
 
   // Great Britain, simplified as its own closed landmass separate from the mainland.
@@ -2339,30 +2320,11 @@
     [51.6,-10.2]
   ];
 
-  // France's own outline as a self-contained closed loop (Atlantic and
-  // Channel coasts, the Belgian/German/Swiss/Italian land border, then the
-  // Mediterranean coast and the Pyrenees back to the Atlantic). Kept apart
-  // from EUROPE_COASTLINE's single continent-wide perimeter because a tight
-  // zoom (e.g. Nice/Monaco) only ever captures a short arc of that bigger
-  // loop, which closes back on itself into a shapeless sliver rather than a
-  // recognizable country - this loop is small enough to render whole even
-  // at a local zoom.
-  var FRANCE_COASTLINE = [
-    [43.4,-1.5],[44.6,-1.2],[47.2,-2.2],[48.4,-4.5],[49.5,-1.6],
-    [50.9,1.6],[50.8,2.9],[49.5,5.9],[48.6,7.8],[47.6,7.6],
-    [46.2,6.1],[44.9,7.0],[43.9,7.5],[43.7,7.3],[43.55,7.0],
-    [43.27,6.65],[43.12,5.93],[43.3,5.37],[43.6,3.9],[42.7,3.0],
-    [42.45,2.5],[42.7,1.0],[42.85,-0.5]
-  ];
-
   var COASTLINE_REGIONS = [
     { points: NORTH_AMERICA_COASTLINE, mode:'closed' },
     { points: SOUTH_AMERICA_COASTLINE, mode:'closed' },
     { points: AFRICA_COASTLINE, mode:'closed' },
     { points: EUROPE_COASTLINE, mode:'closed' },
-    { points: FRANCE_COASTLINE, mode:'closed' },
-    { points: ITALY_COASTLINE, mode:'closed' },
-    { points: POLAND_COASTLINE, mode:'closed' },
     { points: UK_COASTLINE, mode:'closed' },
     { points: IRELAND_COASTLINE, mode:'closed' },
     { points: ARABIA_OUTLINE, mode:'closed' },
