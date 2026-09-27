@@ -463,8 +463,8 @@
   @media (max-width:760px){ .slide--itinerary{ grid-template-columns:1fr; } }
   .itin-map{ width:100%; max-width:460px; margin:0 auto; align-self:center; }
   @media (max-width:480px){ .itin-map{ max-width:320px; } }
-  .itin-map__group + .itin-map__group{ margin-top:var(--sp-3); padding-top:var(--sp-3); border-top:1px solid var(--line); }
   .itin-map svg{ width:100%; height:auto; display:block; overflow:hidden; }
+  .itin-map__zoom{ transform-origin:0 0; }
   .itin-map .coast-fill{ fill:rgba(60,90,82,0.15); stroke:none; }
   .itin-map .coast-edge{ fill:none; stroke:var(--ink-soft); stroke-width:1.1; stroke-linejoin:round; stroke-linecap:round; opacity:.5; }
   .itin-map .leg-path{ fill:none; stroke:var(--accent); stroke-width:1.6; stroke-linecap:round; opacity:.8; }
@@ -1370,21 +1370,13 @@
             { mode:'train', airline:'Irish Rail', fromCode:'KIL', toCode:'ORK' },
             { airline:'Ryanair UK', flight:'3731', fromCode:'ORK', toCode:'EDI', dep:'7:27 AM GMT+1', arr:'8:42 AM GMT+1', duration:'1 hr 15 min', aircraft:'Boeing 737-800', direction:'inbound' }
           ],
-          // The transatlantic hop needs a map wide enough to fit California
-          // to Ireland; once the route reaches Dublin, the second map zooms
-          // in on just the Ireland/GB points (the same tight framing as the
-          // Scotland trip's own map) instead of staying zoomed out that far.
-          legGroups:[
-            { legs:[
-              { airline:'JetBlue', flight:'1734', fromCode:'SFO', toCode:'BOS', dep:'8:29 AM PDT', arr:'6:30 PM EDT', duration:'7 hr 1 min', aircraft:'Airbus A321-200', direction:'outbound' },
-              { airline:'Delta', flight:'154', fromCode:'BOS', toCode:'DUB', dep:'11:31 PM EDT', arr:'10:12 AM GMT+1', duration:'5 hr 41 min', aircraft:'Boeing 767-300ER', direction:'outbound' }
-            ] },
-            { legs:[
-              { mode:'train', airline:'Irish Rail', fromCode:'DUB', toCode:'KIL' },
-              { mode:'train', airline:'Irish Rail', fromCode:'KIL', toCode:'ORK' },
-              { airline:'Ryanair UK', flight:'3731', fromCode:'ORK', toCode:'EDI', dep:'7:27 AM GMT+1', arr:'8:42 AM GMT+1', duration:'1 hr 15 min', aircraft:'Boeing 737-800', direction:'inbound' }
-            ] }
-          ]
+          // The transatlantic hop needs the map wide enough to fit California
+          // to Ireland. zoomAfterLeg:1 says: once leg index 1 (BOS->DUB) has
+          // finished drawing, animate the camera in on just the points used
+          // by the legs after it (DUB/KIL/ORK/EDI) - the same map throughout,
+          // just zooming in once the route reaches Dublin, rather than
+          // staying zoomed out that far for the local Ireland/GB hops.
+          zoomAfterLeg: 1
         },
         { type:'photo', src:'images/ireland/ireland-curry-leaf-facade.jpg', alt:'The Curry Leaf’s bar-and-shisha-lounge sign and a lit Guinness harp sign mounted on a green Victorian building’s corner', loc:'DUBLIN', day:'DAY 1' },
         { type:'photo', src:'images/ireland/ireland-bray-head-rainbow-picnic.jpg', alt:'A rainbow arcing over the sea from a clifftop picnic spot along the Bray Head coastal walk, rain visible out over the water', loc:'BRAY HEAD', day:'DAY 1' },
@@ -2532,7 +2524,7 @@
     return '<path d="M11,0 L2,-1.4 L-9,0 L2,1.4 Z M1,-6.2 L2.6,0 L1,6.2 L-0.6,0 Z M-6,-3 L-5,0 L-6,3 L-7.2,0 Z"/>';
   }
 
-  function buildItineraryMap(legs, mapPad){
+  function buildItineraryMap(legs, mapPad, zoomAfterLeg){
     var codes = [];
     legs.forEach(function(l){
       if (codes.indexOf(l.fromCode) === -1) codes.push(l.fromCode);
@@ -2622,7 +2614,35 @@
         '<text x="'+p[0].toFixed(1)+'" y="'+(p[1]-9).toFixed(1)+'">'+c+'</text>' +
       '</g>';
     });
-    return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet">'+coastSvg+pathsSvg+dotsSvg+planesSvg+'</svg>';
+    var content = coastSvg+pathsSvg+dotsSvg+planesSvg;
+
+    // A trip whose first hop or two crosses an ocean (Ireland's SFO->BOS->DUB)
+    // would otherwise sit tiny in a corner of a map wide enough to fit
+    // California. zoomAfterLeg says "once the leg at this index has finished
+    // drawing, zoom the camera in" - it's the same map and the same
+    // projected points throughout, just a CSS transform on this <g> that
+    // animates in at the right moment (timed in initItinerarySvg), so the
+    // wide route and the zoomed-in local one are one continuous map instead
+    // of two side by side.
+    if (zoomAfterLeg != null && zoomAfterLeg < legs.length-1){
+      var zoomCodes = [];
+      legs.slice(zoomAfterLeg+1).forEach(function(l){
+        if (zoomCodes.indexOf(l.fromCode) === -1) zoomCodes.push(l.fromCode);
+        if (zoomCodes.indexOf(l.toCode) === -1) zoomCodes.push(l.toCode);
+      });
+      var zPts = zoomCodes.map(function(c){ return pts[c]; });
+      var zxs = zPts.map(function(p){ return p[0]; }), zys = zPts.map(function(p){ return p[1]; });
+      var zx0 = Math.min.apply(null, zxs), zx1 = Math.max.apply(null, zxs);
+      var zy0 = Math.min.apply(null, zys), zy1 = Math.max.apply(null, zys);
+      var zPadX = Math.max(30, (zx1-zx0)*0.3), zPadY = Math.max(50, (zy1-zy0)*0.2);
+      zx0 -= zPadX; zx1 += zPadX; zy0 -= zPadY; zy1 += zPadY;
+      var zoomScale = Math.min(W/Math.max(zx1-zx0,1e-3), H/Math.max(zy1-zy0,1e-3));
+      var ztx = W/2 - zoomScale*(zx0+zx1)/2, zty = H/2 - zoomScale*(zy0+zy1)/2;
+      var zoomTransform = 'matrix('+zoomScale.toFixed(4)+',0,0,'+zoomScale.toFixed(4)+','+ztx.toFixed(2)+','+zty.toFixed(2)+')';
+      content = '<g class="itin-map__zoom" data-zoom-after-leg="'+zoomAfterLeg+'" data-zoom-transform="'+zoomTransform+'" data-zoom-scale="'+zoomScale.toFixed(4)+'">'+content+'</g>';
+    }
+
+    return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet">'+content+'</svg>';
   }
 
   var AIRLINE_LOGO = {
@@ -2656,16 +2676,7 @@
   };
 
   function renderItinerary(slide){
-    // Most trips draw their whole route on one map. A trip whose first hop or
-    // two crosses an ocean (Ireland's SFO->BOS->DUB) can instead give a
-    // legGroups list: each group gets its own map, sized to fit just that
-    // group's own points - so once the route "reaches" a group boundary
-    // (e.g. landing in Dublin), the next map zooms in on that region (the
-    // Ireland/GB local hops) instead of staying zoomed out to fit California.
-    var groups = slide.legGroups || [{ legs: slide.legs, mapPad: slide.mapPad }];
-    var mapSvg = groups.map(function(g){
-      return '<div class="itin-map__group">'+buildItineraryMap(g.legs, g.mapPad)+'</div>';
-    }).join('');
+    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad, slide.zoomAfterLeg);
     var legsHtml = slide.legs.map(function(l){
       var mode = l.mode || 'flight';
       var logoSrc = AIRLINE_LOGO[l.airline];
@@ -2698,13 +2709,24 @@
   var itineraryLoopTimers = [];
 
   // Runs the draw-the-route/fly-the-marker animation loop for one map svg.
-  // A slide can have several of these side by side (see legGroups in
-  // renderItinerary), each looping independently on its own timer.
   function initItinerarySvg(svg){
     var paths = svg.querySelectorAll('.leg-path');
     var dots = svg.querySelectorAll('.leg-dot');
     var planes = svg.querySelectorAll('.leg-plane');
     if (!paths.length) return;
+    var zoomGroup = svg.querySelector('.itin-map__zoom');
+    var zoomAfterLeg = zoomGroup ? parseInt(zoomGroup.getAttribute('data-zoom-after-leg'), 10) : -1;
+    var zoomTransform = zoomGroup ? zoomGroup.getAttribute('data-zoom-transform') : null;
+    var zoomScale = zoomGroup ? parseFloat(zoomGroup.getAttribute('data-zoom-scale')) : 1;
+    // The dot markers sit inside the same zoomed group as the geography, so
+    // without correction they'd grow right along with it - fine for the
+    // route line itself, but "DUB"/"KIL"/"ORK" (close together in real life)
+    // would balloon into overlapping blobs and jumbled text once the camera
+    // zooms in. Each marker's circle and label get their own counter-scale,
+    // composing with the dot's separate pop-in transform instead of fighting
+    // it (transform-box/origin keep each anchored on its own center, so the
+    // counter-scale doesn't drift it off its true point).
+    var labels = zoomGroup ? zoomGroup.querySelectorAll('.leg-dot text, .leg-dot circle') : [];
 
     var STEP = 550, DRAW = 1100, HOLD = 1500;
 
@@ -2728,6 +2750,16 @@
         pl.style.transition = 'none';
         pl.style.opacity = '0';
         pl.style.offsetDistance = '0%';
+      });
+      if (zoomGroup){
+        zoomGroup.style.transition = 'none';
+        zoomGroup.style.transform = 'none';
+      }
+      labels.forEach(function(l){
+        l.style.transition = 'none';
+        l.style.transform = 'scale(1)';
+        l.style.transformOrigin = 'center';
+        l.style.transformBox = 'fill-box';
       });
       forceReflow();
     }
@@ -2756,6 +2788,16 @@
         }, 150 + i*STEP);
         setTimeout(function(){ pl.style.opacity = '0'; }, 150 + i*STEP + DRAW + 250);
       });
+      if (zoomGroup && zoomAfterLeg >= 0){
+        setTimeout(function(){
+          zoomGroup.style.transition = 'transform 1400ms cubic-bezier(.4,0,.2,1)';
+          zoomGroup.style.transform = zoomTransform;
+          labels.forEach(function(l){
+            l.style.transition = 'transform 1400ms cubic-bezier(.4,0,.2,1)';
+            l.style.transform = 'scale('+(1/zoomScale)+')';
+          });
+        }, 150 + zoomAfterLeg*STEP + DRAW);
+      }
       var total = 150 + (paths.length-1)*STEP + DRAW + HOLD;
       itineraryLoopTimers.push(setTimeout(function(){
         resetState();
