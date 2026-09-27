@@ -1376,7 +1376,12 @@
           // by the legs after it (DUB/KIL/ORK/EDI) - the same map throughout,
           // just zooming in once the route reaches Dublin, rather than
           // staying zoomed out that far for the local Ireland/GB hops.
-          zoomAfterLeg: 1
+          zoomAfterLeg: 1,
+          // A Panama/Central America anchor so the wide (pre-zoom) view reads
+          // as the whole North American continent, not just a box that
+          // happens to contain SFO and BOS - it isn't a real stop, so it
+          // doesn't get its own dot or appear in any leg.
+          mapAnchors: [[8.0, -80.0]]
         },
         { type:'photo', src:'images/ireland/ireland-curry-leaf-facade.jpg', alt:'The Curry Leaf’s bar-and-shisha-lounge sign and a lit Guinness harp sign mounted on a green Victorian building’s corner', loc:'DUBLIN', day:'DAY 1' },
         { type:'photo', src:'images/ireland/ireland-bray-head-rainbow-picnic.jpg', alt:'A rainbow arcing over the sea from a clifftop picnic spot along the Bray Head coastal walk, rain visible out over the water', loc:'BRAY HEAD', day:'DAY 1' },
@@ -2550,13 +2555,17 @@
     return svg;
   }
 
-  function buildItineraryMap(legs, mapPad, zoomAfterLeg){
+  function buildItineraryMap(legs, mapPad, zoomAfterLeg, mapAnchors){
     var codes = [];
     legs.forEach(function(l){
       if (codes.indexOf(l.fromCode) === -1) codes.push(l.fromCode);
       if (codes.indexOf(l.toCode) === -1) codes.push(l.toCode);
     });
-    var airportPts = codes.map(function(c){ return AIRPORT_COORDS[c]; });
+    // mapAnchors are extra [lat,lon] points folded into the framing (and
+    // fitting) math below without drawing their own dot or being a real
+    // stop - e.g. Ireland's map wants the wide view to read as "all of
+    // North America", not just a box that happens to contain SFO and BOS.
+    var airportPts = codes.map(function(c){ return AIRPORT_COORDS[c]; }).concat(mapAnchors || []);
     var airportLats = airportPts.map(function(p){ return p[0]; });
     var airportLons = airportPts.map(function(p){ return p[1]; });
     var minALat = Math.min.apply(null, airportLats), maxALat = Math.max.apply(null, airportLats);
@@ -2718,7 +2727,7 @@
   };
 
   function renderItinerary(slide){
-    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad, slide.zoomAfterLeg);
+    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad, slide.zoomAfterLeg, slide.mapAnchors);
     var legsHtml = slide.legs.map(function(l){
       var mode = l.mode || 'flight';
       var logoSrc = AIRLINE_LOGO[l.airline];
