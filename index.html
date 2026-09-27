@@ -555,13 +555,13 @@
             { mode:'train', airline:'HSR', fromCode:'CKG', toCode:'CTU' },
             { airline:'Sichuan Airlines', flight:'3937', fromCode:'TFU', toCode:'BKK', dep:'9:55 PM GMT+8', arr:'12:08 AM GMT+7', duration:'3 hr 13 min', aircraft:'Airbus A321-200', direction:'inbound' }
           ],
-          // Zoom in once the route reaches Beijing (leg 2, SIN->PEK). The
-          // explicit zoomCodes leaves Bangkok out of the crop - the last leg
-          // still draws on to it, just running off the edge of the frame,
-          // the same way a real map doesn't re-center every time a road
-          // crosses a border.
+          // Zoom in once the route reaches Beijing (leg 2, SIN->PEK). BKK
+          // is included in zoomCodes on purpose (unlike South Africa's WVB)
+          // so the crop reads as "China + Southeast Asia" - a wide enough
+          // region to show real coastline - rather than an ultra-tight box
+          // around four inland cities with almost no coastline in it.
           zoomAfterLeg: 2,
-          zoomCodes: ['PEK', 'DYG', 'CKG', 'CTU', 'TFU']
+          zoomCodes: ['PEK', 'DYG', 'CKG', 'CTU', 'TFU', 'BKK']
         },
         { type:'photo', src:'images/china/china-forbidden-city-gate.jpg', alt:'The red walls and golden roofs of the Forbidden City’s inner gate, seen across a stone bridge over the moat, crowded with visitors', loc:'FORBIDDEN CITY', day:'DAY 1' },
         { type:'photo', src:'images/china/china-jingshan-park-aerial.jpg', alt:'An aerial view over the Forbidden City’s golden rooftops toward the Beijing skyline, framed by pavilion roofs on Jingshan hill', loc:'JINGSHAN PARK', day:'DAY 2' },
@@ -2796,10 +2796,18 @@
     // without correction they'd grow right along with it - fine for the
     // route line itself, but "DUB"/"KIL"/"ORK" (close together in real life)
     // would balloon into overlapping blobs and jumbled text once the camera
-    // zooms in. Each marker's circle and label get their own counter-scale,
-    // composing with the dot's separate pop-in transform instead of fighting
-    // it (transform-box/origin keep each anchored on its own center, so the
-    // counter-scale doesn't drift it off its true point).
+    // zooms in. Each marker's circle and label get their own counter-scale.
+    // The circle's own fill-box is already centered on the dot's true point,
+    // so scaling it around "center" leaves that point fixed. A label's text
+    // isn't centered on the dot, though - it's the dot's position offset a
+    // few units upward (so it reads just above the marker) - so scaling a
+    // label around ITS OWN center would leave that offset itself subject to
+    // the ancestor zoom, ballooning "9 units above the dot" into "9 units
+    // times the zoom scale" and stranding the label far from its marker.
+    // Anchoring the label's own scale on the SAME point as its dot (not its
+    // own center) keeps that offset constant however far the camera zooms.
+    var circles = zoomGroup ? zoomGroup.querySelectorAll('.leg-dot circle') : [];
+    var texts = zoomGroup ? zoomGroup.querySelectorAll('.leg-dot text') : [];
     var labels = zoomGroup ? zoomGroup.querySelectorAll('.leg-dot text, .leg-dot circle') : [];
     var wideCoast = zoomGroup ? zoomGroup.querySelector('.itin-map__coast--wide') : null;
     var zoomCoast = zoomGroup ? zoomGroup.querySelector('.itin-map__coast--zoom') : null;
@@ -2864,11 +2872,18 @@
       }
       if (wideCoast){ wideCoast.style.transition = 'none'; wideCoast.style.opacity = '1'; }
       if (zoomCoast){ zoomCoast.style.transition = 'none'; zoomCoast.style.opacity = '0'; }
-      labels.forEach(function(l){
-        l.style.transition = 'none';
-        l.style.transform = 'scale(1)';
-        l.style.transformOrigin = 'center';
-        l.style.transformBox = 'fill-box';
+      circles.forEach(function(c){
+        c.style.transition = 'none';
+        c.style.transform = 'scale(1)';
+        c.style.transformOrigin = 'center';
+        c.style.transformBox = 'fill-box';
+      });
+      texts.forEach(function(t){
+        var dot = t.parentNode.querySelector('circle');
+        t.style.transition = 'none';
+        t.style.transform = 'scale(1)';
+        t.style.transformBox = 'view-box';
+        t.style.transformOrigin = dot.getAttribute('cx')+'px '+dot.getAttribute('cy')+'px';
       });
       zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = ''; });
       zoomedCoastEdges.forEach(function(c){ c.style.strokeWidth = ''; });
