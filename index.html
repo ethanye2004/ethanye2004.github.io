@@ -2771,8 +2771,37 @@
     var labels = zoomGroup ? zoomGroup.querySelectorAll('.leg-dot text, .leg-dot circle') : [];
     var wideCoast = zoomGroup ? zoomGroup.querySelector('.itin-map__coast--wide') : null;
     var zoomCoast = zoomGroup ? zoomGroup.querySelector('.itin-map__coast--zoom') : null;
+    // The route line and airline-logo/vehicle markers also live inside the
+    // zoomed group, so they'd grow with it too - a stroke that reads fine at
+    // the wide, zoomed-out scale would look heavy once the camera moves in,
+    // and a 14-unit logo badge would balloon into something oversized. Both
+    // get the same counter-scale treatment as the dot markers.
+    var zoomedLegPaths = zoomGroup ? zoomGroup.querySelectorAll('.leg-path') : [];
+    var zoomedPlanes = zoomGroup ? zoomGroup.querySelectorAll('.leg-plane') : [];
+    var BASE_STROKE = 1.6;
 
-    var STEP = 550, DRAW = 1100, HOLD = 1500;
+    var STEP = 550, DRAW = 1100, HOLD = 1500, ZOOM_DURATION = 1400;
+
+    // Normally every leg is staggered by a flat STEP. A trip that zooms
+    // partway through instead holds at the leg right before the zoom until
+    // the camera has fully finished moving in, then resumes the stagger -
+    // so the Ireland/GB legs only start drawing once Dublin is already
+    // front and center, not while the map is still mid-zoom. Sized to the
+    // longest of paths/dots (dots are one per unique airport code, which
+    // usually outnumbers legs by one), since both are indexed into it by
+    // position the same way the original flat "150+i*STEP" formula was.
+    var startTimeLen = Math.max(paths.length, dots.length);
+    var startTime = [];
+    for (var i = 0; i < startTimeLen; i++){
+      if (i === 0){
+        startTime[i] = 150;
+      } else if (zoomGroup && i === zoomAfterLeg + 1){
+        startTime[i] = startTime[i-1] + DRAW + ZOOM_DURATION;
+      } else {
+        startTime[i] = startTime[i-1] + STEP;
+      }
+    }
+    var zoomTriggerTime = zoomGroup && zoomAfterLeg >= 0 ? startTime[zoomAfterLeg] + DRAW : null;
 
     function forceReflow(){ svg.getBoundingClientRect(); }
 
@@ -2807,6 +2836,8 @@
         l.style.transformOrigin = 'center';
         l.style.transformBox = 'fill-box';
       });
+      zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = ''; });
+      zoomedPlanes.forEach(function(pl){ pl.style.transform = 'none'; });
       forceReflow();
     }
 
@@ -2815,14 +2846,14 @@
         setTimeout(function(){
           p.style.transition = 'stroke-dashoffset '+DRAW+'ms ease';
           p.style.strokeDashoffset = '0';
-        }, 150 + i*STEP);
+        }, startTime[i]);
       });
       dots.forEach(function(d, i){
         setTimeout(function(){
           d.style.transition = 'opacity .4s ease, transform .4s ease';
           d.style.opacity = '1';
           d.style.transform = 'scale(1)';
-        }, 100 + i*STEP);
+        }, startTime[i] - 50);
       });
       planes.forEach(function(pl, i){
         setTimeout(function(){
@@ -2831,22 +2862,24 @@
           forceReflow();
           pl.style.transition = 'offset-distance '+DRAW+'ms linear, opacity .3s ease';
           pl.style.offsetDistance = '100%';
-        }, 150 + i*STEP);
-        setTimeout(function(){ pl.style.opacity = '0'; }, 150 + i*STEP + DRAW + 250);
+        }, startTime[i]);
+        setTimeout(function(){ pl.style.opacity = '0'; }, startTime[i] + DRAW + 250);
       });
-      if (zoomGroup && zoomAfterLeg >= 0){
+      if (zoomTriggerTime != null){
         setTimeout(function(){
-          zoomGroup.style.transition = 'transform 1400ms cubic-bezier(.4,0,.2,1)';
+          zoomGroup.style.transition = 'transform '+ZOOM_DURATION+'ms cubic-bezier(.4,0,.2,1)';
           zoomGroup.style.transform = zoomTransform;
           labels.forEach(function(l){
-            l.style.transition = 'transform 1400ms cubic-bezier(.4,0,.2,1)';
+            l.style.transition = 'transform '+ZOOM_DURATION+'ms cubic-bezier(.4,0,.2,1)';
             l.style.transform = 'scale('+(1/zoomScale)+')';
           });
+          zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = (BASE_STROKE/zoomScale).toFixed(3); });
+          zoomedPlanes.forEach(function(pl){ pl.style.transform = 'scale('+(1/zoomScale)+')'; });
           if (wideCoast){ wideCoast.style.transition = 'opacity 900ms ease'; wideCoast.style.opacity = '0'; }
           if (zoomCoast){ zoomCoast.style.transition = 'opacity 900ms ease 300ms'; zoomCoast.style.opacity = '1'; }
-        }, 150 + zoomAfterLeg*STEP + DRAW);
+        }, zoomTriggerTime);
       }
-      var total = 150 + (paths.length-1)*STEP + DRAW + HOLD;
+      var total = startTime[paths.length-1] + DRAW + HOLD;
       itineraryLoopTimers.push(setTimeout(function(){
         resetState();
         playOnce();
