@@ -315,6 +315,13 @@
     text-transform:uppercase; font-style:italic; color:var(--ink-soft);
     margin-bottom:.6em;
   }
+  .writing-source a{
+    color:inherit; text-decoration:none;
+    border-bottom:1px solid var(--line); transition:color .18s ease, border-color .18s ease;
+  }
+  .writing-source a:hover, .writing-source a:focus-visible{
+    color:var(--accent); border-bottom-color:var(--accent);
+  }
   .writing-header h1{ font-size:clamp(1.7rem,8vw,3.4rem); font-weight:340; margin:.25em 0 .15em; overflow-wrap:break-word; }
   .writing-header__sub{ font-style:italic; color:var(--ink-soft); font-size:var(--fs-lede); margin-bottom:var(--sp-2); }
   .writing-byline{
@@ -1300,6 +1307,44 @@
       ]
     },
     {
+      slug: 'scotland',
+      title: 'Scotland',
+      place: 'Scotland',
+      coord: '55.9533°N, 3.1883°W',
+      cover: 'images/scotland/scotland-glen-etive-road.jpg',
+      coverAlt: 'A single-track road running through a glen toward Buachaille Etive Mòr’s pointed peak, cloud shadow crossing the hills behind it',
+      slides: [
+        { type:'itinerary',
+          title:'Scotland',
+          legs:[
+            { airline:'Ryanair UK', flight:'3731', fromCode:'ORK', toCode:'EDI', dep:'7:27 AM GMT+1', arr:'8:42 AM GMT+1', duration:'1 hr 15 min', aircraft:'Boeing 737-800', direction:'outbound' },
+            { mode:'train', airline:'ScotRail', fromCode:'EDI', toCode:'GLA' },
+            { airline:'Ryanair', flight:'275', fromCode:'GLA', toCode:'DUB', dep:'10:39 PM GMT+1', arr:'11:31 PM GMT+1', duration:'52 min', aircraft:'Boeing 737-800', direction:'inbound' }
+          ]
+        }
+      ]
+    },
+    {
+      slug: 'ireland',
+      title: 'Ireland',
+      place: 'Ireland',
+      coord: '53.1424°N, 7.6921°W',
+      cover: 'images/ireland/ireland-curry-leaf-facade.jpg',
+      coverAlt: 'The Curry Leaf’s bar-and-shisha-lounge sign and a lit Guinness harp sign mounted on a green Victorian building’s corner',
+      slides: [
+        { type:'itinerary',
+          title:'Ireland',
+          legs:[
+            { airline:'JetBlue', flight:'1734', fromCode:'SFO', toCode:'BOS', dep:'8:29 AM PDT', arr:'6:30 PM EDT', duration:'7 hr 1 min', aircraft:'Airbus A321-200', direction:'outbound' },
+            { airline:'Delta', flight:'154', fromCode:'BOS', toCode:'DUB', dep:'11:31 PM EDT', arr:'10:12 AM GMT+1', duration:'5 hr 41 min', aircraft:'Boeing 767-300ER', direction:'outbound' },
+            { mode:'train', airline:'Irish Rail', fromCode:'DUB', toCode:'KIL' },
+            { mode:'train', airline:'Irish Rail', fromCode:'KIL', toCode:'ORK' },
+            { airline:'Ryanair UK', flight:'3731', fromCode:'ORK', toCode:'EDI', dep:'7:27 AM GMT+1', arr:'8:42 AM GMT+1', duration:'1 hr 15 min', aircraft:'Boeing 737-800', direction:'inbound' }
+          ]
+        }
+      ]
+    },
+    {
       slug: 'kenya',
       title: 'Kenya',
       place: 'Kenya',
@@ -2103,7 +2148,7 @@
     }).join('');
     return '<div class="writing-page col">' +
       '<div class="writing-header reveal">' +
-        '<p class="writing-source">A Feature from Caravan Travel &amp; Style Magazine</p>' +
+        '<p class="writing-source">A Feature from <a href="https://www.readcaravan.com" target="_blank" rel="noopener">Caravan Travel &amp; Style Magazine</a></p>' +
         '<p class="eyebrow">'+escapeHtml(w.eyebrow)+'</p>' +
         '<h1>'+escapeHtml(w.title)+'</h1>' +
         '<p class="writing-header__sub">'+escapeHtml(w.subtitle)+'</p>' +
@@ -2169,7 +2214,12 @@
     AMS: [52.3105, 4.7683],
     NCE: [43.6584, 7.2159],
     MCM: [43.7396, 7.4269],
-    BUD: [47.4369, 19.2556]
+    BUD: [47.4369, 19.2556],
+    BOS: [42.3656, -71.0096],
+    KIL: [52.0599, -9.5044],
+    ORK: [51.8413, -8.4911],
+    EDI: [55.9500, -3.3725],
+    GLA: [55.8642, -4.4331]
   };
 
   // Simplified coastline outlines used as a map backdrop so routes read against real
@@ -2505,8 +2555,10 @@
     'Sichuan Airlines': 'images/site/airlines/sichuan-airlines.png',
     'Southwest': 'images/site/airlines/southwest.png',
     'Ryanair': 'images/site/airlines/ryanair.png',
+    'Ryanair UK': 'images/site/airlines/ryanair.png',
     'TAP Air Portugal': 'images/site/airlines/tap-air-portugal.png',
-    'KLM': 'images/site/airlines/klm.png'
+    'KLM': 'images/site/airlines/klm.png',
+    'JetBlue': 'images/site/airlines/jetblue.png'
   };
 
   function renderItinerary(slide){
