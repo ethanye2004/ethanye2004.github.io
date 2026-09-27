@@ -463,6 +463,7 @@
   @media (max-width:760px){ .slide--itinerary{ grid-template-columns:1fr; } }
   .itin-map{ width:100%; max-width:460px; margin:0 auto; align-self:center; }
   @media (max-width:480px){ .itin-map{ max-width:320px; } }
+  .itin-map__group + .itin-map__group{ margin-top:var(--sp-3); padding-top:var(--sp-3); border-top:1px solid var(--line); }
   .itin-map svg{ width:100%; height:auto; display:block; overflow:hidden; }
   .itin-map .coast-fill{ fill:rgba(60,90,82,0.15); stroke:none; }
   .itin-map .coast-edge{ fill:none; stroke:var(--ink-soft); stroke-width:1.1; stroke-linejoin:round; stroke-linecap:round; opacity:.5; }
@@ -1321,7 +1322,35 @@
             { mode:'train', airline:'ScotRail', fromCode:'EDI', toCode:'GLA' },
             { airline:'Ryanair', flight:'275', fromCode:'GLA', toCode:'DUB', dep:'10:39 PM GMT+1', arr:'11:31 PM GMT+1', duration:'52 min', aircraft:'Boeing 737-800', direction:'inbound' }
           ]
-        }
+        },
+        { type:'photo-pair', photos:[
+          { src:'images/scotland/scotland-edinburgh-old-town-skyline.jpg', alt:'New College’s spires rising above Princes Street Gardens, the Old Town’s rooftops layered behind', loc:'EDINBURGH', day:'DAY 1' },
+          { src:'images/scotland/scotland-edinburgh-castle-close.jpg', alt:'Edinburgh Castle perched on its volcanic crag, seen through the trees of Princes Street Gardens', loc:'EDINBURGH CASTLE', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/scotland/scotland-edinburgh-old-town-wide.jpg', alt:'The Old Town’s spires and gabled rooftops rising above Princes Street Gardens’ autumn trees', loc:'EDINBURGH', day:'DAY 1' },
+        { type:'photo', src:'images/scotland/scotland-edinburgh-castle-ramparts.jpg', alt:'Edinburgh Castle’s ramparts and gatehouse framed by autumn-tinged trees', loc:'EDINBURGH CASTLE', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/scotland/scotland-edinburgh-church-spire-castle.jpg', alt:'A church spire and clock tower standing before Edinburgh Castle on its hill', loc:'EDINBURGH', day:'DAY 1' },
+          { src:'images/scotland/scotland-edinburgh-royal-mile-piper.jpg', alt:'A kilted bagpiper playing in a doorway along the Royal Mile', loc:'ROYAL MILE, EDINBURGH', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/scotland/scotland-edinburgh-rooftops-tolbooth.jpg', alt:'The Hub’s spire rising over the Old Town’s rooftops, seen from Edinburgh Castle’s esplanade', loc:'EDINBURGH', day:'DAY 1' },
+        { type:'photo', src:'images/scotland/scotland-glencoe-valley-green.jpg', alt:'A green glen floor cutting between sunlit hills in Glen Coe', loc:'GLEN COE', day:'DAY 2' },
+        { type:'photo', src:'images/scotland/scotland-glencoe-mountain-ridge.jpg', alt:'A sunlit mountain ridge streaked with scree, seen from the road through Glen Coe', loc:'GLEN COE', day:'DAY 2' },
+        { type:'photo', src:'images/scotland/scotland-glencoe-farms-valley.jpg', alt:'Small farms tucked into a fold of the glen beneath Glen Coe’s mountains', loc:'GLEN COE', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/scotland/scotland-glen-etive-buachaille-distant.jpg', alt:'Buachaille Etive Mòr’s pointed summit rising over Glen Etive’s moorland', loc:'GLEN ETIVE', day:'DAY 2' },
+          { src:'images/scotland/scotland-glen-etive-buachaille-road.jpg', alt:'The single-track Glen Etive road running toward Buachaille Etive Mòr', loc:'GLEN ETIVE', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/scotland/scotland-glen-etive-road.jpg', alt:'A single-track road running through a glen toward Buachaille Etive Mòr’s pointed peak, cloud shadow crossing the hills behind it', loc:'GLEN ETIVE', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/scotland/scotland-glen-etive-buachaille-rockface.jpg', alt:'Buachaille Etive Mòr’s scree-streaked rock face rising straight from the moor', loc:'GLEN ETIVE', day:'DAY 2' },
+          { src:'images/scotland/scotland-glen-etive-waterfall.jpg', alt:'A small waterfall spilling over moss-covered rocks beside the Glen Etive road', loc:'GLEN ETIVE', day:'DAY 2' }
+        ] },
+        { type:'photo-pair', photos:[
+          { src:'images/scotland/scotland-glencoe-three-sisters-cottage.jpg', alt:'A white cottage dwarfed by the Three Sisters of Glen Coe', loc:'GLENCOE', day:'DAY 2' },
+          { src:'images/scotland/scotland-glencoe-loch-achtriochtan.jpg', alt:'Loch Achtriochtan beneath the jagged ridge of Aonach Eagach', loc:'GLENCOE', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/scotland/scotland-fort-augustus-canal.jpg', alt:'Cruisers moored along the Caledonian Canal locks at Fort Augustus, Loch Ness beyond', loc:'FORT AUGUSTUS, LOCH NESS', day:'DAY 2' }
       ]
     },
     {
@@ -1340,8 +1369,42 @@
             { mode:'train', airline:'Irish Rail', fromCode:'DUB', toCode:'KIL' },
             { mode:'train', airline:'Irish Rail', fromCode:'KIL', toCode:'ORK' },
             { airline:'Ryanair UK', flight:'3731', fromCode:'ORK', toCode:'EDI', dep:'7:27 AM GMT+1', arr:'8:42 AM GMT+1', duration:'1 hr 15 min', aircraft:'Boeing 737-800', direction:'inbound' }
+          ],
+          // The transatlantic hop needs a map wide enough to fit California
+          // to Ireland; once the route reaches Dublin, the second map zooms
+          // in on just the Ireland/GB points (the same tight framing as the
+          // Scotland trip's own map) instead of staying zoomed out that far.
+          legGroups:[
+            { legs:[
+              { airline:'JetBlue', flight:'1734', fromCode:'SFO', toCode:'BOS', dep:'8:29 AM PDT', arr:'6:30 PM EDT', duration:'7 hr 1 min', aircraft:'Airbus A321-200', direction:'outbound' },
+              { airline:'Delta', flight:'154', fromCode:'BOS', toCode:'DUB', dep:'11:31 PM EDT', arr:'10:12 AM GMT+1', duration:'5 hr 41 min', aircraft:'Boeing 767-300ER', direction:'outbound' }
+            ] },
+            { legs:[
+              { mode:'train', airline:'Irish Rail', fromCode:'DUB', toCode:'KIL' },
+              { mode:'train', airline:'Irish Rail', fromCode:'KIL', toCode:'ORK' },
+              { airline:'Ryanair UK', flight:'3731', fromCode:'ORK', toCode:'EDI', dep:'7:27 AM GMT+1', arr:'8:42 AM GMT+1', duration:'1 hr 15 min', aircraft:'Boeing 737-800', direction:'inbound' }
+            ] }
           ]
-        }
+        },
+        { type:'photo', src:'images/ireland/ireland-curry-leaf-facade.jpg', alt:'The Curry Leaf’s bar-and-shisha-lounge sign and a lit Guinness harp sign mounted on a green Victorian building’s corner', loc:'DUBLIN', day:'DAY 1' },
+        { type:'photo', src:'images/ireland/ireland-bray-head-rainbow-picnic.jpg', alt:'A rainbow arcing over the sea from a clifftop picnic spot along the Bray Head coastal walk, rain visible out over the water', loc:'BRAY HEAD', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/ireland/ireland-bray-head-double-rainbow.jpg', alt:'A double rainbow over a rocky headland and the coastal railway line on the Bray-to-Greystones cliff walk', loc:'BRAY-TO-GREYSTONES CLIFF WALK', day:'DAY 1' },
+          { src:'images/ireland/ireland-bray-head-rock-pools.jpg', alt:'Dark rocky ledges meeting turquoise water below the cliffs of Bray Head', loc:'BRAY HEAD', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/ireland/ireland-cliffs-of-moher-wide.jpg', alt:'The layered cliffs of the Cliffs of Moher receding into haze along Ireland’s Atlantic coast', loc:'CLIFFS OF MOHER', day:'DAY 2' },
+        { type:'photo', src:'images/ireland/ireland-cliffs-of-moher-sea-cave.jpg', alt:'Waves breaking at the base of the Cliffs of Moher beneath a sea cave carved into the rock', loc:'CLIFFS OF MOHER', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/ireland/ireland-gap-of-dunloe-jaunting-car.jpg', alt:'A horse-drawn jaunting car leading the way down a misty road through the Gap of Dunloe', loc:'GAP OF DUNLOE', day:'DAY 3' },
+          { src:'images/ireland/ireland-gap-of-dunloe-waterfall-streaks.jpg', alt:'Streams cascading down a fog-wrapped mountainside above the road through the Gap of Dunloe', loc:'GAP OF DUNLOE', day:'DAY 3' }
+        ] },
+        { type:'photo', src:'images/ireland/ireland-gap-of-dunloe-valley-wide.jpg', alt:'A narrow mountain pass disappearing into low cloud at the Gap of Dunloe', loc:'GAP OF DUNLOE', day:'DAY 3' },
+        { type:'photo', src:'images/ireland/ireland-gap-of-dunloe-winding-road.jpg', alt:'A winding road threading through the misty valley floor of the Gap of Dunloe', loc:'GAP OF DUNLOE', day:'DAY 3' },
+        { type:'photo-pair', photos:[
+          { src:'images/ireland/ireland-ring-of-kerry-headland-bay.jpg', alt:'A green farmed headland curving out into the bay along the Ring of Kerry', loc:'RING OF KERRY', day:'DAY 4' },
+          { src:'images/ireland/ireland-ring-of-kerry-patchwork-fields.jpg', alt:'Stone-walled fields terracing down a hillside on the Iveragh Peninsula, a hazy island visible far out to sea', loc:'RING OF KERRY', day:'DAY 4' }
+        ] },
+        { type:'photo', src:'images/ireland/ireland-ring-of-kerry-sheep.jpg', alt:'Sheep grazing a hillside pasture along the Ring of Kerry, mist settling over the hills behind', loc:'RING OF KERRY', day:'DAY 4' }
       ]
     },
     {
@@ -1645,6 +1708,19 @@
     'images/hungary/hungary-pest-street-buildings.jpg':0.6667,
     'images/hungary/hungary-szent-lukacs-galeria.jpg':0.6667,
     'images/hungary/hungary-tram-liberty-bridge.jpg':0.6667,
+    'images/ireland/ireland-bray-head-double-rainbow.jpg':0.6667,
+    'images/ireland/ireland-bray-head-rainbow-picnic.jpg':1.5,
+    'images/ireland/ireland-bray-head-rock-pools.jpg':0.6667,
+    'images/ireland/ireland-cliffs-of-moher-sea-cave.jpg':0.6667,
+    'images/ireland/ireland-cliffs-of-moher-wide.jpg':1.5,
+    'images/ireland/ireland-curry-leaf-facade.jpg':0.6667,
+    'images/ireland/ireland-gap-of-dunloe-jaunting-car.jpg':0.6667,
+    'images/ireland/ireland-gap-of-dunloe-valley-wide.jpg':1.5,
+    'images/ireland/ireland-gap-of-dunloe-waterfall-streaks.jpg':0.6667,
+    'images/ireland/ireland-gap-of-dunloe-winding-road.jpg':0.6667,
+    'images/ireland/ireland-ring-of-kerry-headland-bay.jpg':0.6667,
+    'images/ireland/ireland-ring-of-kerry-patchwork-fields.jpg':0.6667,
+    'images/ireland/ireland-ring-of-kerry-sheep.jpg':1.5,
     'images/kenya/kenya-donkey-cart-road.jpg':0.6667,
     'images/kenya/kenya-maasai-herder.jpg':0.6667,
     'images/kenya/kenya-maasai-village-kids.jpg':1.5,
@@ -1824,6 +1900,24 @@
     'images/peru/peru-vinicunca-trailhead.jpg':1.5007,
     'images/peru/peru-weaver-hands.jpg':1.5007,
     'images/peru/peru-weaver-portrait-dusk.jpg':1.5007,
+    'images/scotland/scotland-edinburgh-castle-close.jpg':0.6667,
+    'images/scotland/scotland-edinburgh-castle-ramparts.jpg':1.5,
+    'images/scotland/scotland-edinburgh-church-spire-castle.jpg':0.6667,
+    'images/scotland/scotland-edinburgh-old-town-skyline.jpg':0.6667,
+    'images/scotland/scotland-edinburgh-old-town-wide.jpg':1.5,
+    'images/scotland/scotland-edinburgh-rooftops-tolbooth.jpg':0.6667,
+    'images/scotland/scotland-edinburgh-royal-mile-piper.jpg':0.6667,
+    'images/scotland/scotland-fort-augustus-canal.jpg':1.5,
+    'images/scotland/scotland-glen-etive-buachaille-distant.jpg':1.5,
+    'images/scotland/scotland-glen-etive-buachaille-road.jpg':1.5,
+    'images/scotland/scotland-glen-etive-buachaille-rockface.jpg':0.6667,
+    'images/scotland/scotland-glen-etive-road.jpg':0.6667,
+    'images/scotland/scotland-glen-etive-waterfall.jpg':0.6667,
+    'images/scotland/scotland-glencoe-farms-valley.jpg':0.6667,
+    'images/scotland/scotland-glencoe-loch-achtriochtan.jpg':1.5,
+    'images/scotland/scotland-glencoe-mountain-ridge.jpg':1.5,
+    'images/scotland/scotland-glencoe-three-sisters-cottage.jpg':1.5,
+    'images/scotland/scotland-glencoe-valley-green.jpg':0.6667,
     'images/seychelles/seychelles-anse-source-dargent-boulders-portrait.jpg':0.6667,
     'images/seychelles/seychelles-anse-source-dargent-boulders-wide.jpg':1.5,
     'images/seychelles/seychelles-anse-source-dargent-classic.jpg':1.5,
@@ -2562,7 +2656,16 @@
   };
 
   function renderItinerary(slide){
-    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad);
+    // Most trips draw their whole route on one map. A trip whose first hop or
+    // two crosses an ocean (Ireland's SFO->BOS->DUB) can instead give a
+    // legGroups list: each group gets its own map, sized to fit just that
+    // group's own points - so once the route "reaches" a group boundary
+    // (e.g. landing in Dublin), the next map zooms in on that region (the
+    // Ireland/GB local hops) instead of staying zoomed out to fit California.
+    var groups = slide.legGroups || [{ legs: slide.legs, mapPad: slide.mapPad }];
+    var mapSvg = groups.map(function(g){
+      return '<div class="itin-map__group">'+buildItineraryMap(g.legs, g.mapPad)+'</div>';
+    }).join('');
     var legsHtml = slide.legs.map(function(l){
       var mode = l.mode || 'flight';
       var logoSrc = AIRLINE_LOGO[l.airline];
@@ -2592,12 +2695,12 @@
     '</div>';
   }
 
-  var itineraryLoopTimer = null;
+  var itineraryLoopTimers = [];
 
-  function initItinerary(){
-    if (itineraryLoopTimer){ clearTimeout(itineraryLoopTimer); itineraryLoopTimer = null; }
-    var svg = document.querySelector('.itin-map svg');
-    if (!svg) return;
+  // Runs the draw-the-route/fly-the-marker animation loop for one map svg.
+  // A slide can have several of these side by side (see legGroups in
+  // renderItinerary), each looping independently on its own timer.
+  function initItinerarySvg(svg){
     var paths = svg.querySelectorAll('.leg-path');
     var dots = svg.querySelectorAll('.leg-dot');
     var planes = svg.querySelectorAll('.leg-plane');
@@ -2654,14 +2757,20 @@
         setTimeout(function(){ pl.style.opacity = '0'; }, 150 + i*STEP + DRAW + 250);
       });
       var total = 150 + (paths.length-1)*STEP + DRAW + HOLD;
-      itineraryLoopTimer = setTimeout(function(){
+      itineraryLoopTimers.push(setTimeout(function(){
         resetState();
         playOnce();
-      }, total);
+      }, total));
     }
 
     resetState();
     playOnce();
+  }
+
+  function initItinerary(){
+    itineraryLoopTimers.forEach(clearTimeout);
+    itineraryLoopTimers = [];
+    document.querySelectorAll('.itin-map svg').forEach(initItinerarySvg);
   }
 
   function renderSlide(slide){
@@ -2821,7 +2930,8 @@
 
   function renderRoute(){
     if (stageKeyHandler){ document.removeEventListener('keydown', stageKeyHandler); stageKeyHandler = null; }
-    if (itineraryLoopTimer){ clearTimeout(itineraryLoopTimer); itineraryLoopTimer = null; }
+    itineraryLoopTimers.forEach(clearTimeout);
+    itineraryLoopTimers = [];
     var app = document.getElementById('app');
     var hash = location.hash.replace(/^#\/?/, '');
 
