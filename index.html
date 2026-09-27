@@ -554,7 +554,14 @@
             { mode:'train', airline:'HSR', fromCode:'DYG', toCode:'CKG' },
             { mode:'train', airline:'HSR', fromCode:'CKG', toCode:'CTU' },
             { airline:'Sichuan Airlines', flight:'3937', fromCode:'TFU', toCode:'BKK', dep:'9:55 PM GMT+8', arr:'12:08 AM GMT+7', duration:'3 hr 13 min', aircraft:'Airbus A321-200', direction:'inbound' }
-          ]
+          ],
+          // Zoom in once the route reaches Beijing (leg 2, SIN->PEK). The
+          // explicit zoomCodes leaves Bangkok out of the crop - the last leg
+          // still draws on to it, just running off the edge of the frame,
+          // the same way a real map doesn't re-center every time a road
+          // crosses a border.
+          zoomAfterLeg: 2,
+          zoomCodes: ['PEK', 'DYG', 'CKG', 'CTU', 'TFU']
         },
         { type:'photo', src:'images/china/china-forbidden-city-gate.jpg', alt:'The red walls and golden roofs of the Forbidden City’s inner gate, seen across a stone bridge over the moat, crowded with visitors', loc:'FORBIDDEN CITY', day:'DAY 1' },
         { type:'photo', src:'images/china/china-jingshan-park-aerial.jpg', alt:'An aerial view over the Forbidden City’s golden rooftops toward the Beijing skyline, framed by pavilion roofs on Jingshan hill', loc:'JINGSHAN PARK', day:'DAY 2' },
@@ -721,7 +728,12 @@
             { airline:'Air France', flight:'990', fromCode:'CDG', toCode:'JNB', dep:'11:27 PM GMT+2', arr:'10:54 AM GMT+2', duration:'11 hr 27 min', aircraft:'Airbus A350-900', direction:'outbound' },
             { airline:'FlySafair', flight:'206', fromCode:'JNB', toCode:'CPT', dep:'12:13 PM GMT+2', arr:'2:35 PM GMT+2', duration:'2 hr 22 min', aircraft:'Boeing 737-800' },
             { airline:'Airlink', flight:'341', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190', direction:'inbound' }
-          ]
+          ],
+          // Zoom in once the route reaches Johannesburg (leg 1, CDG->JNB).
+          // zoomCodes leaves Walvis Bay (Namibia) out of the crop - the last
+          // leg still draws on to it, just running off the edge of frame.
+          zoomAfterLeg: 1,
+          zoomCodes: ['JNB', 'CPT']
         },
         { type:'photo', src:'images/south-africa/sa-table-mountain-city-view.jpg', alt:'Table Mountain’s flat summit wreathed in cloud above Cape Town’s city bowl, seen from an elevated vantage', loc:'CAPE TOWN', day:'DAY 1' },
         { type:'photo', src:'images/south-africa/sa-cape-point-boardwalk.jpg', alt:'A wooden boardwalk leading down toward turquoise water at Dias Beach, sheer cliffs rising on either side', loc:'CAPE POINT', day:'DAY 1' },
@@ -2555,7 +2567,7 @@
     return svg;
   }
 
-  function buildItineraryMap(legs, mapPad, zoomAfterLeg, mapAnchors){
+  function buildItineraryMap(legs, mapPad, zoomAfterLeg, mapAnchors, zoomCodesOverride){
     var codes = [];
     legs.forEach(function(l){
       if (codes.indexOf(l.fromCode) === -1) codes.push(l.fromCode);
@@ -2650,11 +2662,22 @@
     // the same moment gives the zoomed-in view a clean Ireland/GB coastline
     // instead, with nothing else on it.
     if (zoomAfterLeg != null && zoomAfterLeg < legs.length-1){
-      var zoomCodes = [];
-      legs.slice(zoomAfterLeg+1).forEach(function(l){
-        if (zoomCodes.indexOf(l.fromCode) === -1) zoomCodes.push(l.fromCode);
-        if (zoomCodes.indexOf(l.toCode) === -1) zoomCodes.push(l.toCode);
-      });
+      // Usually every code used by the legs after the zoom point belongs in
+      // the crop (Ireland's DUB/KIL/ORK/EDI are all "arrived"). But a route
+      // that keeps going past the country being zoomed into - China's last
+      // leg out to Bangkok, South Africa's on to Namibia - would otherwise
+      // drag Thailand or Namibia into the frame too. zoomCodesOverride lets
+      // the trip say explicitly which codes the crop should fit; the leg
+      // onward from there still draws (and animates) normally, just running
+      // off the edge of the zoomed-in frame like it would on a real map.
+      var zoomCodes = zoomCodesOverride || (function(){
+        var arr = [];
+        legs.slice(zoomAfterLeg+1).forEach(function(l){
+          if (arr.indexOf(l.fromCode) === -1) arr.push(l.fromCode);
+          if (arr.indexOf(l.toCode) === -1) arr.push(l.toCode);
+        });
+        return arr;
+      })();
       var zAirportPts = zoomCodes.map(function(c){ return AIRPORT_COORDS[c]; });
       var zLats = zAirportPts.map(function(p){ return p[0]; }), zLons = zAirportPts.map(function(p){ return p[1]; });
       var zMinALat = Math.min.apply(null, zLats), zMaxALat = Math.max.apply(null, zLats);
@@ -2727,7 +2750,7 @@
   };
 
   function renderItinerary(slide){
-    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad, slide.zoomAfterLeg, slide.mapAnchors);
+    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad, slide.zoomAfterLeg, slide.mapAnchors, slide.zoomCodes);
     var legsHtml = slide.legs.map(function(l){
       var mode = l.mode || 'flight';
       var logoSrc = AIRLINE_LOGO[l.airline];
@@ -2780,14 +2803,16 @@
     var labels = zoomGroup ? zoomGroup.querySelectorAll('.leg-dot text, .leg-dot circle') : [];
     var wideCoast = zoomGroup ? zoomGroup.querySelector('.itin-map__coast--wide') : null;
     var zoomCoast = zoomGroup ? zoomGroup.querySelector('.itin-map__coast--zoom') : null;
-    // The route line and airline-logo/vehicle markers also live inside the
-    // zoomed group, so they'd grow with it too - a stroke that reads fine at
-    // the wide, zoomed-out scale would look heavy once the camera moves in,
-    // and a 14-unit logo badge would balloon into something oversized. Both
-    // get the same counter-scale treatment as the dot markers.
+    // The route line, coastline border and airline-logo/vehicle markers also
+    // live inside the zoomed group, so they'd grow with it too - a stroke
+    // that reads fine at the wide, zoomed-out scale would look heavy once
+    // the camera moves in, and a 14-unit logo badge would balloon into
+    // something oversized. All three get the same counter-scale treatment
+    // as the dot markers.
     var zoomedLegPaths = zoomGroup ? zoomGroup.querySelectorAll('.leg-path') : [];
+    var zoomedCoastEdges = zoomGroup ? zoomGroup.querySelectorAll('.coast-edge') : [];
     var zoomedPlanes = zoomGroup ? zoomGroup.querySelectorAll('.leg-plane') : [];
-    var BASE_STROKE = 1.6;
+    var BASE_STROKE = 1.6, BASE_COAST_STROKE = 1.1;
 
     var STEP = 550, DRAW = 1100, HOLD = 1500, ZOOM_DURATION = 1400;
 
@@ -2846,6 +2871,7 @@
         l.style.transformBox = 'fill-box';
       });
       zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = ''; });
+      zoomedCoastEdges.forEach(function(c){ c.style.strokeWidth = ''; });
       zoomedPlanes.forEach(function(pl){ pl.style.transform = 'none'; });
       forceReflow();
     }
@@ -2883,6 +2909,7 @@
             l.style.transform = 'scale('+(1/zoomScale)+')';
           });
           zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = (BASE_STROKE/zoomScale).toFixed(3); });
+          zoomedCoastEdges.forEach(function(c){ c.style.strokeWidth = (BASE_COAST_STROKE/zoomScale).toFixed(3); });
           zoomedPlanes.forEach(function(pl){ pl.style.transform = 'scale('+(1/zoomScale)+')'; });
           if (wideCoast){ wideCoast.style.transition = 'opacity 900ms ease'; wideCoast.style.opacity = '0'; }
           if (zoomCoast){ zoomCoast.style.transition = 'opacity 900ms ease 300ms'; zoomCoast.style.opacity = '1'; }
