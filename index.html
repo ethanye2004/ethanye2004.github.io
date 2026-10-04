@@ -1500,29 +1500,34 @@
     },
     {
       slug: 'thailand',
-      title: 'Thailand',
-      place: 'Thailand',
+      title: 'Bangkok, Chiang Mai, Chiang Rai, Koh Lanta, and Krabi',
+      place: 'Bangkok, Chiang Mai, Chiang Rai, Koh Lanta, and Krabi',
       coord: '13.7563°N, 100.5018°E',
       cover: 'images/thailand/thailand-chiang-rai-white-temple.jpg',
       coverAlt: 'Wat Rong Khun’s intricately carved white spires reflected in its pool, visitors crossing the bridge',
       slides: [
         { type:'itinerary',
-          title:'Thailand',
+          title:'Bangkok, Chiang Mai, Chiang Rai, Koh Lanta, and Krabi',
           legs:[
+            { airline:'Kenya Airways', flight:'886', fromCode:'NBO', toCode:'BKK', dep:'12:11 AM GMT+3', arr:'1:42 PM GMT+7', duration:'9 hr 31 min', aircraft:'Boeing 787-8', direction:'outbound' },
             { airline:'Thai Airways', flight:'120', fromCode:'BKK', toCode:'CNX', dep:'7:18 PM GMT+7', arr:'8:45 PM GMT+7', duration:'1 hr 27 min', aircraft:'Airbus A320-200' },
             { airline:'Thai AirAsia', flight:'3070', fromCode:'CNX', toCode:'KBV', dep:'6:24 AM GMT+7', arr:'8:17 AM GMT+7', duration:'1 hr 53 min', aircraft:'Airbus A320-200' },
             { airline:'Thai AirAsia', flight:'3075', fromCode:'KBV', toCode:'CNX', dep:'7:06 PM GMT+7', arr:'8:59 PM GMT+7', duration:'1 hr 53 min', aircraft:'Airbus A320-200' },
-            { airline:'Thai Airways', flight:'103', fromCode:'CNX', toCode:'BKK', dep:'9:18 AM GMT+7', arr:'10:30 AM GMT+7', duration:'1 hr 12 min', aircraft:'Airbus A320-200' },
+            { airline:'Thai Airways', flight:'103', fromCode:'CNX', toCode:'BKK', dep:'9:18 AM GMT+7', arr:'10:30 AM GMT+7', duration:'1 hr 12 min', aircraft:'Airbus A320-200', direction:'inbound' },
             { airline:'Thai Airways', flight:'634', fromCode:'BKK', toCode:'TPE', dep:'12:40 PM GMT+7', arr:'5:50 PM GMT+8', duration:'4 hr 10 min', aircraft:'Boeing 787-8', direction:'inbound' },
             { airline:'EVA Air', flight:'28', fromCode:'TPE', toCode:'SFO', dep:'11:35 PM GMT+8', arr:'8:28 PM PDT', duration:'11 hr 53 min', aircraft:'Boeing 777-300ER', direction:'inbound' }
           ],
-          // The opposite of Ireland's shape: this trip STARTS inside a tight
-          // cluster (the BKK/CNX/KBV domestic hops) and only spreads out to
-          // Taipei/SFO at the very end. zoomInverted rests the map already
-          // zoomed in on that cluster and zooms OUT once leg 3 (CNX->BKK)
-          // finishes - i.e. right as the international departure begins -
-          // instead of the usual zoom-in-partway-through.
-          zoomAfterLeg: 3,
+          // The opposite of Ireland's shape: this trip arrives already inside
+          // a tight cluster (the BKK/CNX/KBV domestic hops) and only spreads
+          // out to Taipei/SFO at the very end. zoomInverted rests the map
+          // already zoomed in on that cluster and zooms OUT once leg 4
+          // (CNX->BKK, the last domestic hop) finishes - i.e. right as the
+          // international departure begins - instead of the usual
+          // zoom-in-partway-through. The Kenya->Bangkok arrival (leg 0) plays
+          // out before that, its path running in from off the edge of the
+          // already-zoomed frame the same way a departing leg runs off the
+          // edge elsewhere.
+          zoomAfterLeg: 4,
           zoomCodes: ['BKK', 'CNX', 'KBV'],
           zoomInverted: true
         },
@@ -2713,6 +2718,34 @@
     { points: ASIA_COASTLINE, mode:'ribbon', dir:-1 }
   ];
 
+  // Longitude doesn't wrap on its own: a route from Taipei (121E) to San
+  // Francisco (122W, i.e. -122) actually flies the short way, east across
+  // the Pacific - but naive min/max fitting (and a straight line between
+  // the two projected points) reads -122 as "most of the way back around
+  // through Europe" instead, since -122 < 121 numerically. Given every
+  // longitude a map's points actually use, this finds the single widest
+  // gap around the full circle; if that gap is big enough to matter, it's
+  // the real "nothing here" stretch (ocean, or just unvisited territory),
+  // and everything on the near side of it gets shifted up by 360° so the
+  // whole set becomes one contiguous, non-wrapping range - Taipei stays
+  // where it is and San Francisco becomes same ocean, continuing east.
+  function findLonCutoff(lons){
+    if (lons.length < 2) return null;
+    var sorted = lons.slice().sort(function(a,b){ return a-b; });
+    var n = sorted.length;
+    var maxGap = -1, gapIndex = -1;
+    for (var i = 0; i < n; i++){
+      var a = sorted[i];
+      var b = i+1 < n ? sorted[i+1] : sorted[0]+360;
+      var gap = b - a;
+      if (gap > maxGap){ maxGap = gap; gapIndex = i; }
+    }
+    // The widest gap landing at the "seam" (wrapping from the max back to
+    // the min) means the data's already contiguous as-is - nothing to shift.
+    if (gapIndex === n-1 || maxGap < 180) return null;
+    return sorted[gapIndex];
+  }
+
   function computeProjection(points, W, H, PAD){
     var lats = points.map(function(p){ return p[0]; });
     var lons = points.map(function(p){ return p[1]; });
@@ -2805,8 +2838,16 @@
     // fitting) math below without drawing their own dot or being a real
     // stop - e.g. Ireland's map wants the wide view to read as "all of
     // North America", not just a box that happens to contain SFO and BOS.
-    var airportPts = codes.map(function(c){ return AIRPORT_COORDS[c]; }).concat(mapAnchors || []);
-    var airportLats = airportPts.map(function(p){ return p[0]; });
+    var airportPtsRaw = codes.map(function(c){ return AIRPORT_COORDS[c]; }).concat(mapAnchors || []);
+    var airportLats = airportPtsRaw.map(function(p){ return p[0]; });
+    var airportLonsRaw = airportPtsRaw.map(function(p){ return p[1]; });
+    // See findLonCutoff above - Thailand's TPE->SFO leg (and anything else
+    // that crosses the antimeridian) needs every longitude in this map
+    // resolved onto one consistent, non-wrapping scale before any fitting,
+    // filtering or projecting happens below.
+    var lonCutoff = findLonCutoff(airportLonsRaw);
+    function unwrapLon(lon){ return (lonCutoff != null && lon <= lonCutoff) ? lon + 360 : lon; }
+    var airportPts = airportPtsRaw.map(function(p){ return [p[0], unwrapLon(p[1])]; });
     var airportLons = airportPts.map(function(p){ return p[1]; });
     var minALat = Math.min.apply(null, airportLats), maxALat = Math.max.apply(null, airportLats);
     var minALon = Math.min.apply(null, airportLons), maxALon = Math.max.apply(null, airportLons);
@@ -2819,8 +2860,9 @@
 
     var regions = COASTLINE_REGIONS.map(function(region){
       var pts = region.points.filter(function(p){
-        return p[0] >= latLo && p[0] <= latHi && p[1] >= lonLo && p[1] <= lonHi;
-      });
+        var lon = unwrapLon(p[1]);
+        return p[0] >= latLo && p[0] <= latHi && lon >= lonLo && lon <= lonHi;
+      }).map(function(p){ return [p[0], unwrapLon(p[1])]; });
       return { mode: region.mode, dir: region.dir, points: pts };
     }).filter(function(r){ return r.points.length > 1; });
 
@@ -2834,7 +2876,7 @@
     var coastSvg = renderCoastRegions(regions, project);
 
     var pts = {};
-    codes.forEach(function(c){ pts[c] = project(AIRPORT_COORDS[c][0], AIRPORT_COORDS[c][1]); });
+    codes.forEach(function(c){ pts[c] = project(AIRPORT_COORDS[c][0], unwrapLon(AIRPORT_COORDS[c][1])); });
 
     var seenPairs = {};
     var pathsSvg = '';
@@ -2906,7 +2948,7 @@
         });
         return arr;
       })();
-      var zAirportPts = zoomCodes.map(function(c){ return AIRPORT_COORDS[c]; });
+      var zAirportPts = zoomCodes.map(function(c){ return [AIRPORT_COORDS[c][0], unwrapLon(AIRPORT_COORDS[c][1])]; });
       var zLats = zAirportPts.map(function(p){ return p[0]; }), zLons = zAirportPts.map(function(p){ return p[1]; });
       var zMinALat = Math.min.apply(null, zLats), zMaxALat = Math.max.apply(null, zLats);
       var zMinALon = Math.min.apply(null, zLons), zMaxALon = Math.max.apply(null, zLons);
@@ -2917,8 +2959,9 @@
 
       var zoomRegions = COASTLINE_REGIONS.map(function(region){
         var rpts = region.points.filter(function(p){
-          return p[0] >= zLatLo && p[0] <= zLatHi && p[1] >= zLonLo && p[1] <= zLonHi;
-        });
+          var lon = unwrapLon(p[1]);
+          return p[0] >= zLatLo && p[0] <= zLatHi && lon >= zLonLo && lon <= zLonHi;
+        }).map(function(p){ return [p[0], unwrapLon(p[1])]; });
         return { mode: region.mode, dir: region.dir, points: rpts };
       }).filter(function(r){ return r.points.length > 1; });
       var zoomCoastSvg = renderCoastRegions(zoomRegions, project);
@@ -3188,7 +3231,19 @@
           });
           zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = triggerStroke(BASE_STROKE); });
           zoomedCoastEdges.forEach(function(c){ c.style.strokeWidth = triggerStroke(BASE_COAST_STROKE); });
-          zoomedPlanes.forEach(function(pl){ pl.style.transform = triggerPlaneScale; });
+          // A plane marker can still be mid-flight (its own offset-distance/
+          // opacity transition still running) right when the zoom triggers -
+          // snapping its transform with no transition of its own, like the
+          // stroke-width/coastline changes above get away with, showed up as
+          // a jarring pop: whichever airline badge was still fading out
+          // suddenly flashed to full size for an instant. Appending (not
+          // replacing) a transform-specific transition animates that size
+          // change smoothly instead, without touching the other properties'
+          // already-running transitions.
+          zoomedPlanes.forEach(function(pl){
+            pl.style.transition = (pl.style.transition ? pl.style.transition+', ' : '') + 'transform '+ZOOM_DURATION+'ms ease';
+            pl.style.transform = triggerPlaneScale;
+          });
           if (wideCoast){ wideCoast.style.transition = 'opacity 900ms ease'; wideCoast.style.opacity = triggerWideOpacity; }
           if (zoomCoast){ zoomCoast.style.transition = 'opacity 900ms ease 300ms'; zoomCoast.style.opacity = triggerZoomOpacity; }
         }, zoomTriggerTime);
@@ -3435,11 +3490,19 @@
       .map(function(t){
         return '<a class="nav__dropdown-link" href="#/trip/'+t.slug+'">'+escapeHtml(t.place)+'</a>';
       }).join('');
-    var tripEntries = trips.filter(function(t){ return franceSlugs.indexOf(t.slug) === -1; })
+    var thailandSlugs = ['thailand', 'koh-samui-koh-tao'];
+    var thailandLinks = trips.filter(function(t){ return thailandSlugs.indexOf(t.slug) !== -1; })
+      .slice().sort(function(a,b){ return a.place.localeCompare(b.place); })
+      .map(function(t){
+        return '<a class="nav__dropdown-link" href="#/trip/'+t.slug+'">'+escapeHtml(t.place)+'</a>';
+      }).join('');
+    var groupedSlugs = franceSlugs.concat(thailandSlugs);
+    var tripEntries = trips.filter(function(t){ return groupedSlugs.indexOf(t.slug) === -1; })
       .map(function(t){
         return { key: t.place, html: '<a class="nav__dropdown-link" href="#/trip/'+t.slug+'">'+escapeHtml(t.place)+'</a>' };
       });
     tripEntries.push({ key: 'France', html: subDropdownHtml('france', 'France', franceLinks) });
+    tripEntries.push({ key: 'Thailand', html: subDropdownHtml('thailand', 'Thailand', thailandLinks) });
     var tripLinks = tripEntries.sort(function(a,b){
       return a.key.localeCompare(b.key);
     }).map(function(e){ return e.html; }).join('');
@@ -3462,9 +3525,10 @@
     }
 
     var subDropdownDefs = [
-      { id:'travels', children:['france'], siblings:['writings'] },
+      { id:'travels', children:['france', 'thailand'], siblings:['writings'] },
       { id:'writings', children:[], siblings:['travels'] },
-      { id:'france', children:[], siblings:[] }
+      { id:'france', children:[], siblings:['thailand'] },
+      { id:'thailand', children:[], siblings:['france'] }
     ];
     // Touch devices sometimes fire a synthetic mouseenter right before the
     // click on a tap; wiring mouseenter to auto-open here would then have
@@ -3600,13 +3664,16 @@
       });
     }
     var travelsMenu = document.getElementById('travels-submenu');
-    if (travelsMenu && subDropdownsById.france){
-      travelsMenu.addEventListener('scroll', subDropdownsById.france.reposition);
-      if (isHoverCapable){
-        Array.prototype.forEach.call(travelsMenu.querySelectorAll(':scope > a.nav__dropdown-link'), function(link){
-          link.addEventListener('mouseenter', function(){ subDropdownsById.france.close(); });
-        });
-      }
+    if (travelsMenu){
+      ['france', 'thailand'].forEach(function(id){
+        if (!subDropdownsById[id]) return;
+        travelsMenu.addEventListener('scroll', subDropdownsById[id].reposition);
+        if (isHoverCapable){
+          Array.prototype.forEach.call(travelsMenu.querySelectorAll(':scope > a.nav__dropdown-link'), function(link){
+            link.addEventListener('mouseenter', function(){ subDropdownsById[id].close(); });
+          });
+        }
+      });
     }
 
     menuToggle.addEventListener('click', function(ev){
