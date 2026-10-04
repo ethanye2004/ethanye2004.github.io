@@ -274,6 +274,7 @@
   .tile:hover .tile__frame::after, .tile:focus-visible .tile__frame::after{ background:rgba(0,0,0,.28); }
   .tile__place{
     position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:0 var(--sp-3);
     font-family:"Space Mono", monospace; font-style:normal; font-weight:400;
     font-size:.85rem; letter-spacing:.08em; color:#f6efe1; text-shadow:0 2px 10px rgba(0,0,0,.5);
     opacity:0; transition:opacity .35s ease; pointer-events:none;
@@ -587,12 +588,12 @@
             { airline:'Sichuan Airlines', flight:'3937', fromCode:'TFU', toCode:'BKK', dep:'9:55 PM GMT+8', arr:'12:08 AM GMT+7', duration:'3 hr 13 min', aircraft:'Airbus A321-200', direction:'inbound' }
           ],
           // Zoom in once the route reaches Beijing (leg 2, SIN->PEK). BKK
-          // is included in zoomCodes on purpose (unlike South Africa's WVB)
-          // so the crop reads as "China + Southeast Asia" - a wide enough
-          // region to show real coastline - rather than an ultra-tight box
-          // around four inland cities with almost no coastline in it.
-          zoomAfterLeg: 2,
-          zoomCodes: ['PEK', 'DYG', 'CKG', 'CTU', 'TFU', 'BKK']
+          // is included in this stage's codes on purpose (unlike South
+          // Africa's WVB) so the crop reads as "China + Southeast Asia" - a
+          // wide enough region to show real coastline - rather than an
+          // ultra-tight box around four inland cities with almost no
+          // coastline in it.
+          zoomStages: [ {}, { afterLeg: 2, codes: ['PEK', 'DYG', 'CKG', 'CTU', 'TFU', 'BKK'] } ]
         },
         { type:'photo', src:'images/china/china-forbidden-city-gate.jpg', alt:'The red walls and golden roofs of the Forbidden City’s inner gate, seen across a stone bridge over the moat, crowded with visitors', loc:'FORBIDDEN CITY', day:'DAY 1' },
         { type:'photo', src:'images/china/china-jingshan-park-aerial.jpg', alt:'An aerial view over the Forbidden City’s golden rooftops toward the Beijing skyline, framed by pavilion roofs on Jingshan hill', loc:'JINGSHAN PARK', day:'DAY 2' },
@@ -761,10 +762,9 @@
             { airline:'Airlink', flight:'341', fromCode:'CPT', toCode:'WVB', dep:'10:54 AM GMT+2', arr:'1:07 PM GMT+2', duration:'2 hr 13 min', aircraft:'Embraer E190', direction:'inbound' }
           ],
           // Zoom in once the route reaches Johannesburg (leg 1, CDG->JNB).
-          // zoomCodes leaves Walvis Bay (Namibia) out of the crop - the last
-          // leg still draws on to it, just running off the edge of frame.
-          zoomAfterLeg: 1,
-          zoomCodes: ['JNB', 'CPT']
+          // This stage's codes leave Walvis Bay (Namibia) out of the crop -
+          // the last leg still draws on to it, just running off the frame.
+          zoomStages: [ {}, { afterLeg: 1, codes: ['JNB', 'CPT'] } ]
         },
         { type:'photo', src:'images/south-africa/sa-table-mountain-city-view.jpg', alt:'Table Mountain’s flat summit wreathed in cloud above Cape Town’s city bowl, seen from an elevated vantage', loc:'CAPE TOWN', day:'DAY 1' },
         { type:'photo', src:'images/south-africa/sa-cape-point-boardwalk.jpg', alt:'A wooden boardwalk leading down toward turquoise water at Dias Beach, sheer cliffs rising on either side', loc:'CAPE POINT', day:'DAY 1' },
@@ -1414,13 +1414,14 @@
             { airline:'Ryanair UK', flight:'3731', fromCode:'ORK', toCode:'EDI', dep:'7:27 AM GMT+1', arr:'8:42 AM GMT+1', duration:'1 hr 15 min', aircraft:'Boeing 737-800', direction:'inbound' }
           ],
           // The transatlantic hop needs the map wide enough to fit California
-          // to Ireland. zoomAfterLeg:1 says: once leg index 1 (BOS->DUB) has
-          // finished drawing, animate the camera in on just the points used
-          // by the legs after it (DUB/KIL/ORK/EDI) - the same map throughout,
-          // just zooming in once the route reaches Dublin, rather than
-          // staying zoomed out that far for the local Ireland/GB hops.
-          zoomAfterLeg: 1,
-          // A Panama/Central America anchor so the wide (pre-zoom) view reads
+          // to Ireland. Stage 0 is that wide view; once leg index 1
+          // (BOS->DUB) has finished drawing, the camera zooms in on just the
+          // points used by the legs after it (DUB/KIL/ORK/EDI) - the same
+          // map throughout, just zooming in once the route reaches Dublin,
+          // rather than staying zoomed out that far for the local
+          // Ireland/GB hops.
+          zoomStages: [ {}, { afterLeg: 1, codes: ['DUB', 'KIL', 'ORK', 'EDI'] } ],
+          // A Panama/Central America anchor so the wide (stage 0) view reads
           // as the whole North American continent, not just a box that
           // happens to contain SFO and BOS - it isn't a real stop, so it
           // doesn't get its own dot or appear in any leg.
@@ -1515,21 +1516,25 @@
             { airline:'Thai AirAsia', flight:'3075', fromCode:'KBV', toCode:'CNX', dep:'7:06 PM GMT+7', arr:'8:59 PM GMT+7', duration:'1 hr 53 min', aircraft:'Airbus A320-200' },
             { airline:'Thai Airways', flight:'103', fromCode:'CNX', toCode:'BKK', dep:'9:18 AM GMT+7', arr:'10:30 AM GMT+7', duration:'1 hr 12 min', aircraft:'Airbus A320-200', direction:'inbound' },
             { airline:'Thai Airways', flight:'634', fromCode:'BKK', toCode:'TPE', dep:'12:40 PM GMT+7', arr:'5:50 PM GMT+8', duration:'4 hr 10 min', aircraft:'Boeing 787-8', direction:'inbound' },
-            { airline:'EVA Air', flight:'28', fromCode:'TPE', toCode:'SFO', dep:'11:35 PM GMT+8', arr:'8:28 PM PDT', duration:'11 hr 53 min', aircraft:'Boeing 777-300ER', direction:'inbound' }
+            // via pins this leg's path to visibly track up near Japan before
+            // heading across the North Pacific, rather than cutting a
+            // straight line - see buildItineraryMap's `via` handling below.
+            { airline:'EVA Air', flight:'28', fromCode:'TPE', toCode:'SFO', dep:'11:35 PM GMT+8', arr:'8:28 PM PDT', duration:'11 hr 53 min', aircraft:'Boeing 777-300ER', direction:'inbound', via:[36.5, 140.5] }
           ],
-          // The opposite of Ireland's shape: this trip arrives already inside
-          // a tight cluster (the BKK/CNX/KBV domestic hops) and only spreads
-          // out to Taipei/SFO at the very end. zoomInverted rests the map
-          // already zoomed in on that cluster and zooms OUT once leg 4
-          // (CNX->BKK, the last domestic hop) finishes - i.e. right as the
-          // international departure begins - instead of the usual
-          // zoom-in-partway-through. The Kenya->Bangkok arrival (leg 0) plays
-          // out before that, its path running in from off the edge of the
-          // already-zoomed frame the same way a departing leg runs off the
-          // edge elsewhere.
-          zoomAfterLeg: 4,
-          zoomCodes: ['BKK', 'CNX', 'KBV'],
-          zoomInverted: true
+          // Three camera positions in a row, not just a wide/zoomed pair:
+          // stage 0 rests on the Kenya->Bangkok arrival wide enough to read
+          // as the actual African continent, not just a box that happens to
+          // contain Nairobi and Bangkok; once that leg (index 0) finishes,
+          // stage 1 zooms into the tight BKK/CNX/KBV domestic cluster; once
+          // the last domestic hop (index 4, CNX->BKK) finishes, stage 2
+          // zooms back out to the Taipei->SFO Pacific crossing, with a
+          // northern-Hokkaido anchor so Japan's full extent shows and
+          // nothing from Africa or Europe is left in frame.
+          zoomStages: [
+            { codes: ['NBO', 'BKK'], anchors: [[-34.8,18.4],[36.8,10.2],[14.7,-17.4]] },
+            { afterLeg: 0, codes: ['BKK', 'CNX', 'KBV'] },
+            { afterLeg: 4, codes: ['TPE', 'SFO'], anchors: [[45.5,142.0]] }
+          ]
         },
         { type:'photo', src:'images/thailand/thailand-bangkok-street-skyline-dusk.jpg', alt:'A quiet Bangkok side street at dusk, a skyscraper rising behind tangled power lines and a hotel sign', loc:'BANGKOK', day:'DAY 1' },
         { type:'photo-pair', photos:[
@@ -2704,6 +2709,19 @@
     [20.9,101.1]
   ];
 
+  // Japan's main islands, simplified as one closed landmass (Kyushu up
+  // through Honshu's Pacific side to Hokkaido, back down its Sea-of-Japan
+  // side) - added for the Thailand trip's Taipei->San Francisco leg, whose
+  // real route passes close by on its way across the North Pacific.
+  var JAPAN_COASTLINE = [
+    [31.0,130.6],[32.6,131.7],[33.2,131.9],[34.0,131.0],[34.6,135.5],
+    [35.0,136.9],[35.6,139.8],[36.9,140.9],[37.9,140.9],[38.3,141.5],
+    [40.8,141.7],[41.8,140.8],[43.0,141.3],[43.8,144.5],[45.4,141.9],
+    [43.2,140.3],[40.8,140.0],[39.7,139.9],[38.3,139.0],[36.6,137.2],
+    [35.5,135.8],[35.5,133.0],[34.6,131.5],[33.9,130.2],[32.6,129.8],
+    [31.0,130.6]
+  ];
+
   var COASTLINE_REGIONS = [
     { points: NORTH_AMERICA_COASTLINE, mode:'closed' },
     { points: SOUTH_AMERICA_COASTLINE, mode:'closed' },
@@ -2713,6 +2731,7 @@
     { points: IRELAND_COASTLINE, mode:'closed' },
     { points: ARABIA_OUTLINE, mode:'closed' },
     { points: SOUTH_ASIA_OUTLINE, mode:'closed' },
+    { points: JAPAN_COASTLINE, mode:'closed' },
     { points: THAILAND_BORDER, mode:'closed' },
     { points: LAOS_BORDER, mode:'closed' },
     { points: ASIA_COASTLINE, mode:'ribbon', dir:-1 }
@@ -2733,6 +2752,7 @@
     if (lons.length < 2) return null;
     var sorted = lons.slice().sort(function(a,b){ return a-b; });
     var n = sorted.length;
+    var rawRange = sorted[n-1] - sorted[0];
     var maxGap = -1, gapIndex = -1;
     for (var i = 0; i < n; i++){
       var a = sorted[i];
@@ -2742,7 +2762,13 @@
     }
     // The widest gap landing at the "seam" (wrapping from the max back to
     // the min) means the data's already contiguous as-is - nothing to shift.
-    if (gapIndex === n-1 || maxGap < 180) return null;
+    // Otherwise, only cut at that gap if doing so actually tightens the
+    // span - e.g. Thailand's NBO/BKK/.../TPE/SFO points have their widest
+    // empty gap at ~159 degrees (between SFO and NBO), short of a flat
+    // 180-degree threshold, but shifting at it still shrinks the fitted
+    // span from 244 degrees down to 201, so it's still the right cut: an
+    // arbitrary degree threshold would have missed this case entirely.
+    if (gapIndex === n-1 || (360 - maxGap) >= rawRange) return null;
     return sorted[gapIndex];
   }
 
@@ -2828,24 +2854,43 @@
     return svg;
   }
 
-  function buildItineraryMap(legs, mapPad, zoomAfterLeg, mapAnchors, zoomCodesOverride, zoomInverted){
+  function buildItineraryMap(legs, mapPad, mapAnchors, zoomStages){
     var codes = [];
     legs.forEach(function(l){
       if (codes.indexOf(l.fromCode) === -1) codes.push(l.fromCode);
       if (codes.indexOf(l.toCode) === -1) codes.push(l.toCode);
     });
-    // mapAnchors are extra [lat,lon] points folded into the framing (and
-    // fitting) math below without drawing their own dot or being a real
-    // stop - e.g. Ireland's map wants the wide view to read as "all of
-    // North America", not just a box that happens to contain SFO and BOS.
+    // zoomStages is an ordered list of camera positions: stage 0 is the
+    // resting state the map starts on, and each later stage says "once leg
+    // afterLeg has finished drawing, move the camera here next." A stage
+    // with no codes is the plain wide view (every airport, no crop); a
+    // stage with codes crops/zooms to just those airports (e.g. Thailand's
+    // domestic BKK/CNX/KBV cluster, or its outbound Pacific hop). Trips with
+    // no zoomStages at all just get a single implicit wide stage - same
+    // map, no camera moves.
+    var stages = (zoomStages && zoomStages.length) ? zoomStages : [{}];
+    // mapAnchors are extra [lat,lon] points folded into the WIDE view's own
+    // framing (and fitting) math below without drawing their own dot or
+    // being a real stop - e.g. Ireland's map wants the wide view to read as
+    // "all of North America", not just a box that happens to contain SFO
+    // and BOS. A stage's own `anchors` do the same thing but scoped to just
+    // that stage's crop (e.g. Thailand's Pacific stage pulls in a northern
+    // Hokkaido point so Japan's full extent shows, without ballooning the
+    // wide view out to Japan too).
     var airportPtsRaw = codes.map(function(c){ return AIRPORT_COORDS[c]; }).concat(mapAnchors || []);
     var airportLats = airportPtsRaw.map(function(p){ return p[0]; });
     var airportLonsRaw = airportPtsRaw.map(function(p){ return p[1]; });
     // See findLonCutoff above - Thailand's TPE->SFO leg (and anything else
     // that crosses the antimeridian) needs every longitude in this map
     // resolved onto one consistent, non-wrapping scale before any fitting,
-    // filtering or projecting happens below.
-    var lonCutoff = findLonCutoff(airportLonsRaw);
+    // filtering or projecting happens below. The cutoff has to be found
+    // across every point this map will ever project - including each
+    // stage's own anchors/codes - so that a given airport unwraps the same
+    // way no matter which stage is looking at it.
+    var stageAnchorsFlat = [];
+    stages.forEach(function(s){ stageAnchorsFlat = stageAnchorsFlat.concat(s.anchors || []); });
+    var allLonSourcePts = airportPtsRaw.concat(stageAnchorsFlat);
+    var lonCutoff = findLonCutoff(allLonSourcePts.map(function(p){ return p[1]; }));
     function unwrapLon(lon){ return (lonCutoff != null && lon <= lonCutoff) ? lon + 360 : lon; }
     var airportPts = airportPtsRaw.map(function(p){ return [p[0], unwrapLon(p[1])]; });
     var airportLons = airportPts.map(function(p){ return p[1]; });
@@ -2892,8 +2937,25 @@
       var dx = p2[0]-p1[0], dy = p2[1]-p1[1];
       var len = Math.sqrt(dx*dx + dy*dy) || 1;
       var nx = -dy/len, ny = dx/len;
-      var bend = Math.min(26, len*0.24) * sign;
-      var cx = mx + nx*bend, cy = my + ny*bend;
+      var cx, cy;
+      if (l.via){
+        // Most legs just need a gentle generic bow so overlapping routes
+        // (same two airports flown twice) don't draw right on top of each
+        // other - the perpendicular-offset math below is plenty for that.
+        // A real-world route that bulges noticeably off the straight line
+        // on the map - Thailand's TPE->SFO hop, which actually tracks up
+        // near Japan before heading across the North Pacific rather than
+        // cutting straight there - reads better pinned to an explicit
+        // waypoint. For a quadratic bezier, the point at t=0.5 is
+        // 0.25*P0 + 0.5*C + 0.25*P2, i.e. halfway between the control
+        // point and the P0/P2 midpoint - solving that for C is what makes
+        // the curve actually pass through `via` at its midpoint.
+        var viaP = project(l.via[0], unwrapLon(l.via[1]));
+        cx = 2*viaP[0] - mx; cy = 2*viaP[1] - my;
+      } else {
+        var bend = Math.min(26, len*0.24) * sign;
+        cx = mx + nx*bend; cy = my + ny*bend;
+      }
       var d = 'M'+p1[0].toFixed(1)+','+p1[1].toFixed(1)+' Q'+cx.toFixed(1)+','+cy.toFixed(1)+' '+p2[0].toFixed(1)+','+p2[1].toFixed(1);
       pathsSvg += '<path class="leg-path leg-path--'+mode+'" d="'+d+'"/>';
       var logoSrc = mode === 'flight' ? AIRLINE_LOGO[l.airline] : null;
@@ -2915,40 +2977,31 @@
         '<text x="'+p[0].toFixed(1)+'" y="'+(p[1]-9).toFixed(1)+'">'+c+'</text>' +
       '</g>';
     });
-    var coastHtml = '<g class="itin-map__coast itin-map__coast--wide" style="opacity:'+(zoomInverted?0:1)+'">'+coastSvg+'</g>';
-
     // A trip whose first hop or two crosses an ocean (Ireland's SFO->BOS->DUB)
     // would otherwise sit tiny in a corner of a map wide enough to fit
-    // California. zoomAfterLeg says "once the leg at this index has finished
-    // drawing, zoom the camera in" - it's the same map and the same
-    // projected points throughout, just a CSS transform on this <g> that
-    // animates in at the right moment (timed in initItinerarySvg), so the
-    // wide route and the zoomed-in local one are one continuous map instead
-    // of two side by side. The wide map's own coastline was filtered to a
-    // box wide enough to include the transatlantic hop, so it still carries
-    // continental Europe's coastline in the background - drawing a second,
-    // separately-scoped coastline (using the exact same lat/lon-padding
-    // formula the standalone Scotland map uses) and crossfading to it at
-    // the same moment gives the zoomed-in view a clean Ireland/GB coastline
-    // instead, with nothing else on it.
-    if (zoomAfterLeg != null && zoomAfterLeg < legs.length-1){
-      // Usually every code used by the legs after the zoom point belongs in
-      // the crop (Ireland's DUB/KIL/ORK/EDI are all "arrived"). But a route
-      // that keeps going past the country being zoomed into - China's last
-      // leg out to Bangkok, South Africa's on to Namibia - would otherwise
-      // drag Thailand or Namibia into the frame too. zoomCodesOverride lets
-      // the trip say explicitly which codes the crop should fit; the leg
-      // onward from there still draws (and animates) normally, just running
-      // off the edge of the zoomed-in frame like it would on a real map.
-      var zoomCodes = zoomCodesOverride || (function(){
-        var arr = [];
-        legs.slice(zoomAfterLeg+1).forEach(function(l){
-          if (arr.indexOf(l.fromCode) === -1) arr.push(l.fromCode);
-          if (arr.indexOf(l.toCode) === -1) arr.push(l.toCode);
-        });
-        return arr;
-      })();
-      var zAirportPts = zoomCodes.map(function(c){ return [AIRPORT_COORDS[c][0], unwrapLon(AIRPORT_COORDS[c][1])]; });
+    // California. Each later stage says "once the leg at index afterLeg has
+    // finished drawing, move the camera here next" - it's the same map and
+    // the same projected points throughout, just a CSS transform on the
+    // wrapping <g> that animates at the right moment (timed in
+    // initItinerarySvg), so the wide route and any zoomed-in legs read as
+    // one continuous map instead of several side by side. Thailand needs
+    // three such camera positions in a row (Africa+Bangkok, then the Thai
+    // domestic cluster, then the Pacific crossing to SFO) - framed as a
+    // generic ordered list rather than a single wide/zoomed pair, a trip
+    // can use as many stages as its route actually needs.
+    //
+    // Each non-wide stage also gets its own separately-scoped coastline
+    // (the wide view's own coastline is filtered to a box wide enough to
+    // include every leg, so it still carries whatever continents sit
+    // between the first and last stop) - crossfading to a tighter one
+    // scoped to just that stage's own airports gives it a clean, uncluttered
+    // coastline instead, with nothing else on it.
+    function computeStageCrop(stageCodes, stageAnchors){
+      if (!stageCodes || !stageCodes.length){
+        return { transform: 'none', scale: 1, coastSvg: coastSvg };
+      }
+      var zAirportPts = stageCodes.map(function(c){ return [AIRPORT_COORDS[c][0], unwrapLon(AIRPORT_COORDS[c][1])]; })
+        .concat((stageAnchors || []).map(function(p){ return [p[0], unwrapLon(p[1])]; }));
       var zLats = zAirportPts.map(function(p){ return p[0]; }), zLons = zAirportPts.map(function(p){ return p[1]; });
       var zMinALat = Math.min.apply(null, zLats), zMaxALat = Math.max.apply(null, zLats);
       var zMinALon = Math.min.apply(null, zLons), zMaxALon = Math.max.apply(null, zLons);
@@ -2965,23 +3018,13 @@
         return { mode: region.mode, dir: region.dir, points: rpts };
       }).filter(function(r){ return r.points.length > 1; });
       var zoomCoastSvg = renderCoastRegions(zoomRegions, project);
-      // Usually the map starts wide and zooms in once the route reaches a
-      // tight cluster (Ireland's Dublin/Killarney/Cork, say). A trip that
-      // starts inside that tight cluster instead - Thailand's domestic
-      // BKK/CNX/KBV hops, with the international departure to Taipei/SFO
-      // only at the very end - needs the opposite: start already zoomed in
-      // (so the close-together Thai airports read clearly from the first
-      // frame) and zoom OUT once the route actually leaves for the wider
-      // world. zoomInverted just swaps which of these two states is the
-      // resting one and which is the animated-to one; everything else
-      // (the two coastlines, the crop math) is identical either way.
-      coastHtml += '<g class="itin-map__coast itin-map__coast--zoom" style="opacity:'+(zoomInverted?1:0)+'">'+zoomCoastSvg+'</g>';
 
-      // Fit the crop tightly around both the zoom codes' airports and this
-      // coastline's own points (projected through the same wide project()),
-      // the same "fit everything, then add a small pixel margin" approach
-      // computeProjection itself uses - so the camera really zooms in,
-      // rather than leaving the generic degree-padding as unused margin.
+      // Fit the crop tightly around both this stage's airports/anchors and
+      // this coastline's own points (projected through the same wide
+      // project()), the same "fit everything, then add a small pixel
+      // margin" approach computeProjection itself uses - so the camera
+      // really zooms to this stage, rather than leaving the generic
+      // degree-padding as unused margin.
       var zoomCoastPts = [];
       zoomRegions.forEach(function(r){ zoomCoastPts = zoomCoastPts.concat(r.points); });
       var zoomAllProjected = zAirportPts.concat(zoomCoastPts).map(function(p){ return project(p[0], p[1]); });
@@ -2992,12 +3035,24 @@
       var zoomScale = Math.min(W/Math.max(zx1-zx0,1e-3), H/Math.max(zy1-zy0,1e-3));
       var ztx = W/2 - zoomScale*(zx0+zx1)/2, zty = H/2 - zoomScale*(zy0+zy1)/2;
       var zoomTransform = 'matrix('+zoomScale.toFixed(4)+',0,0,'+zoomScale.toFixed(4)+','+ztx.toFixed(2)+','+zty.toFixed(2)+')';
-      var content = coastHtml+pathsSvg+dotsSvg+planesSvg;
-      content = '<g class="itin-map__zoom" data-zoom-after-leg="'+zoomAfterLeg+'" data-zoom-transform="'+zoomTransform+'" data-zoom-scale="'+zoomScale.toFixed(4)+'"'+(zoomInverted?' data-zoom-inverted="1"':'')+'>'+content+'</g>';
-      return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet">'+content+'</svg>';
+      return { transform: zoomTransform, scale: zoomScale, coastSvg: zoomCoastSvg };
     }
 
-    return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet">'+coastHtml+pathsSvg+dotsSvg+planesSvg+'</svg>';
+    var stageInfos = stages.map(function(s){ return computeStageCrop(s.codes, s.anchors); });
+    var coastHtml = stageInfos.map(function(info, i){
+      return '<g class="itin-map__coast itin-map__coast--L'+i+'" style="opacity:'+(i === 0 ? 1 : 0)+'">'+info.coastSvg+'</g>';
+    }).join('');
+    var content = coastHtml+pathsSvg+dotsSvg+planesSvg;
+    if (stages.length > 1){
+      var stageData = stages.map(function(s, i){
+        return { afterLeg: (i === 0) ? null : s.afterLeg, transform: stageInfos[i].transform, scale: stageInfos[i].scale };
+      });
+      var stageJson = JSON.stringify(stageData).replace(/"/g, '&quot;');
+      content = '<g class="itin-map__zoom" data-zoom-stages="'+stageJson+'">'+content+'</g>';
+    } else {
+      content = '<g class="itin-map__zoom">'+content+'</g>';
+    }
+    return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet">'+content+'</svg>';
   }
 
   var AIRLINE_LOGO = {
@@ -3037,7 +3092,7 @@
   };
 
   function renderItinerary(slide){
-    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad, slide.zoomAfterLeg, slide.mapAnchors, slide.zoomCodes, slide.zoomInverted);
+    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad, slide.mapAnchors, slide.zoomStages);
     var legsHtml = slide.legs.map(function(l){
       var mode = l.mode || 'flight';
       var logoSrc = AIRLINE_LOGO[l.airline];
@@ -3076,28 +3131,13 @@
     var planes = svg.querySelectorAll('.leg-plane');
     if (!paths.length) return;
     var zoomGroup = svg.querySelector('.itin-map__zoom');
-    var zoomAfterLeg = zoomGroup ? parseInt(zoomGroup.getAttribute('data-zoom-after-leg'), 10) : -1;
-    var zoomTransform = zoomGroup ? zoomGroup.getAttribute('data-zoom-transform') : null;
-    var zoomScale = zoomGroup ? parseFloat(zoomGroup.getAttribute('data-zoom-scale')) : 1;
-    // Normally the map rests wide and animates in to zoomTransform. A trip
-    // like Thailand's - tightly clustered domestic hops first, the
-    // international departure only at the very end - wants the opposite:
-    // rest already zoomed in, animate OUT to the wide view once that last
-    // leg starts. rest/trigger below just swap which end of each property
-    // is the resting state and which is animated to, so the rest of this
-    // function (resetState/playOnce) doesn't need to know which direction
-    // it's going.
-    var inverted = zoomGroup && zoomGroup.hasAttribute('data-zoom-inverted');
-    var restTransform = inverted ? zoomTransform : 'none';
-    var triggerTransform = inverted ? 'none' : zoomTransform;
-    var restLabelScale = inverted ? (1/zoomScale) : 1;
-    var triggerLabelScale = inverted ? 1 : (1/zoomScale);
-    var restStroke = function(base){ return inverted ? (base/zoomScale).toFixed(3) : ''; };
-    var triggerStroke = function(base){ return inverted ? '' : (base/zoomScale).toFixed(3); };
-    var restPlaneScale = inverted ? ('scale('+(1/zoomScale)+')') : 'none';
-    var triggerPlaneScale = inverted ? 'none' : ('scale('+(1/zoomScale)+')');
-    var restWideOpacity = inverted ? '0' : '1', triggerWideOpacity = inverted ? '1' : '0';
-    var restZoomOpacity = inverted ? '1' : '0', triggerZoomOpacity = inverted ? '0' : '1';
+    var stagesAttr = zoomGroup ? zoomGroup.getAttribute('data-zoom-stages') : null;
+    // stages[0] is the resting camera position; each later stage names the
+    // leg index (afterLeg) whose finish triggers the move to it. A trip
+    // with no stagesAttr (no zoomStages given at all) just gets a single
+    // implicit stage at transform:none/scale:1 - everything below still
+    // runs, it just never has anything to animate the camera to.
+    var stages = stagesAttr ? JSON.parse(stagesAttr) : [{ afterLeg: null, transform: 'none', scale: 1 }];
     // The dot markers sit inside the same zoomed group as the geography, so
     // without correction they'd grow right along with it - fine for the
     // route line itself, but "DUB"/"KIL"/"ORK" (close together in real life)
@@ -3115,8 +3155,10 @@
     var circles = zoomGroup ? zoomGroup.querySelectorAll('.leg-dot circle') : [];
     var texts = zoomGroup ? zoomGroup.querySelectorAll('.leg-dot text') : [];
     var labels = zoomGroup ? zoomGroup.querySelectorAll('.leg-dot text, .leg-dot circle') : [];
-    var wideCoast = zoomGroup ? zoomGroup.querySelector('.itin-map__coast--wide') : null;
-    var zoomCoast = zoomGroup ? zoomGroup.querySelector('.itin-map__coast--zoom') : null;
+    // One coastline layer per stage (itin-map__coast--L0, --L1, ...) - the
+    // camera move crossfades from whichever layer was showing to the next
+    // stage's own layer, same moment the transform itself animates.
+    var coastLayers = zoomGroup ? zoomGroup.querySelectorAll('[class*="itin-map__coast--L"]') : [];
     // The route line, coastline border and airline-logo/vehicle markers also
     // live inside the zoomed group, so they'd grow with it too - a stroke
     // that reads fine at the wide, zoomed-out scale would look heavy once
@@ -3131,27 +3173,53 @@
     var STEP = 550, DRAW = 1100, HOLD = 1500, ZOOM_DURATION = 1400;
 
     // Normally every leg is staggered by a flat STEP. A trip that zooms
-    // partway through instead holds at the leg right before the zoom until
-    // the camera has fully finished moving in, then resumes the stagger -
-    // so the Ireland/GB legs only start drawing once Dublin is already
-    // front and center, not while the map is still mid-zoom. Sized to the
-    // longest of paths/dots (dots are one per unique airport code, which
-    // usually outnumbers legs by one), since both are indexed into it by
-    // position the same way the original flat "150+i*STEP" formula was.
+    // partway through instead holds at the leg right before each camera
+    // move until it has fully finished, then resumes the stagger - so e.g.
+    // Ireland's GB legs only start drawing once Dublin is already front and
+    // center, not while the map is still mid-zoom. pauseAfter marks every
+    // leg index that a stage transition is keyed to. Sized to the longest
+    // of paths/dots (dots are one per unique airport code, which usually
+    // outnumbers legs by one), since both are indexed into it by position
+    // the same way the original flat "150+i*STEP" formula was.
+    var pauseAfter = {};
+    stages.forEach(function(s){ if (s.afterLeg != null) pauseAfter[s.afterLeg + 1] = true; });
     var startTimeLen = Math.max(paths.length, dots.length);
     var startTime = [];
     for (var i = 0; i < startTimeLen; i++){
       if (i === 0){
         startTime[i] = 150;
-      } else if (zoomGroup && i === zoomAfterLeg + 1){
+      } else if (zoomGroup && pauseAfter[i]){
         startTime[i] = startTime[i-1] + DRAW + ZOOM_DURATION;
       } else {
         startTime[i] = startTime[i-1] + STEP;
       }
     }
-    var zoomTriggerTime = zoomGroup && zoomAfterLeg >= 0 ? startTime[zoomAfterLeg] + DRAW : null;
 
     function forceReflow(){ svg.getBoundingClientRect(); }
+
+    function applyStage(stageIndex, animate){
+      var stage = stages[stageIndex];
+      var labelScale = 1 / stage.scale;
+      if (zoomGroup){
+        zoomGroup.style.transition = animate ? ('transform '+ZOOM_DURATION+'ms cubic-bezier(.4,0,.2,1)') : 'none';
+        zoomGroup.style.transform = stage.transform;
+      }
+      labels.forEach(function(l){
+        l.style.transition = animate ? ('transform '+ZOOM_DURATION+'ms cubic-bezier(.4,0,.2,1)') : 'none';
+        l.style.transform = 'scale('+labelScale+')';
+      });
+      zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = (BASE_STROKE/stage.scale).toFixed(3); });
+      zoomedCoastEdges.forEach(function(c){ c.style.strokeWidth = (BASE_COAST_STROKE/stage.scale).toFixed(3); });
+      zoomedPlanes.forEach(function(pl){
+        if (animate) pl.style.transition = (pl.style.transition ? pl.style.transition+', ' : '') + 'transform '+ZOOM_DURATION+'ms ease';
+        pl.style.transform = 'scale('+labelScale+')';
+      });
+      coastLayers.forEach(function(layer, i){
+        var show = i === stageIndex;
+        layer.style.transition = animate ? ('opacity 900ms ease'+(show?' 300ms':'')) : 'none';
+        layer.style.opacity = show ? '1' : '0';
+      });
+    }
 
     function resetState(){
       paths.forEach(function(p){
@@ -3172,28 +3240,16 @@
         pl.style.opacity = '0';
         pl.style.offsetDistance = '0%';
       });
-      if (zoomGroup){
-        zoomGroup.style.transition = 'none';
-        zoomGroup.style.transform = restTransform;
-      }
-      if (wideCoast){ wideCoast.style.transition = 'none'; wideCoast.style.opacity = restWideOpacity; }
-      if (zoomCoast){ zoomCoast.style.transition = 'none'; zoomCoast.style.opacity = restZoomOpacity; }
       circles.forEach(function(c){
-        c.style.transition = 'none';
-        c.style.transform = 'scale('+restLabelScale+')';
         c.style.transformOrigin = 'center';
         c.style.transformBox = 'fill-box';
       });
       texts.forEach(function(t){
         var dot = t.parentNode.querySelector('circle');
-        t.style.transition = 'none';
-        t.style.transform = 'scale('+restLabelScale+')';
         t.style.transformBox = 'view-box';
         t.style.transformOrigin = dot.getAttribute('cx')+'px '+dot.getAttribute('cy')+'px';
       });
-      zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = restStroke(BASE_STROKE); });
-      zoomedCoastEdges.forEach(function(c){ c.style.strokeWidth = restStroke(BASE_COAST_STROKE); });
-      zoomedPlanes.forEach(function(pl){ pl.style.transform = restPlaneScale; });
+      applyStage(0, false);
       forceReflow();
     }
 
@@ -3221,32 +3277,11 @@
         }, startTime[i]);
         setTimeout(function(){ pl.style.opacity = '0'; }, startTime[i] + DRAW + 250);
       });
-      if (zoomTriggerTime != null){
-        setTimeout(function(){
-          zoomGroup.style.transition = 'transform '+ZOOM_DURATION+'ms cubic-bezier(.4,0,.2,1)';
-          zoomGroup.style.transform = triggerTransform;
-          labels.forEach(function(l){
-            l.style.transition = 'transform '+ZOOM_DURATION+'ms cubic-bezier(.4,0,.2,1)';
-            l.style.transform = 'scale('+triggerLabelScale+')';
-          });
-          zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = triggerStroke(BASE_STROKE); });
-          zoomedCoastEdges.forEach(function(c){ c.style.strokeWidth = triggerStroke(BASE_COAST_STROKE); });
-          // A plane marker can still be mid-flight (its own offset-distance/
-          // opacity transition still running) right when the zoom triggers -
-          // snapping its transform with no transition of its own, like the
-          // stroke-width/coastline changes above get away with, showed up as
-          // a jarring pop: whichever airline badge was still fading out
-          // suddenly flashed to full size for an instant. Appending (not
-          // replacing) a transform-specific transition animates that size
-          // change smoothly instead, without touching the other properties'
-          // already-running transitions.
-          zoomedPlanes.forEach(function(pl){
-            pl.style.transition = (pl.style.transition ? pl.style.transition+', ' : '') + 'transform '+ZOOM_DURATION+'ms ease';
-            pl.style.transform = triggerPlaneScale;
-          });
-          if (wideCoast){ wideCoast.style.transition = 'opacity 900ms ease'; wideCoast.style.opacity = triggerWideOpacity; }
-          if (zoomCoast){ zoomCoast.style.transition = 'opacity 900ms ease 300ms'; zoomCoast.style.opacity = triggerZoomOpacity; }
-        }, zoomTriggerTime);
+      for (var si = 1; si < stages.length; si++){
+        (function(si){
+          var triggerTime = startTime[stages[si].afterLeg] + DRAW;
+          setTimeout(function(){ applyStage(si, true); }, triggerTime);
+        })(si);
       }
       var total = startTime[paths.length-1] + DRAW + HOLD;
       itineraryLoopTimers.push(setTimeout(function(){
