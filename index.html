@@ -1499,6 +1499,70 @@
       ]
     },
     {
+      slug: 'thailand',
+      title: 'Thailand',
+      place: 'Thailand',
+      coord: '13.7563°N, 100.5018°E',
+      cover: 'images/thailand/thailand-chiang-rai-white-temple.jpg',
+      coverAlt: 'Wat Rong Khun’s intricately carved white spires reflected in its pool, visitors crossing the bridge',
+      slides: [
+        { type:'itinerary',
+          title:'Thailand',
+          legs:[
+            { airline:'Thai Airways', flight:'120', fromCode:'BKK', toCode:'CNX', dep:'7:18 PM GMT+7', arr:'8:45 PM GMT+7', duration:'1 hr 27 min', aircraft:'Airbus A320-200' },
+            { airline:'Thai AirAsia', flight:'3070', fromCode:'CNX', toCode:'KBV', dep:'6:24 AM GMT+7', arr:'8:17 AM GMT+7', duration:'1 hr 53 min', aircraft:'Airbus A320-200' },
+            { airline:'Thai AirAsia', flight:'3075', fromCode:'KBV', toCode:'CNX', dep:'7:06 PM GMT+7', arr:'8:59 PM GMT+7', duration:'1 hr 53 min', aircraft:'Airbus A320-200' },
+            { airline:'Thai Airways', flight:'103', fromCode:'CNX', toCode:'BKK', dep:'9:18 AM GMT+7', arr:'10:30 AM GMT+7', duration:'1 hr 12 min', aircraft:'Airbus A320-200' },
+            { airline:'Thai Airways', flight:'634', fromCode:'BKK', toCode:'TPE', dep:'12:40 PM GMT+7', arr:'5:50 PM GMT+8', duration:'4 hr 10 min', aircraft:'Boeing 787-8', direction:'inbound' },
+            { airline:'EVA Air', flight:'28', fromCode:'TPE', toCode:'SFO', dep:'11:35 PM GMT+8', arr:'8:28 PM PDT', duration:'11 hr 53 min', aircraft:'Boeing 777-300ER', direction:'inbound' }
+          ],
+          // The opposite of Ireland's shape: this trip STARTS inside a tight
+          // cluster (the BKK/CNX/KBV domestic hops) and only spreads out to
+          // Taipei/SFO at the very end. zoomInverted rests the map already
+          // zoomed in on that cluster and zooms OUT once leg 3 (CNX->BKK)
+          // finishes - i.e. right as the international departure begins -
+          // instead of the usual zoom-in-partway-through.
+          zoomAfterLeg: 3,
+          zoomCodes: ['BKK', 'CNX', 'KBV'],
+          zoomInverted: true
+        },
+        { type:'photo', src:'images/thailand/thailand-bangkok-street-skyline-dusk.jpg', alt:'A quiet Bangkok side street at dusk, a skyscraper rising behind tangled power lines and a hotel sign', loc:'BANGKOK', day:'DAY 1' },
+        { type:'photo-pair', photos:[
+          { src:'images/thailand/thailand-bangkok-chinatown-neon-wide.jpg', alt:'Towering neon shop signs lighting up a crowded Yaowarat street in Bangkok’s Chinatown at night', loc:'CHINATOWN, BANGKOK', day:'DAY 1' },
+          { src:'images/thailand/thailand-bangkok-chinatown-neon-close.jpg', alt:'Stacked red and gold neon signage glowing above a Yaowarat storefront', loc:'CHINATOWN, BANGKOK', day:'DAY 1' }
+        ] },
+        { type:'photo', src:'images/thailand/thailand-bangkok-grand-palace-chedi.jpg', alt:'A golden chedi’s tiered spire rising beside an ornate temple roof at the Grand Palace', loc:'GRAND PALACE, BANGKOK', day:'DAY 1' },
+        { type:'photo', src:'images/thailand/thailand-koh-lanta-villa-pool.jpg', alt:'A hillside villa’s pool deck overlooking the trees and coastline of Koh Lanta', loc:'KOH LANTA', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/thailand/thailand-koh-lanta-pool-duck-float.jpg', alt:'A rubber duck float in an infinity pool overlooking a forested bay on Koh Lanta', loc:'KOH LANTA', day:'DAY 2' },
+          { src:'images/thailand/thailand-koh-lanta-lighthouse.jpg', alt:'Koh Lanta’s lighthouse standing atop a rocky headland as waves break below', loc:'KOH LANTA', day:'DAY 2' }
+        ] },
+        { type:'photo', src:'images/thailand/thailand-koh-lanta-forested-cove.jpg', alt:'A secluded cove glimpsed through the trees along Koh Lanta’s lighthouse trail', loc:'KOH LANTA', day:'DAY 2' },
+        { type:'photo', src:'images/thailand/thailand-koh-lanta-coastline-wide.jpg', alt:'A jungle-covered headland curving into turquoise water along Koh Lanta’s coastline', loc:'KOH LANTA', day:'DAY 2' },
+        { type:'photo-pair', photos:[
+          { src:'images/thailand/thailand-krabi-limestone-cliff-portrait.jpg', alt:'A sheer limestone cliff rising from the turquoise water off Krabi’s coast', loc:'KRABI', day:'DAY 3' },
+          { src:'images/thailand/thailand-krabi-railay-beach-swimmer.jpg', alt:'A swimmer wading into the turquoise water below Railay’s towering limestone cliffs', loc:'RAILAY, KRABI', day:'DAY 3' }
+        ] },
+        { type:'photo', src:'images/thailand/thailand-krabi-railay-beach-wide.jpg', alt:'Railay Beach’s white sand curving beneath a jungle-draped limestone cliff', loc:'RAILAY, KRABI', day:'DAY 3' },
+        { type:'photo-pair', photos:[
+          { src:'images/thailand/thailand-chiang-mai-golden-chedi-niche.jpg', alt:'A golden chedi rising above a Buddha niche at a Chiang Mai temple', loc:'CHIANG MAI', day:'DAY 4' },
+          { src:'images/thailand/thailand-chiang-mai-white-elephant-statue.jpg', alt:'A white elephant statue draped in gold standing just inside a temple doorway', loc:'CHIANG MAI', day:'DAY 4' }
+        ] },
+        { type:'photo-pair', photos:[
+          { src:'images/thailand/thailand-chiang-mai-temple-flags-elephant.jpg', alt:'Prayer flags and a bronze elephant statue before a traditional Lanna temple hall', loc:'CHIANG MAI', day:'DAY 4' },
+          { src:'images/thailand/thailand-chiang-mai-wat-chedi-luang.jpg', alt:'Wat Chedi Luang’s weathered brick ruins rising beneath ceremonial flags against a stormy sky', loc:'WAT CHEDI LUANG, CHIANG MAI', day:'DAY 4' }
+        ] },
+        { type:'photo-pair', photos:[
+          { src:'images/thailand/thailand-chiang-rai-blue-temple-dragon.jpg', alt:'A carved blue naga and elephant guarding the entrance of Wat Rong Suea Ten, the Blue Temple', loc:'BLUE TEMPLE, CHIANG RAI', day:'DAY 5' },
+          { src:'images/thailand/thailand-chiang-rai-blue-temple-cat.jpg', alt:'A ginger cat resting on a gilded tiger-painted ledge at the Blue Temple', loc:'BLUE TEMPLE, CHIANG RAI', day:'DAY 5' }
+        ] },
+        { type:'photo-pair', photos:[
+          { src:'images/thailand/thailand-chiang-rai-white-guanyin.jpg', alt:'A giant white Guanyin statue seated on a lotus throne atop a hillside at Wat Huay Pla Kang', loc:'WAT HUAY PLA KANG, CHIANG RAI', day:'DAY 5' },
+          { src:'images/thailand/thailand-chiang-rai-white-temple.jpg', alt:'Wat Rong Khun’s intricately carved white spires reflected in its pool, visitors crossing the bridge', loc:'WHITE TEMPLE, CHIANG RAI', day:'DAY 5' }
+        ] }
+      ]
+    },
+    {
       slug: 'kenya',
       title: 'Kenya',
       place: 'Kenya',
@@ -2154,6 +2218,26 @@
     'images/switzerland/switzerland-wengen-village.jpg':1.5,
     'images/switzerland/switzerland-window-flowers.jpg':0.6667,
     'images/switzerland/switzerland-zermatt-town-lights.jpg':1.5,
+    'images/thailand/thailand-bangkok-chinatown-neon-close.jpg':0.6667,
+    'images/thailand/thailand-bangkok-chinatown-neon-wide.jpg':0.6667,
+    'images/thailand/thailand-bangkok-grand-palace-chedi.jpg':0.6667,
+    'images/thailand/thailand-bangkok-street-skyline-dusk.jpg':0.6667,
+    'images/thailand/thailand-chiang-mai-golden-chedi-niche.jpg':0.6667,
+    'images/thailand/thailand-chiang-mai-temple-flags-elephant.jpg':0.6667,
+    'images/thailand/thailand-chiang-mai-wat-chedi-luang.jpg':0.6667,
+    'images/thailand/thailand-chiang-mai-white-elephant-statue.jpg':0.6667,
+    'images/thailand/thailand-chiang-rai-blue-temple-cat.jpg':0.6667,
+    'images/thailand/thailand-chiang-rai-blue-temple-dragon.jpg':0.6667,
+    'images/thailand/thailand-chiang-rai-white-guanyin.jpg':1.5,
+    'images/thailand/thailand-chiang-rai-white-temple.jpg':1.5,
+    'images/thailand/thailand-koh-lanta-coastline-wide.jpg':1.5,
+    'images/thailand/thailand-koh-lanta-forested-cove.jpg':0.6667,
+    'images/thailand/thailand-koh-lanta-lighthouse.jpg':0.6667,
+    'images/thailand/thailand-koh-lanta-pool-duck-float.jpg':0.6667,
+    'images/thailand/thailand-koh-lanta-villa-pool.jpg':1.5,
+    'images/thailand/thailand-krabi-limestone-cliff-portrait.jpg':0.6667,
+    'images/thailand/thailand-krabi-railay-beach-swimmer.jpg':0.6667,
+    'images/thailand/thailand-krabi-railay-beach-wide.jpg':1.5,
     'images/zambezi/zambezi-chobe-crocodile.jpg':1.5,
     'images/zambezi/zambezi-chobe-elephant-riverbank.jpg':1.5,
     'images/zambezi/zambezi-chobe-elephant-vehicle.jpg':0.6667,
@@ -2439,7 +2523,9 @@
     CNX: [18.7669, 98.9626],
     LPQ: [19.8973, 102.1608],
     USM: [9.5479, 100.0624],
-    SGN: [10.8188, 106.6520]
+    SGN: [10.8188, 106.6520],
+    KBV: [8.0991, 98.9863],
+    TPE: [25.0797, 121.2342]
   };
 
   // Simplified coastline outlines used as a map backdrop so routes read against real
@@ -2709,7 +2795,7 @@
     return svg;
   }
 
-  function buildItineraryMap(legs, mapPad, zoomAfterLeg, mapAnchors, zoomCodesOverride){
+  function buildItineraryMap(legs, mapPad, zoomAfterLeg, mapAnchors, zoomCodesOverride, zoomInverted){
     var codes = [];
     legs.forEach(function(l){
       if (codes.indexOf(l.fromCode) === -1) codes.push(l.fromCode);
@@ -2787,7 +2873,7 @@
         '<text x="'+p[0].toFixed(1)+'" y="'+(p[1]-9).toFixed(1)+'">'+c+'</text>' +
       '</g>';
     });
-    var coastHtml = '<g class="itin-map__coast itin-map__coast--wide">'+coastSvg+'</g>';
+    var coastHtml = '<g class="itin-map__coast itin-map__coast--wide" style="opacity:'+(zoomInverted?0:1)+'">'+coastSvg+'</g>';
 
     // A trip whose first hop or two crosses an ocean (Ireland's SFO->BOS->DUB)
     // would otherwise sit tiny in a corner of a map wide enough to fit
@@ -2836,7 +2922,17 @@
         return { mode: region.mode, dir: region.dir, points: rpts };
       }).filter(function(r){ return r.points.length > 1; });
       var zoomCoastSvg = renderCoastRegions(zoomRegions, project);
-      coastHtml += '<g class="itin-map__coast itin-map__coast--zoom" style="opacity:0">'+zoomCoastSvg+'</g>';
+      // Usually the map starts wide and zooms in once the route reaches a
+      // tight cluster (Ireland's Dublin/Killarney/Cork, say). A trip that
+      // starts inside that tight cluster instead - Thailand's domestic
+      // BKK/CNX/KBV hops, with the international departure to Taipei/SFO
+      // only at the very end - needs the opposite: start already zoomed in
+      // (so the close-together Thai airports read clearly from the first
+      // frame) and zoom OUT once the route actually leaves for the wider
+      // world. zoomInverted just swaps which of these two states is the
+      // resting one and which is the animated-to one; everything else
+      // (the two coastlines, the crop math) is identical either way.
+      coastHtml += '<g class="itin-map__coast itin-map__coast--zoom" style="opacity:'+(zoomInverted?1:0)+'">'+zoomCoastSvg+'</g>';
 
       // Fit the crop tightly around both the zoom codes' airports and this
       // coastline's own points (projected through the same wide project()),
@@ -2854,7 +2950,7 @@
       var ztx = W/2 - zoomScale*(zx0+zx1)/2, zty = H/2 - zoomScale*(zy0+zy1)/2;
       var zoomTransform = 'matrix('+zoomScale.toFixed(4)+',0,0,'+zoomScale.toFixed(4)+','+ztx.toFixed(2)+','+zty.toFixed(2)+')';
       var content = coastHtml+pathsSvg+dotsSvg+planesSvg;
-      content = '<g class="itin-map__zoom" data-zoom-after-leg="'+zoomAfterLeg+'" data-zoom-transform="'+zoomTransform+'" data-zoom-scale="'+zoomScale.toFixed(4)+'">'+content+'</g>';
+      content = '<g class="itin-map__zoom" data-zoom-after-leg="'+zoomAfterLeg+'" data-zoom-transform="'+zoomTransform+'" data-zoom-scale="'+zoomScale.toFixed(4)+'"'+(zoomInverted?' data-zoom-inverted="1"':'')+'>'+content+'</g>';
       return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMid meet">'+content+'</svg>';
     }
 
@@ -2891,11 +2987,14 @@
     'JetBlue': 'images/site/airlines/jetblue.png',
     'Lao Airlines': 'images/site/airlines/lao-airlines.png',
     'Bangkok Airways': 'images/site/airlines/bangkok-airways.png',
-    'Vietnam Airlines': 'images/site/airlines/vietnam-airlines.png'
+    'Vietnam Airlines': 'images/site/airlines/vietnam-airlines.png',
+    'Thai Airways': 'images/site/airlines/thai-airways.png',
+    'Thai AirAsia': 'images/site/airlines/thai-airasia.png',
+    'EVA Air': 'images/site/airlines/eva-air.png'
   };
 
   function renderItinerary(slide){
-    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad, slide.zoomAfterLeg, slide.mapAnchors, slide.zoomCodes);
+    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad, slide.zoomAfterLeg, slide.mapAnchors, slide.zoomCodes, slide.zoomInverted);
     var legsHtml = slide.legs.map(function(l){
       var mode = l.mode || 'flight';
       var logoSrc = AIRLINE_LOGO[l.airline];
@@ -2937,6 +3036,25 @@
     var zoomAfterLeg = zoomGroup ? parseInt(zoomGroup.getAttribute('data-zoom-after-leg'), 10) : -1;
     var zoomTransform = zoomGroup ? zoomGroup.getAttribute('data-zoom-transform') : null;
     var zoomScale = zoomGroup ? parseFloat(zoomGroup.getAttribute('data-zoom-scale')) : 1;
+    // Normally the map rests wide and animates in to zoomTransform. A trip
+    // like Thailand's - tightly clustered domestic hops first, the
+    // international departure only at the very end - wants the opposite:
+    // rest already zoomed in, animate OUT to the wide view once that last
+    // leg starts. rest/trigger below just swap which end of each property
+    // is the resting state and which is animated to, so the rest of this
+    // function (resetState/playOnce) doesn't need to know which direction
+    // it's going.
+    var inverted = zoomGroup && zoomGroup.hasAttribute('data-zoom-inverted');
+    var restTransform = inverted ? zoomTransform : 'none';
+    var triggerTransform = inverted ? 'none' : zoomTransform;
+    var restLabelScale = inverted ? (1/zoomScale) : 1;
+    var triggerLabelScale = inverted ? 1 : (1/zoomScale);
+    var restStroke = function(base){ return inverted ? (base/zoomScale).toFixed(3) : ''; };
+    var triggerStroke = function(base){ return inverted ? '' : (base/zoomScale).toFixed(3); };
+    var restPlaneScale = inverted ? ('scale('+(1/zoomScale)+')') : 'none';
+    var triggerPlaneScale = inverted ? 'none' : ('scale('+(1/zoomScale)+')');
+    var restWideOpacity = inverted ? '0' : '1', triggerWideOpacity = inverted ? '1' : '0';
+    var restZoomOpacity = inverted ? '1' : '0', triggerZoomOpacity = inverted ? '0' : '1';
     // The dot markers sit inside the same zoomed group as the geography, so
     // without correction they'd grow right along with it - fine for the
     // route line itself, but "DUB"/"KIL"/"ORK" (close together in real life)
@@ -3013,26 +3131,26 @@
       });
       if (zoomGroup){
         zoomGroup.style.transition = 'none';
-        zoomGroup.style.transform = 'none';
+        zoomGroup.style.transform = restTransform;
       }
-      if (wideCoast){ wideCoast.style.transition = 'none'; wideCoast.style.opacity = '1'; }
-      if (zoomCoast){ zoomCoast.style.transition = 'none'; zoomCoast.style.opacity = '0'; }
+      if (wideCoast){ wideCoast.style.transition = 'none'; wideCoast.style.opacity = restWideOpacity; }
+      if (zoomCoast){ zoomCoast.style.transition = 'none'; zoomCoast.style.opacity = restZoomOpacity; }
       circles.forEach(function(c){
         c.style.transition = 'none';
-        c.style.transform = 'scale(1)';
+        c.style.transform = 'scale('+restLabelScale+')';
         c.style.transformOrigin = 'center';
         c.style.transformBox = 'fill-box';
       });
       texts.forEach(function(t){
         var dot = t.parentNode.querySelector('circle');
         t.style.transition = 'none';
-        t.style.transform = 'scale(1)';
+        t.style.transform = 'scale('+restLabelScale+')';
         t.style.transformBox = 'view-box';
         t.style.transformOrigin = dot.getAttribute('cx')+'px '+dot.getAttribute('cy')+'px';
       });
-      zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = ''; });
-      zoomedCoastEdges.forEach(function(c){ c.style.strokeWidth = ''; });
-      zoomedPlanes.forEach(function(pl){ pl.style.transform = 'none'; });
+      zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = restStroke(BASE_STROKE); });
+      zoomedCoastEdges.forEach(function(c){ c.style.strokeWidth = restStroke(BASE_COAST_STROKE); });
+      zoomedPlanes.forEach(function(pl){ pl.style.transform = restPlaneScale; });
       forceReflow();
     }
 
@@ -3063,16 +3181,16 @@
       if (zoomTriggerTime != null){
         setTimeout(function(){
           zoomGroup.style.transition = 'transform '+ZOOM_DURATION+'ms cubic-bezier(.4,0,.2,1)';
-          zoomGroup.style.transform = zoomTransform;
+          zoomGroup.style.transform = triggerTransform;
           labels.forEach(function(l){
             l.style.transition = 'transform '+ZOOM_DURATION+'ms cubic-bezier(.4,0,.2,1)';
-            l.style.transform = 'scale('+(1/zoomScale)+')';
+            l.style.transform = 'scale('+triggerLabelScale+')';
           });
-          zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = (BASE_STROKE/zoomScale).toFixed(3); });
-          zoomedCoastEdges.forEach(function(c){ c.style.strokeWidth = (BASE_COAST_STROKE/zoomScale).toFixed(3); });
-          zoomedPlanes.forEach(function(pl){ pl.style.transform = 'scale('+(1/zoomScale)+')'; });
-          if (wideCoast){ wideCoast.style.transition = 'opacity 900ms ease'; wideCoast.style.opacity = '0'; }
-          if (zoomCoast){ zoomCoast.style.transition = 'opacity 900ms ease 300ms'; zoomCoast.style.opacity = '1'; }
+          zoomedLegPaths.forEach(function(p){ p.style.strokeWidth = triggerStroke(BASE_STROKE); });
+          zoomedCoastEdges.forEach(function(c){ c.style.strokeWidth = triggerStroke(BASE_COAST_STROKE); });
+          zoomedPlanes.forEach(function(pl){ pl.style.transform = triggerPlaneScale; });
+          if (wideCoast){ wideCoast.style.transition = 'opacity 900ms ease'; wideCoast.style.opacity = triggerWideOpacity; }
+          if (zoomCoast){ zoomCoast.style.transition = 'opacity 900ms ease 300ms'; zoomCoast.style.opacity = triggerZoomOpacity; }
         }, zoomTriggerTime);
       }
       var total = startTime[paths.length-1] + DRAW + HOLD;
