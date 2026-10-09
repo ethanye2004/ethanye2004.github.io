@@ -190,6 +190,29 @@
   @media (hover:hover) and (pointer:fine){
     .nav__dropdown--sub:hover > .nav__dropdown-bridge{ opacity:1; visibility:visible; pointer-events:auto; }
   }
+  /* When the screen is too narrow for a flyout to sit beside its parent
+     (France/Thailand used to get clamped directly on top of the Travels
+     list, covering the rows around their own toggle so a tap looked like it
+     did nothing), the menu switches to .is-stacked: each submenu expands
+     inline beneath its toggle, accordion-style, and the whole panel scrolls
+     as one list. Whether it stacks is measured in JS from the real widths,
+     not a fixed breakpoint, so it adapts to whatever screen it's on. */
+  #menu-dropdown.is-stacked #menu-menu{
+    min-width:0; width:min(260px, calc(100vw - 2 * var(--sp-3)));
+    max-height:calc(100vh - var(--navh) - 24px);
+    max-height:calc(100dvh - var(--navh) - 24px);
+    overflow-y:auto; overscroll-behavior:contain;
+  }
+  #menu-dropdown.is-stacked .nav__dropdown-link{ overflow-wrap:anywhere; }
+  #menu-dropdown.is-stacked .nav__dropdown-menu--sub{
+    position:static; width:auto; max-width:none; max-height:none; overflow:visible;
+    border:none; padding:0 0 .2rem .9rem;
+    display:none; opacity:1; visibility:visible; transition:none;
+  }
+  #menu-dropdown.is-stacked .nav__dropdown--sub.is-open > .nav__dropdown-menu--sub{ display:flex; }
+  #menu-dropdown.is-stacked .nav__dropdown-bridge{ display:none; }
+  .nav__dropdown-caret--sub{ transition:transform .2s ease; }
+  #menu-dropdown.is-stacked .nav__dropdown--sub.is-open > .nav__dropdown-toggle--sub .nav__dropdown-caret--sub{ transform:rotate(-90deg); }
 
   .site-foot{
     display:flex; align-items:center; justify-content:center; gap:var(--sp-3); flex-wrap:wrap;
@@ -3554,7 +3577,20 @@
       menuToggle.setAttribute('aria-expanded', 'false');
       subDropdowns.forEach(function(s){ s.close(); });
     }
+    // Side-by-side flyouts need room for three columns at the deepest
+    // point (Menu -> Travels -> France/Thailand), each opening to the left
+    // of the last. Measured against the live viewport on every open and
+    // resize, so any screen that can't fit them gets the stacked layout.
+    function updateStacked(){
+      menuDropdown.classList.remove('is-stacked');
+      var flyoutW = document.getElementById('travels-submenu').offsetWidth;
+      var needed = menuMenu.offsetWidth + 2 * (flyoutW + 8) + 16;
+      var stacked = window.innerWidth < needed;
+      menuDropdown.classList.toggle('is-stacked', stacked);
+      return stacked;
+    }
     function toggleMenu(){
+      updateStacked();
       var open = menuDropdown.classList.toggle('is-open');
       menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     }
@@ -3656,6 +3692,15 @@
         def.siblings.forEach(function(siblingId){
           if (subDropdownsById[siblingId]) subDropdownsById[siblingId].close();
         });
+        // Stacked, a submenu near the bottom of a long list can expand
+        // below the panel's visible area; scroll the panel just enough to
+        // reveal it, but never so far that its own toggle scrolls off the top.
+        if (menuDropdown.classList.contains('is-stacked')){
+          var pr = menuMenu.getBoundingClientRect();
+          var overflow = menu.getBoundingClientRect().bottom - pr.bottom;
+          var room = toggle.getBoundingClientRect().top - pr.top;
+          if (overflow > 0) menuMenu.scrollTop += Math.min(overflow, room);
+        }
       }
       // The flyout is position:fixed, sitting a real gap away from its
       // toggle (needed so an ancestor's overflow-y:auto can't clip it, and
@@ -3674,8 +3719,14 @@
         if (dropdown.classList.contains('is-open')) close(); else open();
       });
       if (isHoverCapable){
-        dropdown.addEventListener('mouseenter', open);
-        dropdown.addEventListener('mouseleave', scheduleClose);
+        // Hover-to-open would make a stacked accordion jump around under
+        // the cursor, so stacked mode is click-only.
+        dropdown.addEventListener('mouseenter', function(){
+          if (!menuDropdown.classList.contains('is-stacked')) open();
+        });
+        dropdown.addEventListener('mouseleave', function(){
+          if (!menuDropdown.classList.contains('is-stacked')) scheduleClose();
+        });
         menu.addEventListener('mouseenter', clearCloseTimer);
         menu.addEventListener('mouseleave', scheduleClose);
         bridge.addEventListener('mouseenter', clearCloseTimer);
@@ -3711,6 +3762,10 @@
       });
     }
 
+    window.addEventListener('resize', function(){
+      var wasStacked = menuDropdown.classList.contains('is-stacked');
+      if (updateStacked() !== wasStacked) subDropdowns.forEach(function(s){ s.close(); });
+    });
     menuToggle.addEventListener('click', function(ev){
       ev.stopPropagation();
       toggleMenu();
