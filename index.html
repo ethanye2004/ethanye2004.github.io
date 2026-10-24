@@ -830,7 +830,11 @@
             { airline:'Avianca', flight:'554', fromCode:'SAL', toCode:'GUA', dep:'8:08 AM CST', arr:'8:54 AM CST', duration:'46 min', aircraft:'Airbus A320-200', direction:'outbound' },
             { airline:'Avianca', flight:'555', fromCode:'GUA', toCode:'SAL', dep:'3:42 PM CST', arr:'4:33 PM CST', duration:'51 min', aircraft:'Airbus A320neo', direction:'inbound' },
             { airline:'Avianca', flight:'560', fromCode:'SAL', toCode:'SFO', dep:'5:42 PM CST', arr:'10:46 PM PDT', duration:'6 hr 4 min', aircraft:'Airbus A320neo', direction:'inbound' }
-          ]
+          ],
+          // Zoom in on the short SAL<->GUA hops once SFO->SAL (index 0) has
+          // drawn, then back out to the wide view for SAL->SFO once
+          // GUA->SAL (index 2) finishes.
+          zoomStages: [ {}, { afterLeg: 0, codes: ['SAL', 'GUA'] }, { afterLeg: 2 } ]
         },
         { type:'photo', src:'images/guatemala/guatemala-antigua-asado.jpg', alt:'A cook tending chicken over an open wood fire at a brick grill station in a market stall', loc:'MERCADO, ANTIGUA', day:'DAY 1' },
         { type:'photo', src:'images/guatemala/guatemala-antigua-arch.jpg', alt:'The yellow Santa Catalina Arch spanning a cobblestone street crowded with people, Volcán de Agua rising behind it', loc:'SANTA CATALINA ARCH, ANTIGUA', day:'DAY 1' },
@@ -1550,14 +1554,21 @@
           // contain Nairobi and Bangkok; once that leg (index 0) finishes,
           // stage 1 zooms into the tight BKK/CNX/KBV domestic cluster; once
           // the last domestic hop (index 4, CNX->BKK) finishes, stage 2
-          // zooms back out to the Taipei->SFO Pacific crossing, with a
-          // northern-Hokkaido anchor so Japan's full extent shows and
-          // nothing from Africa or Europe is left in frame.
+          // zooms back out for BKK->TPE->SFO, keeping Thailand in frame and
+          // taking in the whole North American continent across the
+          // Pacific (northern Hokkaido, Panama, Newfoundland and the
+          // Canadian Rockies as anchors), with a tight fixed pad so India
+          // and Africa stay out of frame.
           zoomStages: [
             { codes: ['NBO', 'BKK'], anchors: [[-34.8,18.4],[36.8,10.2],[14.7,-17.4]] },
             { afterLeg: 0, codes: ['BKK', 'CNX', 'KBV'] },
-            { afterLeg: 4, codes: ['TPE', 'SFO'], anchors: [[45.5,142.0]] }
-          ]
+            { afterLeg: 4, codes: ['BKK', 'CNX', 'KBV', 'TPE', 'SFO'],
+              anchors: [[6.5,101.8],[45.5,142.0],[51.0,-115.0],[7.5,-80.4],[47.6,-52.7]],
+              pad: { lat: 2, lon: 2 } }
+          ],
+          // Seam in the mid-Atlantic, so all of North America (not just
+          // SFO) sits east of the Pacific - see buildItineraryMap.
+          lonCutoff: -30
         },
         { type:'photo', src:'images/thailand/thailand-bangkok-street-skyline-dusk.jpg', alt:'A quiet Bangkok side street at dusk, a skyscraper rising behind tangled power lines and a hotel sign', loc:'BANGKOK', day:'DAY 1' },
         { type:'photo-pair', photos:[
@@ -2932,7 +2943,7 @@
     return svg;
   }
 
-  function buildItineraryMap(legs, mapPad, mapAnchors, zoomStages){
+  function buildItineraryMap(legs, mapPad, mapAnchors, zoomStages, lonCutoffOverride){
     var codes = [];
     legs.forEach(function(l){
       if (codes.indexOf(l.fromCode) === -1) codes.push(l.fromCode);
@@ -2968,7 +2979,12 @@
     var stageAnchorsFlat = [];
     stages.forEach(function(s){ stageAnchorsFlat = stageAnchorsFlat.concat(s.anchors || []); });
     var allLonSourcePts = airportPtsRaw.concat(stageAnchorsFlat);
-    var lonCutoff = findLonCutoff(allLonSourcePts.map(function(p){ return p[1]; }));
+    // A slide can pin the cutoff itself when the widest-gap guess lands in
+    // the wrong ocean - e.g. Thailand's final stage spans the whole North
+    // American continent east of SFO, so the seam has to sit in the
+    // Atlantic rather than right at SFO, or everything east of it would
+    // stay unshifted and land back over Africa.
+    var lonCutoff = (lonCutoffOverride != null) ? lonCutoffOverride : findLonCutoff(allLonSourcePts.map(function(p){ return p[1]; }));
     function unwrapLon(lon){ return (lonCutoff != null && lon <= lonCutoff) ? lon + 360 : lon; }
     var airportPts = airportPtsRaw.map(function(p){ return [p[0], unwrapLon(p[1])]; });
     var airportLons = airportPts.map(function(p){ return p[1]; });
@@ -3074,7 +3090,7 @@
     // between the first and last stop) - crossfading to a tighter one
     // scoped to just that stage's own airports gives it a clean, uncluttered
     // coastline instead, with nothing else on it.
-    function computeStageCrop(stageCodes, stageAnchors){
+    function computeStageCrop(stageCodes, stageAnchors, stagePad){
       if (!stageCodes || !stageCodes.length){
         return { transform: 'none', scale: 1, coastSvg: coastSvg };
       }
@@ -3083,8 +3099,11 @@
       var zLats = zAirportPts.map(function(p){ return p[0]; }), zLons = zAirportPts.map(function(p){ return p[1]; });
       var zMinALat = Math.min.apply(null, zLats), zMaxALat = Math.max.apply(null, zLats);
       var zMinALon = Math.min.apply(null, zLons), zMaxALon = Math.max.apply(null, zLons);
-      var zLatPad = Math.max(minLatPad, (zMaxALat - zMinALat) * 0.18);
-      var zLonPad = Math.max(minLonPad, (zMaxALon - zMinALon) * 0.18);
+      // A stage spanning half the globe would otherwise pad its box by 18%
+      // of that span - dozens of degrees, enough to drag in all of India -
+      // so it can ask for a fixed, tight degree pad instead.
+      var zLatPad = stagePad ? stagePad.lat : Math.max(minLatPad, (zMaxALat - zMinALat) * 0.18);
+      var zLonPad = stagePad ? stagePad.lon : Math.max(minLonPad, (zMaxALon - zMinALon) * 0.18);
       var zLatLo = zMinALat - zLatPad, zLatHi = zMaxALat + zLatPad;
       var zLonLo = zMinALon - zLonPad, zLonHi = zMaxALon + zLonPad;
 
@@ -3116,7 +3135,7 @@
       return { transform: zoomTransform, scale: zoomScale, coastSvg: zoomCoastSvg };
     }
 
-    var stageInfos = stages.map(function(s){ return computeStageCrop(s.codes, s.anchors); });
+    var stageInfos = stages.map(function(s){ return computeStageCrop(s.codes, s.anchors, s.pad); });
     var coastHtml = stageInfos.map(function(info, i){
       return '<g class="itin-map__coast itin-map__coast--L'+i+'" style="opacity:'+(i === 0 ? 1 : 0)+'">'+info.coastSvg+'</g>';
     }).join('');
@@ -3172,7 +3191,7 @@
   };
 
   function renderItinerary(slide){
-    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad, slide.mapAnchors, slide.zoomStages);
+    var mapSvg = buildItineraryMap(slide.legs, slide.mapPad, slide.mapAnchors, slide.zoomStages, slide.lonCutoff);
     var legsHtml = slide.legs.map(function(l){
       var mode = l.mode || 'flight';
       var logoSrc = AIRLINE_LOGO[l.airline];
